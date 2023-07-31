@@ -1,53 +1,52 @@
 #include <iostream>
-#include <sys/types.h> 
+#include <sys/types.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h> // for closing the connection
-#include <string.h> // for memset
+#include <unistd.h>
+#include <netdb.h>
+#include <string.h>
+#include <string>
 
+int main(int ac, char **av)
+{
+	if (ac < 3)
+	{
+		std::cout << "not enough argument" << std::endl;
+	}
+	// create a socket
+	int listening = socket(AF_INET, SOCK_STREAM, 0);
+	if (listening < 0)
+	{
+		std::cerr << "can't create socket" << std::endl;
+		return -1;
+	}
+	// bind the socket to an ip / port
+	struct sockaddr_in hint = {};
+	hint.sin_family = AF_INET;
+	hint.sin_port = htons(540000);
+	inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr);
 
-int main (int ac, char **av){
-	
-	if (ac < 3){
-		std::cout << "Not enough argument" << std::endl;
-		return (-1);
+	if (bind(listening, AF_INET, &hint, sizeof(hint)) < 0)
+	{
+		std::cerr "Can't bid to ip port" < std::endl;
+		return -1;
 	}
 
-	int sock = socket(AF_INET, SOCK_STREAM, 0);
-	struct sockaddr_in my_address = {};
-
-	int portno = std::stoi(av[1]);
-	std::string Password = av[2];
-
-	my_adress.sin_familly = AF_INET;
-	my_address.sin_port = htons(23);
-	my_address.sin_addr.s_addr = INADDR_ANY;
-
-	if(bind(sock, my_address, (struct sockaddr_in *)&my_address, Sizeof(my_address)) < 0){
-		std::cer << "Could not bind to socket" << std::endl;
-		return (-1);
+	// Mark the socket for listening in
+	if (listen(listening, SOMAXCONN) < 0)
+	{
+		std::cerr << "Can't listen" << std::endl;
+		return -1;
 	}
 
-	listen(socl, 5);
+	// Accept a call
+	struct sockaddr_in client;
+	socklen_t clientsize;
+	char host[NI_MAXHOST];
 
-	struct sockaddr_in client_adress = {};
-	socklen_t client_size = sizeof(client_adress);
-	
-	int new_sock = accept(sock, (struct sockaddr_in *)&client_address, &client_size);
-	if (new_sock  < 0){
-		std::cer << "Could not connect to the client" << std::endl;
-		return (-1);
-	}
+	// close the listening socket
+	// while receiving - display message, echo message
+	// close the socket
+	// terminate
 
-	char buffer[256] {};
-
-	int n = read(new_sock, buffer, 255);
-	if (n < 0) {
-    	std::cerr << "Error: Could not read from socket" << std::endl;
-    	return -1;
-	}
-
-	close(sock);
-	close(new_sock);
-
-}	
+	return (0);
+}
