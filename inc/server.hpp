@@ -4,18 +4,25 @@
 #include  "includes.hpp"
 
 class Server{
-	public: 
+	public : 
+		Server(void);
+		Server(char *, char *);
+		~Server(void);
+		void	setPort(char *);
+		void	initServ();
+		// handleClient();
+		// removeClient();
+		// passwordAuth(int client_socket);
+		// runServ();
 
-	int	get_sock();
-	int get_port();
-	string get_password();
-	
+	private:
+		int					_port;
+		string				_password;
+		int					_server_socket;
+		struct sockaddr_in	_server_address;
+		fd_set				_master_set;
+		// vector<int>			_client_sockets;
 
-	private: 
-		int sock;
-		int port;
-		string password;
-		//map<int, ClientInfo> clients;
 };
 
 #endif
