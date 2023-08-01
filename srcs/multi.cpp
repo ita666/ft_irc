@@ -42,36 +42,34 @@ int main() {
 	string password = "1234";
 	while (true) {
 		fd_set copy = master;
-		cout << "test" << endl;
+
 		if (select(FD_SETSIZE, &copy, nullptr, nullptr, nullptr) < 0) {
 			perror("select error");
 			exit(EXIT_FAILURE);
 		}
-		cout << "test" << endl;
+	int client_socket;
 		for (int i = 0; i < FD_SETSIZE; i++) {
-			cout << "test" << endl;
 			if (FD_ISSET(i, &copy)) {
 				if (i == listening) {
-				cout << "CACA" << endl;
 					// this is a new connection
+					client_socket = accept(listening, nullptr, nullptr);
 					char password_request[] = "Enter password: ";
-					send(i, password_request, sizeof(password_request), 0);
-					int client_socket = accept(listening, nullptr, nullptr);
+					send(client_socket, password_request, sizeof(password_request), 0);
 					FD_SET(client_socket, &master);
 				} else {
 					char client_password[256];
-					if (recv(i, client_password, sizeof(client_password), 0) <= 0) {
+					if (recv(client_socket, &client_password, sizeof(client_password), 0) < 0) {
 						perror("recv error");
+						exit(EXIT_FAILURE);
 					}
 					else {
-						if (password != client_password){
-							// do whatever we do with connections
+						if (password != client_password)
 							FD_CLR(i, &master);
-						}
 					}
+					// do whatever we do with connections
 				}
 			}
 		}
-	return 0;
 	}
+	return 0;
 }
