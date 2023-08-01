@@ -1,13 +1,5 @@
-#include <iostream>
-#include <sys/types.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <arpa/inet.h>
-#include <string.h>
-#include <string>
 
-using namespace std;
+#include "includes.hpp"
 
 int main() {
 	// Create a socket
@@ -43,16 +35,16 @@ int main() {
 	while (true) {
 		fd_set copy = master;
 
-		if (select(FD_SETSIZE, &copy, nullptr, nullptr, nullptr) < 0) {
+		if (select(FD_SETSIZE, &copy, NULL, NULL, NULL) < 0) {
 			perror("select error");
-			exit(EXIT_FAILURE);
+			exit(0);
 		}
 	int client_socket;
 		for (int i = 0; i < FD_SETSIZE; i++) {
 			if (FD_ISSET(i, &copy)) {
 				if (i == listening) {
 					// this is a new connection
-					client_socket = accept(listening, nullptr, nullptr);
+					client_socket = accept(listening, NULL, NULL);
 					char password_request[] = "Enter password: ";
 					send(client_socket, password_request, sizeof(password_request), 0);
 					FD_SET(client_socket, &master);
@@ -60,7 +52,7 @@ int main() {
 					char client_password[256];
 					if (recv(client_socket, &client_password, sizeof(client_password), 0) < 0) {
 						perror("recv error");
-						exit(EXIT_FAILURE);
+						exit(0);
 					}
 					else {
 						if (password != client_password)
