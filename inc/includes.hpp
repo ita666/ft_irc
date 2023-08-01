@@ -6,12 +6,16 @@
 #include <netinet/in.h> // for sockaddr_in and inet_ntoa()
 #include <arpa/inet.h>  // for htons(), htonl(), ntohs(), ntohl(), inet_addr()
 #include <sys/epoll.h> // for epoll_create(), epoll_ctl(), epoll_wait()
-#include <unistd.h>     // for close()
-#include <fcntl.h>      // for fcntl()
+#include <unistd.h>    // for close()
+#include <netdb.h>     //
+#include <fcntl.h>     // for fcntl()
+#include <stdlib.h>
+#include <stdio.h>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <map>
+
 
 using namespace std;
 

@@ -6,14 +6,14 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by yanthoma          #+#    #+#              #
-#    Updated: 2023/07/31 21:34:46 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/08/01 20:49:08 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 
 # /* ~~~~~~ SOURCES ~~~~~~ */
-SRCS	=   main.cpp
+SRCS	=   multi.cpp
 
 SRCDIR		= srcs/
 OBJDIR 		= objs
