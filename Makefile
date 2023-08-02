@@ -6,14 +6,14 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by yanthoma          #+#    #+#              #
-#    Updated: 2023/08/02 00:50:01 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/08/02 16:23:02 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 
 # /* ~~~~~~ SOURCES ~~~~~~ */
-SRCS	=   server.cpp main.cpp
+SRCS	=   commands/0-Command.cpp server.cpp main.cpp
 
 SRCDIR		= srcs/
 OBJDIR 		= objs
@@ -31,7 +31,7 @@ RM		= rm -rf
 all:		${NAME}
 
 ${OBJDIR}/%.o : ${SRCDIR}%.cpp ${INC}
-				mkdir -p ${OBJDIR}
+				mkdir -p $(dir $@)
 				${CC} ${CFLAGS} ${CINC} -c $< -o $@
 
 ${NAME}:	${OBJS}

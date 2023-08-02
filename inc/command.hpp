@@ -6,10 +6,10 @@
 class Command{
 	public :
 		Command();
-		~Command();
+		virtual ~Command();
 		vector<string> getCommand(string);
-	private :
-		map<string, void (*)(int, string)>;
+	protected :
+		map<string, void (*)(int, string)> Commands;
 
 };
 

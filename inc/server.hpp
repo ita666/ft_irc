@@ -1,9 +1,10 @@
 #ifndef _SERVER_HPP_
 #define _SERVER_HPP_
 
-#include  "includes.hpp"
+#include	"includes.hpp"
+#include	"command.hpp"
 
-class Server{
+class Server: public Command{
 	public : 
 		Server(void);
 		Server(char *, char *);

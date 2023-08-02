@@ -1,4 +1,5 @@
 #include "server.hpp"
+#include "command.hpp"
 
 Server::Server(){}
 
@@ -73,8 +74,9 @@ void Server::handleClient(int socket){
 	} else {
 		client_input[bytes_received] = '\0'; //make it a proper string
 		string message = client_input;
-		
+		//vector<string> command = getCommand(message);
 		cout << message << endl;
+
 	}
 }
 

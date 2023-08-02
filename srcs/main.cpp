@@ -7,5 +7,6 @@ int main (int ac, char **av){
 		return (-1);
 	}
 	
-	Server ircserv(av[1], av[2]);
+	try { Server ircserv(av[1], av[2]); }
+	catch (const exception &e){cerr << e.what(); }
 }
