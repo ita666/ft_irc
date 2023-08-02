@@ -3,6 +3,7 @@
 
 #include	"includes.hpp"
 #include	"command.hpp"
+#include	"channel.hpp"
 
 class Server: public Command{
 	public : 
@@ -17,6 +18,17 @@ class Server: public Command{
 		// passwordAuth(int client_socket);
 		void	runServ();
 
+	//commands
+		void	Invite();
+		void	Join(int socket, string channel);
+		void	Mode();
+		void	Nick();
+		void	Pass();
+		void	Ping();
+		void	Privmsg();
+		void	Topic();
+		void	Whois();
+
 	private:
 		int					_port;
 		string				_password;
@@ -24,6 +36,7 @@ class Server: public Command{
 		struct sockaddr_in	_server_address;
 		fd_set				_master_set;
 		vector<int>			_client_sockets;
+		std::map<std::string, Channel> _channels;
 
 };
 

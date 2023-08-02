@@ -6,7 +6,7 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by yanthoma          #+#    #+#              #
-#    Updated: 2023/08/02 16:23:02 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/08/02 16:32:09 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCDIR		= srcs/
 OBJDIR 		= objs
 OBJS		= ${addprefix ${OBJDIR}/, ${SRCS:.cpp=.o}}
 INC			= inc/
-CINC		= -I ./inc/
+CINC		= -I ./inc/ -I ./inc/commands/
 
 # /* ~~~~~~~ COMPILING INFO ~~~~~~~ */
 
