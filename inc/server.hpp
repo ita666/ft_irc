@@ -9,11 +9,12 @@ class Server{
 		Server(char *, char *);
 		~Server(void);
 		void	setPort(char *);
+		void	acceptClient();
 		void	initServ();
-		// handleClient();
+		void	handleClient(int);
 		// removeClient();
 		// passwordAuth(int client_socket);
-		// runServ();
+		void	runServ();
 
 	private:
 		int					_port;
@@ -21,7 +22,7 @@ class Server{
 		int					_server_socket;
 		struct sockaddr_in	_server_address;
 		fd_set				_master_set;
-		// vector<int>			_client_sockets;
+		vector<int>			_client_sockets;
 
 };
 

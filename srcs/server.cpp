@@ -4,6 +4,14 @@ Server::Server(){}
 
 Server::~Server(){}
 
+Server::Server(char *port, char *pass){
+
+	setPort(port);
+	_password = string(pass);
+	initServ();
+	runServ();
+}
+
 void Server::setPort(char *input){
 	int port;
 	stringstream ss(input);
@@ -17,12 +25,6 @@ void Server::setPort(char *input){
 	}
 }
 
-Server::Server(char *port, char *pass){
-
-	setPort(port);
-	_password = string(pass);
-	initServ();
-}
 
 void Server::initServ() {
     // Create a socket
@@ -51,4 +53,44 @@ void Server::initServ() {
     FD_SET(_server_socket, &_master_set);
 }
 
+void Server::acceptClient(){
+	int client_socket = accept(_server_socket, NULL, NULL);
+    if (client_socket < 0) {
+        // You might want to handle the error case here
+    } else {
+        FD_SET(client_socket, &_master_set);
+        _client_sockets.push_back(client_socket); // add the new client to your vector
+    }
+}
+
+void Server::handleClient(int socket){
+	char	client_input[256];
+	int		bytes_received = recv(socket, client_input, sizeof(client_input), 0);
+
+	if(bytes_received <= 0){
+		FD_CLR(socket, &_master_set);
+		_client_sockets.erase(remove(_client_sockets.begin(), _client_sockets.end(), socket), _client_sockets.end());
+	} else {
+		cout << "client message" << endl;
+	}
+}
+
+void Server::runServ(){
+	while (true){
+		fd_set copy = _master_set;
+
+		if(select(FD_SETSIZE, & copy, NULL, NULL, NULL) < 0){
+			throw std::runtime_error("Select error.");
+		}
+		for (int i = 0; i < FD_SETSIZE; i++){
+			if(FD_ISSET(i, &copy)){
+				if(i == _server_socket){
+					acceptClient();
+				}else{
+					handleClient(i);
+				}
+			}
+		}
+	}
+}
 
