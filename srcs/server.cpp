@@ -64,14 +64,17 @@ void Server::acceptClient(){
 }
 
 void Server::handleClient(int socket){
-	char	client_input[256];
-	int		bytes_received = recv(socket, client_input, sizeof(client_input), 0);
+	char	client_input[2048] = {0};
+	int		bytes_received = recv(socket, client_input, sizeof(client_input) - 1, 0);
 
 	if(bytes_received <= 0){
 		FD_CLR(socket, &_master_set);
 		_client_sockets.erase(remove(_client_sockets.begin(), _client_sockets.end(), socket), _client_sockets.end());
 	} else {
-		cout << "client message" << endl;
+		client_input[bytes_received] = '\0'; //make it a proper string
+		string message = client_input;
+		
+		cout << message << endl;
 	}
 }
 
