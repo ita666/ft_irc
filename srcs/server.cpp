@@ -9,7 +9,7 @@ Server::Server(char *port, char *pass){
 
 	setPort(port);
 	_password = string(pass);
-	_commands["NICK"] = &Nick;
+	_commands["NICK"] = &Server::Nick;
 	initServ();
 	runServ();
 }
@@ -101,7 +101,7 @@ void Server::runServ(){
 	}
 }
 
-static void Server::Nick(int socket, vector<string> arg){
+void Server::Nick(int socket, vector<string> arg){
 	
 	(void)arg;
 	std::string errMsg = "461 NICK :Not enough parameters\r\n";
