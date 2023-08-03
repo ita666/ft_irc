@@ -9,6 +9,7 @@ Server::Server(char *port, char *pass){
 
 	setPort(port);
 	_password = string(pass);
+	_commands["NICK"] = &Nick;
 	initServ();
 	runServ();
 }
@@ -74,7 +75,8 @@ void Server::handleClient(int socket){
 	} else {
 		client_input[bytes_received] = '\0'; //make it a proper string
 		string message = client_input;
-		//vector<string> command = getCommand(message);
+		vector<string> command = getCommand(message);
+		handleCommand(socket, command);
 		cout << message << endl;
 
 	}
@@ -99,3 +101,9 @@ void Server::runServ(){
 	}
 }
 
+static void Server::Nick(int socket, vector<string> arg){
+	
+	(void)arg;
+	std::string errMsg = "461 NICK :Not enough parameters\r\n";
+        send(socket, errMsg.c_str(), errMsg.length(), 0);
+}

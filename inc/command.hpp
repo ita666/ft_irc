@@ -8,8 +8,10 @@ class Command{
 		Command();
 		virtual ~Command();
 		vector<string> getCommand(string);
+		void	handleCommand(int socket, vector<string>);
+		void	initMap();
 	protected :
-		map<string, void (*)(int, string)> Commands;
+		map<string, void (*)(int, vector<string>)> _commands;
 
 };
 
