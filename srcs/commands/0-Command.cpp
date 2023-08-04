@@ -7,20 +7,19 @@ Command::Command(){
 
 Command::~Command(){};
 
-vector<string>& Command::getCommand(string input_client){
+vector<string> Command::getCommand(string input_client){
 
 	string tok;
-	vector<string> splitb;
+	vector<string> split;
 	
 	stringstream ss(input_client);
-	while(getline(ss, tok, ' ')){ splitb.push_back(tok);	}
+	while(getline(ss, tok, ' ')){ split.push_back(tok);	}
 	cout  << "verif" << endl;
-	for (size_t i = 0;  i < splitb.size(); i++){ cout << splitb[i] << endl; }
-	vector<string>& split = splitb;
+	for (size_t i = 0;  i < split.size(); i++){ cout << split[i] << endl; }
 	return (split);
 }
 
-void	Command::handleCommand(int socket, vector<string>& split){
+void	Command::handleCommand(int socket, vector<string> split){
 	
 	string errmsg; // variable if the command is not found int the map
 

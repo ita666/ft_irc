@@ -80,7 +80,7 @@ void Server::handleClient(int socket){
 	} else {
 		client_input[bytes_received] = '\0'; //make it a proper string
 		string message = client_input;
-		vector<string>& command = getCommand(message);
+		vector<string> command = getCommand(message);
 		handleCommand(socket, command);
 		cout << "error\n";
 		cout << message << endl;
@@ -91,6 +91,7 @@ void Server::handleClient(int socket){
 void Server::runServ(){
 	while (true){
 		fd_set copy = _master_set;
+
 
 		if(select(FD_SETSIZE, & copy, NULL, NULL, NULL) < 0){
 			throw std::runtime_error("Select error.");
