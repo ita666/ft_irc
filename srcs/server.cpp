@@ -6,9 +6,15 @@ Server::Server(){}
 Server::~Server(){}
 
 Server::Server(char *port, char *pass){
-
+	std::cout << "Port: " << (port ? port : "NULL") << std::endl;
+    std::cout << "Pass: " << (pass ? pass : "NULL") << std::endl;
 	setPort(port);
-	_password = string(pass);
+    if (pass != NULL) {
+        _password = string(pass);
+    } else {
+        throw std::runtime_error("Null password provided.");
+    }
+	_commands.insert(pair<string, void (*)(int, vector<string>&)>("NICK", &Nick));
 	initServ();
 	runServ();
 }
@@ -74,7 +80,9 @@ void Server::handleClient(int socket){
 	} else {
 		client_input[bytes_received] = '\0'; //make it a proper string
 		string message = client_input;
-		//vector<string> command = getCommand(message);
+		vector<string> command = getCommand(message);
+		handleCommand(socket, command);
+		cout << "error\n";
 		cout << message << endl;
 
 	}
@@ -83,6 +91,7 @@ void Server::handleClient(int socket){
 void Server::runServ(){
 	while (true){
 		fd_set copy = _master_set;
+
 
 		if(select(FD_SETSIZE, & copy, NULL, NULL, NULL) < 0){
 			throw std::runtime_error("Select error.");
@@ -99,3 +108,9 @@ void Server::runServ(){
 	}
 }
 
+void Nick(int socket, vector<string>& arg){
+	
+	(void)arg;
+	std::string errMsg = "461 NICK :Not enough parameters\r\n";
+        send(socket, errMsg.c_str(), errMsg.length(), 0);
+}
