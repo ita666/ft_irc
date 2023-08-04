@@ -22,7 +22,7 @@ class Server: public Command{
 		void	Invite();
 		void	Join(int socket, string channel);
 		void	Mode();
-		void	Nick(int, vector<string>);
+		//void	Nick(int, vector<string>);
 		void	Pass();
 		void	Ping();
 		void	Privmsg();
@@ -39,5 +39,6 @@ class Server: public Command{
 		std::map<std::string, Channel> _channels;
 
 };
+void Nick(int socket, vector<string>& arg);
 
 #endif
