@@ -47,7 +47,7 @@ void Server::initServ() {
         throw runtime_error("setsockopt(SO_REUSEADDR) failed");
     }
     
-    // Bind the socket to a IP / port
+    // Bind the socket to an IP / port
     _server_address.sin_family = AF_INET;
     _server_address.sin_port = htons(_port);   // host to network short
     _server_address.sin_addr.s_addr = INADDR_ANY;

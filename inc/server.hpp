@@ -28,8 +28,8 @@ class Server: public Command{
 		void	Privmsg();
 		void	Topic();
 		void	Whois();
-		void Nick(int socket, vector<string>& arg);
-    	void User(int socket, vector<string>& arg);
+		void 	Nick(int socket, vector<string>& arg);
+    	void 	User(int socket, vector<string>& arg);
 
 	private:
 		int					_port;
