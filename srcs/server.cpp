@@ -6,28 +6,22 @@ Server::Server(){}
 Server::~Server(){}
 
 Server::Server(char *port, char *pass){
-	std::cout << "Port: " << (port ? port : "NULL") << std::endl;
-    std::cout << "Pass: " << (pass ? pass : "NULL") << std::endl;
 	setPort(port);
     if (pass != NULL) {
         _password = string(pass);
     } else {
         throw runtime_error("Null password provided.");
     }
-	//_commands.insert(pair<string, void (*)(int, vector<string>&)>("NICK", &Nick));
-	//_commands.insert(pair<string, void (*)(int, vector<string>&)>("USER", &User));
-	_commands["NICK"] = &Server::Nick;
-	_commands["USER"] = &Server::User;
+	//init map commands to do 
+	_commands["NICK"] = &Server::Nick; // adding user for the command map
+	_commands["USER"] = &Server::User; //adding User for the command map
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
-for (it = _commands.begin(); it != _commands.end(); ++it)
-{
-    std::cout << it->first << '\n';
-}
-	initServ();
-	runServ();
+	initServ(); // INIT SERV DUH
+	runServ();  // RUN THE SERV =)
 }
 
 void Server::setPort(char *input){
+	//convert the char * port to an int go cpp0 if you are an idiot
 	int port;
 	stringstream ss(input);
 	if (!(ss >> port) || !ss.eof()){
@@ -93,15 +87,17 @@ void Server::handleClient(int socket){
 		close(socket); 
 	} else {
 		client_input[bytes_received] = '\0'; //make it a proper string
-		string message = client_input;
-
-		istringstream ss(message);
+		string message = client_input; //info received from the client to the server
+//CAP\r\nLS\r\nPASS 123\r\nNICK yanou\r\nUSER yanou yanou localhost :yanou\r\n
+//this is how we receive message from the client uppon connection
+		istringstream ss(message); 
 		string line;
+// at each \n we need to get the command and pass to the next it works uppon connection and after if only one command is sent
 		while(getline(ss, line, '\n')){
 			if (!line.empty()) {
     			line.erase(line.length() - 1);
 			}
-			cout << "line " << line << '\n';
+		//get the command from the line and send it to handle command
 		vector<string> command = getCommand(line);
 		handleCommand(socket, command, *this);
 		}
@@ -119,7 +115,6 @@ void Server::handleClient(int socket){
 		}
 		//cout << "error\n";
 		//cout << message << endl;
-
 	}
 }
 
@@ -146,20 +141,21 @@ void Server::runServ(){
 				}
 			}
 		}
-		        // Print active file descriptors
-        cout << "Active file descriptors: ";
-        for(int i = 0; i < FD_SETSIZE; i++) {
-            if(FD_ISSET(i, &_master_set)) {
-                cout << i << " ";
-            }
-        }
-        cout << endl;
+		//         // Print active file descriptors
+        // cout << "Active file descriptors: ";
+        // for(int i = 0; i < FD_SETSIZE; i++) {
+        //     if(FD_ISSET(i, &_master_set)) {
+        //         cout << i << " ";
+        //     }
+        // }
+        // cout << endl;
 
 	}
 }
 
 void Server::Nick(int socket, vector<string>& arg){
 	
+	//to do handle error msg
 	cout << "nick " << arg[0] << '\n';
 	_clients[socket].setNickname(arg[0]);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
@@ -167,7 +163,7 @@ void Server::Nick(int socket, vector<string>& arg){
 }
 
 void Server::User(int socket, vector<string>& arg){
-	
+	//to do handle error msg
 	cout << "user " << arg[0] << '\n';
 	_clients[socket].setUser(arg[0]);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";

@@ -23,7 +23,6 @@ class Server: public Command{
 		void	Invite();
 		void	Join(int socket, string channel);
 		void	Mode();
-		//void	Nick(int, vector<string>);
 		void	Pass();
 		void	Ping();
 		void	Privmsg();
@@ -38,9 +37,8 @@ class Server: public Command{
 		int					_server_socket;
 		struct sockaddr_in	_server_address;
 		fd_set				_master_set;
-		map<int, Client>	_clients;
-		//vector<int>			_client_sockets;
-		map<std::string, Channel> _channels;
+		map<int, Client>	_clients; // a map of client with their info to handle them the key is the socket
+		map<std::string, Channel> _channels; // to store the future channel name and check if they already exist
 
 };
 
