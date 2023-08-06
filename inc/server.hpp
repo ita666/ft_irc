@@ -4,6 +4,7 @@
 #include	"includes.hpp"
 #include	"command.hpp"
 #include	"channel.hpp"
+#include	"client.hpp"
 
 class Server: public Command{
 	public : 
@@ -22,12 +23,13 @@ class Server: public Command{
 		void	Invite();
 		void	Join(int socket, string channel);
 		void	Mode();
-		//void	Nick(int, vector<string>);
 		void	Pass();
 		void	Ping();
 		void	Privmsg();
 		void	Topic();
 		void	Whois();
+		void Nick(int socket, vector<string>& arg);
+    	void User(int socket, vector<string>& arg);
 
 	private:
 		int					_port;
@@ -35,10 +37,9 @@ class Server: public Command{
 		int					_server_socket;
 		struct sockaddr_in	_server_address;
 		fd_set				_master_set;
-		vector<int>			_client_sockets;
-		std::map<std::string, Channel> _channels;
+		map<int, Client>	_clients; // a map of client with their info to handle them the key is the socket
+		map<std::string, Channel> _channels; // to store the future channel name and check if they already exist
 
 };
-void Nick(int socket, vector<string>& arg);
 
 #endif
