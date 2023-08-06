@@ -14,7 +14,15 @@ Server::Server(char *port, char *pass){
     } else {
         throw runtime_error("Null password provided.");
     }
-	_commands.insert(pair<string, void (*)(int, vector<string>&)>("NICK", &Nick));
+	//_commands.insert(pair<string, void (*)(int, vector<string>&)>("NICK", &Nick));
+	//_commands.insert(pair<string, void (*)(int, vector<string>&)>("USER", &User));
+	_commands["NICK"] = &Server::Nick;
+	_commands["USER"] = &Server::User;
+	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
+for (it = _commands.begin(); it != _commands.end(); ++it)
+{
+    std::cout << it->first << '\n';
+}
 	initServ();
 	runServ();
 }
@@ -71,7 +79,7 @@ void Server::acceptClient(){
         throw runtime_error("Cannot accept client !");
     } else {
         FD_SET(client_socket, &_master_set);
-        _client_sockets.push_back(client_socket); // add the new client to your vector
+        _clients[client_socket] = Client(client_socket);// add the new client to the map
     }
 }
 
@@ -81,33 +89,54 @@ void Server::handleClient(int socket){
 
 	if(bytes_received <= 0){
 		FD_CLR(socket, &_master_set);
-		_client_sockets.erase(remove(_client_sockets.begin(), _client_sockets.end(), socket), _client_sockets.end());
+		_clients.erase(socket);
 		close(socket); 
 	} else {
 		client_input[bytes_received] = '\0'; //make it a proper string
 		string message = client_input;
-		vector<string> command = getCommand(message);
-		handleCommand(socket, command);
-		cout << "error\n";
-		cout << message << endl;
+
+		istringstream ss(message);
+		string line;
+		while(getline(ss, line, '\n')){
+			if (!line.empty()) {
+    			line.erase(line.length() - 1);
+			}
+			cout << "line " << line << '\n';
+		vector<string> command = getCommand(line);
+		handleCommand(socket, command, *this);
+		}
+
+		cout <<"client " << _clients[socket].getNickname() << _clients[socket].getUser() << _clients[socket].getIsWelcomed() << '\n';
+
+		if(_clients[socket].isReady() && !_clients[socket].getIsWelcomed()){
+		_clients[socket].setIsWelcomed(true);
+		string nickname = _clients[socket].getNickname();
+		string user = _clients[socket].getUser();
+		string host = _clients[socket].getHost();
+		string welcome_msg = ":localhost 001 " + nickname + " :Welcome to IRC " + nickname + "!" + user + "@" + host + "\r\n";
+		send(socket, welcome_msg.c_str(), welcome_msg.size(), 0);
+
+		}
+		//cout << "error\n";
+		//cout << message << endl;
 
 	}
 }
 
 void Server::runServ(){
 
-	struct timeval timeout;
-	timeout.tv_sec = 5;  // seconds
+	// struct timeval timeout;
+	// timeout.tv_sec = 5;  // seconds
 
 	//int j = 0;
 	while (true){
 		fd_set copy = _master_set;
 		//cout  << j++ << "run\n";
 
-		if(select(FD_SETSIZE + 1, &copy, NULL, NULL, &timeout) < 0){
+		if(select(FD_SETSIZE + 1, &copy, NULL, NULL, NULL) < 0){
 			throw std::runtime_error("Select error.");
 		}
-		for (int i = 0; i < FD_SETSIZE; i++){
+		for (int i = 0; i <= FD_SETSIZE; i++){
 			//cout  << j++ << "run\n";
 			if(FD_ISSET(i, &copy)){
 				if(i == _server_socket){
@@ -129,9 +158,18 @@ void Server::runServ(){
 	}
 }
 
-void Nick(int socket, vector<string>& arg){
+void Server::Nick(int socket, vector<string>& arg){
 	
-	(void)arg;
-	std::string errMsg = "461 NICK :Not enough parameters\r\n";
-        send(socket, errMsg.c_str(), errMsg.length(), 0);
+	cout << "nick " << arg[0] << '\n';
+	_clients[socket].setNickname(arg[0]);
+	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
+     //   send(socket, errMsg.c_str(), errMsg.length(), 0);
+}
+
+void Server::User(int socket, vector<string>& arg){
+	
+	cout << "user " << arg[0] << '\n';
+	_clients[socket].setUser(arg[0]);
+	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
+     //   send(socket, errMsg.c_str(), errMsg.length(), 0);
 }
