@@ -61,3 +61,17 @@ accept(): return a new soecket representing the co to that specific client
 connect() : establishing the co with IP + port nb 
 send/recv(): send receive data over the socket
 close(): close the connection 
+
+--------------------------------------------------------------
+
+try/catch/throw = error management (+ e.what retrieves error message associated)
+
+std::map<KeyType, ValueType> mapname;
+	mapname.insert(std::make_pair(key, value)) == "mapname[key] = value"
+	iterator iter = mapname.find(key);
+	mapname.begin/end + mapname.size + mapname.empty + mapname.erase(key)
+
+std::vector<DataType> Vectorname;
+	vectorname.push_back(element);
+	vectorname[0] = first element
+	vector.pop_back() remove last element || vector.erase(index)
