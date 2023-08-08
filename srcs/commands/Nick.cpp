@@ -10,6 +10,38 @@ bool Server::nicknameAlreadyUsed(string name, Client cl) {
 	return false;
 }
 
+static bool isSpecialChar(char c)
+{
+	switch (c)
+	{
+		case '-':
+		case '[':
+		case ']':
+		case '\\':
+		case '`':
+		case '_':
+		case '^':
+		case '{':
+		case '}':
+		case '|':
+			return true;
+		default:
+			return false;
+	}
+}
+
+static bool isValidNickname(string nickname) {
+	if (nickname.length() > 9)
+		return false;
+	if (nickname[0] == '-' || nickname[0] >= '0' && nickname[0] <= '9')
+		return false;
+	for (int i = 0; i < (int)nickname.length(); i++) {
+		if (isalnum(nickname[i]) == false && isSpecialChar(nickname[i]) == false)
+			return false;
+	}
+	return true;
+}
+
 void Server::Nick(int socket, vector<string>& arg){
 	
 	//to do handle error msg
@@ -19,10 +51,14 @@ void Server::Nick(int socket, vector<string>& arg){
    		if (send(socket, paquet.c_str(), paquet.length(), 0) < 0)
         	throw(std::out_of_range("Error while sending"));
 	}
-	cout << "nick " << arg[0] << '\n';
+	if (isValidNickname(arg[0]) == false)
+	{
+		string paquet = "CACA PIPI:";
+   		if (send(socket, paquet.c_str(), paquet.length(), 0) < 0)
+			throw(std::out_of_range("Error while sending"));
+	}
+
 	_clients[socket].setNickname("test");
-	cout << "nick " << arg[0] << '\n';
-	
 	_clients[socket].setNickname(arg[0]);
 	string user = _clients[socket].getUser();
 	string host = _clients[socket].getHost();
