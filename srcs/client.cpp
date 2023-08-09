@@ -9,6 +9,7 @@ Client::Client(int socket) : _socket(socket) {
 
 Client::~Client(){}
 
+int		Client::getSocket(){ return _socket; }
 string&	Client::getNickname(){ return _nickname; }
 string&	Client::getUser(){ return _username; }
 string&	Client::getHost(){ return _hostname; }

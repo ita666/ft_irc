@@ -34,5 +34,4 @@ void	Command::handleCommand(int socket, vector<string> split, Server& server){
 		errmsg = "421 " + command + " was not coded =)\r\n"; // /r/n = Carriage Return Line Feed
 		send(socket, errmsg.c_str(), errmsg.size(), 0); //c_str to convert to a const
 	}
-
 }

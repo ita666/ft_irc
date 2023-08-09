@@ -113,9 +113,9 @@ void Server::handleClient(int socket){
 		send(socket, welcome_msg.c_str(), welcome_msg.size(), 0);
 
 		}
+	}
 		//cout << "error\n";
 		//cout << message << endl;
-	}
 }
 
 void Server::runServ(){
@@ -151,15 +151,6 @@ void Server::runServ(){
         // cout << endl;
 
 	}
-}
-
-void Server::Nick(int socket, vector<string>& arg){
-	
-	//to do handle error msg
-	cout << "nick " << arg[0] << '\n';
-	_clients[socket].setNickname(arg[0]);
-	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
-     //   send(socket, errMsg.c_str(), errMsg.length(), 0);
 }
 
 void Server::User(int socket, vector<string>& arg){

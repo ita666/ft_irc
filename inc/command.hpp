@@ -6,7 +6,7 @@
 
 class Server; 
 
-class Command{
+class Command {
 	public :
 		Command();
 		virtual ~Command();
@@ -16,8 +16,6 @@ class Command{
 	protected :
 		typedef void (Server::*commandFunc)(int, vector<string>&); // go to chatgpt
 		map<string, commandFunc> _commands; //same
-
-
 };
 
 
