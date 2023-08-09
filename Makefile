@@ -6,14 +6,14 @@
 #    By: fwong <fwong@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by yanthoma          #+#    #+#              #
-#    Updated: 2023/08/08 15:35:38 by fwong            ###   ########.fr        #
+#    Updated: 2023/08/09 21:36:00 by fwong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 
 # /* ~~~~~~ SOURCES ~~~~~~ */
-SRCS	=   commands/0-Command.cpp client.cpp commands/Nick.cpp server.cpp main.cpp
+SRCS	=   commands/0-Command.cpp client.cpp commands/Nick.cpp commands/Privmsg.cpp server.cpp main.cpp
 
 SRCDIR		= srcs/
 OBJDIR 		= objs
