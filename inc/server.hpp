@@ -16,6 +16,7 @@ class Server: public Command{
 		void	initServ();
 		void	handleClient(int);
 		bool	nicknameAlreadyUsed(string name, Client cl);
+		bool	isNicknamePresent(string nickName);
 		// removeClient();
 		// passwordAuth(int client_socket);
 		void	runServ();
@@ -26,7 +27,7 @@ class Server: public Command{
 		void	Mode();
 		void	Pass();
 		void	Ping();
-		void	Privmsg();
+		void	Privmsg(int socket, vector<string>& arg);
 		void	Topic();
 		void	Whois();
 		void	Nick(int socket, vector<string>& arg);
