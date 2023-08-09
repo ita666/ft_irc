@@ -33,7 +33,7 @@ static bool isSpecialChar(char c)
 static bool isValidNickname(string nickname) {
 	if (nickname.length() > 9)
 		return false;
-	if (nickname[0] == '-' || nickname[0] >= '0' && nickname[0] <= '9')
+	if (nickname[0] == '-' || (nickname[0] >= '0' && nickname[0] <= '9'))
 		return false;
 	for (int i = 0; i < (int)nickname.length(); i++) {
 		if (isalnum(nickname[i]) == false && isSpecialChar(nickname[i]) == false)
