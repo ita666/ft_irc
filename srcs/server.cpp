@@ -12,9 +12,7 @@ Server::Server(char *port, char *pass){
     } else {
         throw runtime_error("Null password provided.");
     }
-	//init map commands to do 
-	_commands["NICK"] = &Server::Nick; // adding user for the command map
-	_commands["user"] = &Server::User; //adding User for the command map
+	initmap();
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	initServ(); // INIT SERV DUH
 	runServ();  // RUN THE SERV =)
@@ -34,7 +32,11 @@ void Server::setPort(char *input){
 	}
 }
 
-
+void Server::initmap(){
+	_commands["NICK"] = &Server::Nick; // adding user for the command map
+	_commands["USER"] = &Server::User; //adding User for the command map
+	_commands["JOIN"] = &Server::Join;
+}
 void Server::initServ() {
     // Create a socket
     _server_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -155,7 +157,7 @@ void Server::runServ(){
 
 void Server::User(int socket, vector<string>& arg){
 	//to do handle error msg
-	cout << "user " << arg[0] << '\n';
+	//cout << "user " << arg[0] << '\n';
 	_clients[socket].setUser(arg[0]);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);

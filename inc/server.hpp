@@ -6,6 +6,7 @@
 #include	"channel.hpp"
 #include	"client.hpp"
 
+
 class Server: public Command{
 	public : 
 		Server(void);
@@ -13,16 +14,17 @@ class Server: public Command{
 		~Server(void);
 		void	setPort(char *);
 		void	acceptClient();
+		void	initmap();
 		void	initServ();
 		void	handleClient(int);
-		bool	nicknameAlreadyUsed(string name, Client cl);
+		bool	nicknameAlreadyUsed(string name, Client cl); //maybe make a static out of it.
 		// removeClient();
 		// passwordAuth(int client_socket);
 		void	runServ();
 
 	//commands
 		void	Invite();
-		void	Join(int socket, string channel);
+		void	Join(int socket, vector<string>& arg);
 		void	Mode();
 		void	Pass();
 		void	Ping();

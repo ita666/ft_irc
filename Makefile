@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fwong <fwong@student.42.fr>                +#+  +:+       +#+         #
+#    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by yanthoma          #+#    #+#              #
-#    Updated: 2023/08/08 15:35:38 by fwong            ###   ########.fr        #
+#    Updated: 2023/08/10 15:23:31 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 
 # /* ~~~~~~ SOURCES ~~~~~~ */
-SRCS	=   commands/0-Command.cpp client.cpp commands/Nick.cpp server.cpp main.cpp
+SRCS	=   commands/0-Command.cpp client.cpp commands/Nick.cpp commands/Join.cpp server.cpp main.cpp
 
 SRCDIR		= srcs/
 OBJDIR 		= objs

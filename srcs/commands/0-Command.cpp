@@ -15,7 +15,8 @@ vector<string> Command::getCommand(string input_client){
 	stringstream ss(input_client);
 	while(getline(ss, tok, ' ')){ split.push_back(tok);	}
 	cout  << "verif" << endl;
-	for (size_t i = 0;  i < split.size(); i++){ cout << split[i] << endl; }
+	for (size_t i = 0;  i < split.size(); i++){ cout << split[i] << "-"; }
+	cout  << "\nend verif" << endl;
 	return (split);
 }
 
