@@ -15,7 +15,7 @@ Server::Server(char *port, char *pass){
 	//init map commands to do 
 	_commands["NICK"] = &Server::Nick; // adding user for the command map
 	_commands["USER"] = &Server::User; //adding User for the command map
-	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
+	_commands["MSG"] = &Server::Privmsg; //adding Privmsg for the command map
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	initServ(); // INIT SERV DUH
 	runServ();  // RUN THE SERV =)

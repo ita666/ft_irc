@@ -13,6 +13,7 @@ bool Server::isNicknamePresent(string nickName) {
 void Server::Privmsg(int socket, vector<string> &arg) {
 
 	string message;
+	string test;
 
 	if (arg.size() < 2)
 		return;
@@ -22,7 +23,8 @@ void Server::Privmsg(int socket, vector<string> &arg) {
 		for (unsigned int i = 0; i < arg.size(); i++)
 			message += arg[i];
 		message += "\r\n";
-		std::cout <<"message = " << message << std::endl;
-		send(socket, message.c_str(), message.size(), 0);
+		test = ":" + _clients[socket].getNickname() +  " PRIVMSG " + arg[0] + " :" + message;
+		std::cout << test << std::endl;
+		send(socket, test.c_str(), test.size(), 0);
 	}
 }
