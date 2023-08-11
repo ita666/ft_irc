@@ -1,0 +1,77 @@
+
+Internet Relay Chat (ex: Discord)
+
+Server: host the Chat in real-time
+Channels: different chat rooms
+Clients: software ppl can connect to join IRC servers
+Nicknames: unique, chosen when you join a Channels
+Messages
+Commands: "/nick NewNickname" to change n for exemple
+          "/part" leave a channel 
+		  "/quit" leave a server 
+
+127.0.0.1 = localhost
+
+--------------------------------------------------------------
+
+ircserv(port, password)
+
+functions allowed: Everything in C++ 98.
+				   socket, close, setsockopt, getsockname,
+				   getprotobyname, gethostbyname, getaddrinfo,
+				   freeaddrinfo, bind, connect, listen, accept,
+				   htons, htonl, ntohs, ntohl, inet_addr, inet_ntoa,
+				   send, recv, signal, lseek, fstat, fcntl, poll (or equivalent = select, kqueue, epoll)
+
+handle multiple clients, no fork. I/O operations non-blocking
+only 1 poll can be used and it must be used for read/recv or write/send
+TCP/IP
+
+authenticate, nickname, username, join a chan, send/recv pm
+operators + regular users
+   ↳ kick, invite, topic, mode
+							↳ i = set/remove invite-only chan
+							  t = set/remove restrictions of the TOPIC command to chan operators
+							  k = set/remove chan password
+							  o = give/take chan operator privilege
+							  l = set/remove user limit to chan
+
+--------------------------------------------------------------
+
+1/ initialize data structures/resources = sockets for network communication
+2/ create socket that listens for incomming connections from IRC clients
+3/ accept incoming client co + assign socket to each client / store client info (nickname, chan) in data structures
+4/ receive data through sockets, parse data to understand message + content
+5/ identify IRC commands (join, kick, invite etc) + code them
+6/ determine target channel/users when message is sent by client and broadcast it to the right person
+7/ keep track of users' nicknames/current chan to make modification if asked
+8/ error handling: disconnections, invalid commands etc
+9/ close sockets and free memory when shutting down server
+10/ non-blocking I/O for multiple client connections 
+
+--------------------------------------------------------------
+
+[ SOCKETS ]
+
+connection between server socket (listens for incoming co) <=> client socket (initiates co to serv)
+socket() : return a fd, representing the socket
+bind() : match IP and port with socket
+listen(): activate server socket to listen 
+accept(): return a new soecket representing the co to that specific client
+connect() : establishing the co with IP + port nb 
+send/recv(): send receive data over the socket
+close(): close the connection 
+
+--------------------------------------------------------------
+
+try/catch/throw = error management (+ e.what retrieves error message associated)
+
+std::map<KeyType, ValueType> mapname;
+	mapname.insert(std::make_pair(key, value)) == "mapname[key] = value"
+	iterator iter = mapname.find(key);
+	mapname.begin/end + mapname.size + mapname.empty + mapname.erase(key)
+
+std::vector<DataType> Vectorname;
+	vectorname.push_back(element);
+	vectorname[0] = first element
+	vector.pop_back() remove last element || vector.erase(index)
