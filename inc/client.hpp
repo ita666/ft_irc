@@ -17,8 +17,8 @@ class Client{
 		void	setUser(string user);
 		void	setNickname(string nickname);
 		void	setIsWelcomed(bool);
-
 		bool	isReady();
+		void	sendMessage(const string& message);
 
 	private	:
 		int		_socket;
