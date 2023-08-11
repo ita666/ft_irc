@@ -18,6 +18,7 @@
 #include <vector>
 #include <set>
 #include <map>
+#include "define.hpp"
 
 
 using namespace std;

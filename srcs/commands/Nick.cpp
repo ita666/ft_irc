@@ -42,14 +42,18 @@ static bool isValidNickname(string nickname) {
 	return true;
 }
 
-void Server::Nick(int socket, vector<string>& arg){
+void Server::Nick(int socket, vector<string>& arg, Client cl){
 	
-	//to do handle error msg
-	if (nicknameAlreadyUsed(arg[0], _clients[socket]) == true)
-	{
-    	string paquet = "CACA PIPI:";
-   		if (send(socket, paquet.c_str(), paquet.length(), 0) < 0)
-        	throw(std::out_of_range("Error while sending"));
+	map<int, Client>::iterator it;
+	string currentNickname = cl.getNickname();
+	string newNickname = arg[0];
+	for (it = _clients.begin(); it != _clients.end(); it++) {
+		if (it->second.getNickname() == currentNickname && it->second.getSocket() != cl.getSocket())
+			newNickname = it->second.getNickname();
+	}
+	if (newNickname == currentNickname) {
+   		cl.sendMessage(ERR_NICKNAMEINUSE(newNickname));
+		return ;
 	}
 	if (isValidNickname(arg[0]) == false)
 	{
