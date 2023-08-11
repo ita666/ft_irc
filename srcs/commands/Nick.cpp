@@ -52,10 +52,10 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 
 	cout << " NICK-" << newNickname << "\n";
 
-	for (it = _clients.begin(); it != _clients.end(); it++) {
-		if (it->second.getNickname() == currentNickname && it->second.getSocket() != cl.getSocket())
-			newNickname = it->second.getNickname();
-	}
+	// for (it = _clients.begin(); it != _clients.end(); it++) {
+	// 	if (it->second.getNickname() == currentNickname && it->second.getSocket() != cl.getSocket())
+	// 		newNickname = it->second.getNickname();
+	// }
 
 	cout << "newnickname " << newNickname << "\n";
 	if (newNickname == currentNickname) {
