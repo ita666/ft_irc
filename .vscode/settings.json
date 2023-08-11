@@ -47,6 +47,9 @@
 	"numeric": "cpp",
 	"optional": "cpp",
 	"fstream": "cpp",
-	"sstream": "cpp"
+	"sstream": "cpp",
+	"numbers": "cpp",
+	"ranges": "cpp",
+	"span": "cpp"
 }
 }

@@ -49,28 +49,31 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 	map<int, Client>::iterator it;
 	string currentNickname = cl.getNickname();
 	string newNickname = arg[0];
-	
+
+	cout << " NICK-" << newNickname << "\n";
+
 	for (it = _clients.begin(); it != _clients.end(); it++) {
 		if (it->second.getNickname() == currentNickname && it->second.getSocket() != cl.getSocket())
 			newNickname = it->second.getNickname();
 	}
+
+	cout << "newnickname " << newNickname << "\n";
 	if (newNickname == currentNickname) {
    		cl.sendMessage(ERR_NICKNAMEINUSE(newNickname));
+	cout  << "current\n";
 		return ;
 	}
 	if (isValidNickname(arg[0]) == false)
 	{
-		string paquet = "CACA PIPI:";
-   		if (send(socket, paquet.c_str(), paquet.length(), 0) < 0)
+   		if (send(socket, arg[0].c_str(), arg[0].length(), 0) < 0)
 			throw(std::out_of_range("Error while sending"));
 	}
 
-	_clients[socket].setNickname("test");
 	_clients[socket].setNickname(arg[0]);
 	string user = _clients[socket].getUser();
 	string host = _clients[socket].getHost();
-	string nickname_msg = ":localhost 001 " + arg[0] + " :Welcome to IRC " + arg[0] + "!" + user + "@" + host + "\r\n";
-	send(socket, nickname_msg.c_str(), nickname_msg.size(), 0);
+	//string nickname_msg = ":localhost 001 " + arg[0] + " :Welcome to IRC " + arg[0] + "!" + user + "@" + host + "\r\n";
+	//send(socket, nickname_msg.c_str(), nickname_msg.size(), 0);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
 }

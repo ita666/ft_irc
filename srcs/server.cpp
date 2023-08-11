@@ -108,7 +108,7 @@ void Server::handleClient(int socket){
 		string nickname = _clients[socket].getNickname();
 		string user = _clients[socket].getUser();
 		string host = _clients[socket].getHost();
-		string welcome_msg = ":localhost 001 " + nickname + " :Welcome to IRC " + nickname + "!" + user + "@" + host + "\r\n";
+		string welcome_msg = SERVER_NAME " 001 " + nickname + " :Welcome to IRC " + nickname + "!" + user + "@" + host + "\r\n";
 		send(socket, welcome_msg.c_str(), welcome_msg.size(), 0);
 
 		}
@@ -121,7 +121,6 @@ void Server::runServ(){
 
 	// struct timeval timeout;
 	// timeout.tv_sec = 5;  // seconds
-
 	int maxFD = 0;
 	while (true){
 		fd_set copy = _master_set;
