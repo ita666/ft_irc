@@ -50,17 +50,12 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 	string currentNickname = cl.getNickname();
 	string newNickname = arg[0];
 
-	cout << " NICK-" << newNickname << "\n";
-
-	// for (it = _clients.begin(); it != _clients.end(); it++) {
-	// 	if (it->second.getNickname() == currentNickname && it->second.getSocket() != cl.getSocket())
-	// 		newNickname = it->second.getNickname();
-	// }
-
-	cout << "newnickname " << newNickname << "\n";
+	for (it = _clients.begin(); it != _clients.end(); it++) {
+		if (it->second.getNickname() == newNickname && it->second.getSocket() != cl.getSocket())
+			currentNickname = it->second.getNickname();
+	}
 	if (newNickname == currentNickname) {
    		cl.sendMessage(ERR_NICKNAMEINUSE(newNickname));
-	cout  << "current\n";
 		return ;
 	}
 	if (isValidNickname(arg[0]) == false)
@@ -72,8 +67,8 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 	_clients[socket].setNickname(arg[0]);
 	string user = _clients[socket].getUser();
 	string host = _clients[socket].getHost();
-	//string nickname_msg = ":localhost 001 " + arg[0] + " :Welcome to IRC " + arg[0] + "!" + user + "@" + host + "\r\n";
-	//send(socket, nickname_msg.c_str(), nickname_msg.size(), 0);
+	string nickname_msg = ":localhost 001 " + arg[0] + " :Welcome to IRC " + arg[0] + "!" + user + "@" + host + "\r\n";
+	send(socket, nickname_msg.c_str(), nickname_msg.size(), 0);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
 }

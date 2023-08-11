@@ -159,4 +159,4 @@ void Server::User(int socket, vector<string>& arg, Client cl){
 	_clients[socket].setUser(arg[0]);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
-}22 days ago
+}
