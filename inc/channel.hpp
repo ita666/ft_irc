@@ -6,11 +6,13 @@
 class Channel{
 	public : 
 		Channel(string name);
-		void	addUser(int);
+		string	getName();
+		void	setName();
+
 
 	private :
 		string _name;
-		set<int> _users;
+		set<int> _users; //
 };
 
-#endif
+#endif 
