@@ -12,7 +12,6 @@ Server::Server(char *port, char *pass){
     } else {
         throw runtime_error("Null password provided.");
     }
-	//init map commands to do 
 	_commands["NICK"] = &Server::Nick; // adding user for the command map
 	_commands["USER"] = &Server::User; //adding User for the command map
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
@@ -99,7 +98,7 @@ void Server::handleClient(int socket){
 			}
 		//get the command from the line and send it to handle command
 		vector<string> command = getCommand(line);
-		handleCommand(socket, command, *this);
+		handleCommand(socket, command, *this, _clients[socket]);
 		}
 
 		cout <<"client " << _clients[socket].getNickname() << _clients[socket].getUser() << _clients[socket].getIsWelcomed() << '\n';
@@ -151,12 +150,12 @@ void Server::runServ(){
         //     }
         // }
         // cout << endl;
-
 	}
 }
 
-void Server::User(int socket, vector<string>& arg){
+void Server::User(int socket, vector<string>& arg, Client cl){
 	//to do handle error msg
+	(void)cl;
 	cout << "user " << arg[0] << '\n';
 	_clients[socket].setUser(arg[0]);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
