@@ -23,7 +23,7 @@ class Server: public Command{
 
 	//commands
 		void	Invite();
-		void	Join(int socket, string channel);
+		void	Join(int socket, vector<string>& arg);
 		void	Mode();
 		void	Pass();
 		void	Ping();

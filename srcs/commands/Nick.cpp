@@ -49,6 +49,7 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 	map<int, Client>::iterator it;
 	string currentNickname = cl.getNickname();
 	string newNickname = arg[0];
+	
 	for (it = _clients.begin(); it != _clients.end(); it++) {
 		if (it->second.getNickname() == currentNickname && it->second.getSocket() != cl.getSocket())
 			newNickname = it->second.getNickname();

@@ -12,7 +12,7 @@ int main() {
 	// Bind thesockt to a IP / port
 	sockaddr_in hint;
 	hint.sin_family = AF_INET;
-	hint.sin_port = htons(54000);				   // host to network short
+	hint.sin_port //# = htons(54000);				   // host to network short
 	inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr); // convert IP address from text to binary form 127.0.0.1
 
 	if (bind(listening, (sockaddr *)&hint, sizeof(hint)) == -1) {
