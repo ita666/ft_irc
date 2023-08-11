@@ -108,7 +108,7 @@ void Server::handleClient(int socket){
 		string nickname = _clients[socket].getNickname();
 		string user = _clients[socket].getUser();
 		string host = _clients[socket].getHost();
-		string welcome_msg = SERVER_NAME " 001 " + nickname + " :Welcome to IRC " + nickname + "!" + user + "@" + host + "\r\n";
+		string welcome_msg = (string)":" + SERVER_NAME " 001 " + nickname + " :Welcome to IRC " + nickname + "!" + user + "@" + host + "\r\n";
 		send(socket, welcome_msg.c_str(), welcome_msg.size(), 0);
 
 		}
@@ -159,4 +159,4 @@ void Server::User(int socket, vector<string>& arg, Client cl){
 	_clients[socket].setUser(arg[0]);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
-}
+}22 days ago
