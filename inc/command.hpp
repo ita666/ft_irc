@@ -11,10 +11,10 @@ class Command {
 		Command();
 		virtual ~Command();
 		vector<string> getCommand(string);
-		void	handleCommand(int socket, vector<string> split, Server& server);
+		void	handleCommand(int socket, vector<string> split, Server& server, Client cl);
 		void	initMap();
 	protected :
-		typedef void (Server::*commandFunc)(int, vector<string>&); // go to chatgpt
+		typedef void (Server::*commandFunc)(int, vector<string>&, Client); // go to chatgpt
 		map<string, commandFunc> _commands; //same
 };
 
