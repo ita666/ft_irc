@@ -1,6 +1,6 @@
 #include "command.hpp"
 
-
+// comment
 Command::Command(){
 	//init the map with all the functions;
 };

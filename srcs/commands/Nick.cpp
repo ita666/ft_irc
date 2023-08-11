@@ -1,6 +1,8 @@
 #include "server.hpp"
 #include "command.hpp"
 
+// comment
+
 bool Server::nicknameAlreadyUsed(string name, Client cl) {
 	map<int, Client>::iterator it;
 	for (it = _clients.begin(); it != _clients.end(); it++) {

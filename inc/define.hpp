@@ -1,5 +1,6 @@
 #pragma once
 
+//comment
 // GENERAL
 #define	SERVER_NAME "ircserv"
 #define MAX_EVENTS 10
