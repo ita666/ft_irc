@@ -14,22 +14,8 @@ bool Server::nicknameAlreadyUsed(string name, Client cl) {
 
 static bool isSpecialChar(char c)
 {
-	switch (c)
-	{
-		case '-':
-		case '[':
-		case ']':
-		case '\\':
-		case '`':
-		case '_':
-		case '^':
-		case '{':
-		case '}':
-		case '|':
-			return true;
-		default:
-			return false;
-	}
+    const string specialChars = "-[]\\`_^{}|";
+    return (specialChars.find(c) != string::npos);
 }
 
 static bool isValidNickname(string nickname) {
@@ -52,23 +38,27 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 
 	cout << " NICK-" << newNickname << "\n";
 
-	// for (it = _clients.begin(); it != _clients.end(); it++) {
-	// 	if (it->second.getNickname() == currentNickname && it->second.getSocket() != cl.getSocket())
-	// 		newNickname = it->second.getNickname();
-	// }
+	for (it = _clients.begin(); it != _clients.end(); it++) {
+		if (it->second.getNickname() == currentNickname && it->second.getSocket() != cl.getSocket())
+			newNickname = it->second.getNickname();
+	}
 
-	cout << "newnickname " << newNickname << "\n";
 	if (newNickname == currentNickname) {
    		cl.sendMessage(ERR_NICKNAMEINUSE(newNickname));
-	cout  << "current\n";
 		return ;
 	}
+
 	if (isValidNickname(arg[0]) == false)
 	{
    		if (send(socket, arg[0].c_str(), arg[0].length(), 0) < 0)
 			throw(std::out_of_range("Error while sending"));
 	}
-
+	// to put in the define line too long
+	if (_clients[socket].getIsWelcomed() == 1){
+		string msg = string(":") + _clients[socket].getNickname() + "!" + _clients[socket].getNickname() + "@localhost NICK :" + arg[0] + "\r\n";
+		 send(socket, msg.c_str(), msg.length(), 0);
+	
+	}
 	_clients[socket].setNickname(arg[0]);
 	string user = _clients[socket].getUser();
 	string host = _clients[socket].getHost();

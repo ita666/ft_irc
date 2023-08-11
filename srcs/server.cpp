@@ -101,7 +101,7 @@ void Server::handleClient(int socket){
 		handleCommand(socket, command, *this, _clients[socket]);
 		}
 
-		cout <<"client " << _clients[socket].getNickname() << _clients[socket].getUser() << _clients[socket].getIsWelcomed() << '\n';
+		//cout <<"client " << _clients[socket].getNickname() << " " <<  _clients[socket].getUser() << _clients[socket].getIsWelcomed() << '\n';
 
 		if(_clients[socket].isReady() && !_clients[socket].getIsWelcomed()){
 		_clients[socket].setIsWelcomed(true);
@@ -127,7 +127,7 @@ void Server::runServ(){
 		//cout  << j++ << "run\n";
 
 		if(select(FD_SETSIZE + 1, &copy, NULL, NULL, NULL) < 0){
-			throw std::runtime_error("Select error.");
+			throw runtime_error("Select error.");
 		} else {
 			maxFD++;
 		}
@@ -159,4 +159,4 @@ void Server::User(int socket, vector<string>& arg, Client cl){
 	_clients[socket].setUser(arg[0]);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
-}22 days ago
+}
