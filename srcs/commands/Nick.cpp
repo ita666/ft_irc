@@ -36,8 +36,6 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 	string currentNickname = cl.getNickname();
 	string newNickname = arg[0];
 
-	cout << " NICK-" << newNickname << "\n";
-
 	for (it = _clients.begin(); it != _clients.end(); it++) {
 		if (it->second.getNickname() == currentNickname && it->second.getSocket() != cl.getSocket())
 			newNickname = it->second.getNickname();
@@ -56,14 +54,11 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 	// to put in the define line too long
 	if (_clients[socket].getIsWelcomed() == 1){
 		string msg = string(":") + _clients[socket].getNickname() + "!" + _clients[socket].getNickname() + "@localhost NICK :" + arg[0] + "\r\n";
-		 send(socket, msg.c_str(), msg.length(), 0);
-	
+		send(socket, msg.c_str(), msg.length(), 0);
 	}
 	_clients[socket].setNickname(arg[0]);
 	string user = _clients[socket].getUser();
 	string host = _clients[socket].getHost();
-	//string nickname_msg = ":localhost 001 " + arg[0] + " :Welcome to IRC " + arg[0] + "!" + user + "@" + host + "\r\n";
-	//send(socket, nickname_msg.c_str(), nickname_msg.size(), 0);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
 }

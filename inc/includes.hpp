@@ -16,6 +16,7 @@
 #include <sstream>
 #include <algorithm>
 #include <vector>
+#include <stdexcept>
 #include <set>
 #include <map>
 #include "define.hpp"
