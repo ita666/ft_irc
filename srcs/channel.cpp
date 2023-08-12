@@ -1,7 +1,10 @@
 #include "channel.hpp"
 
-Channel::Channel(){}
-Channel::Channel(string& name) : _name(name){
+Channel::Channel(){	
+	_name = "channel1";
+	_topic = "Elephant are pregnant for 20 month";
+	}
+Channel::Channel(string name) : _name(name){
 	_topic = "Elephant are pregnant for 20 month";
 }
 
@@ -27,6 +30,10 @@ int		Channel::getSocket(string& userName){
 	if (_nameToSocket.find(userName) != _nameToSocket.end()){
 		return (_nameToSocket[userName]);
 	} else { throw runtime_error("Username not found in the channel."); }
+}
+
+bool Channel::isUserInChannel(const string& username) {
+    return _nameToSocket.find(username) != _nameToSocket.end();
 }
 
 string	Channel::getName(int socket){
