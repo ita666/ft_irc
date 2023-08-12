@@ -23,15 +23,15 @@ class Server: public Command{
 
 	//commands
 		void	Invite();
-		void	Join(int socket, vector<string>& arg);
+		void	Join(int socket, vector<string>& arg, Client);
 		void	Mode();
 		void	Pass();
 		void	Ping();
-		void	Privmsg(int socket, vector<string>& arg, Client cl);
+		void	Privmsg(int socket, vector<string>& arg, Client);
 		void	Topic();
 		void	Whois();
-		void	Nick(int socket, vector<string>& arg, Client cl);
-    	void	User(int socket, vector<string>& arg, Client cl);
+		void	Nick(int socket, vector<string>& arg, Client);
+    	void	User(int socket, vector<string>& arg, Client);
 
 	private:
 		int							_port;
