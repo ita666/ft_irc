@@ -6,7 +6,9 @@
 
 class Channel{
 	public : 
-		Channel(string name);
+		
+		Channel();
+		Channel(std::string& name);
 		~Channel();
 
 		string	getName();
