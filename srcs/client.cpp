@@ -4,6 +4,7 @@ Client::Client(int socket) : _socket(socket) {
 	_nickname = "";
 	_username = "";
 	_hostname = "IRC_HELL";
+	_iswelcomed = false;
 
 }
 
@@ -22,7 +23,6 @@ void	Client::setIsWelcomed(bool info) { _iswelcomed = info; }
 bool	Client::isReady() { return (!_nickname.empty() && !_username.empty());}
 
 void	Client::sendMessage(const string& message) {
-	cout << message << "\n";
 	if (send(_socket, message.c_str(), message.length(), 0) < 0)
 		throw(std::out_of_range("Error while sending"));
 }

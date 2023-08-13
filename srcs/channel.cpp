@@ -1,7 +1,6 @@
 #include "channel.hpp"
 
 Channel::Channel(){	
-	_name = "channel1";
 	_topic = "Elephant are pregnant for 20 month";
 	}
 Channel::Channel(string name) : _name(name){
@@ -34,6 +33,10 @@ int		Channel::getSocket(string& userName){
 
 bool Channel::isUserInChannel(const string& username) {
     return _nameToSocket.find(username) != _nameToSocket.end();
+}
+
+bool Channel::isEmpty(){
+	return (!_nameToSocket.size());
 }
 
 string	Channel::getName(int socket){
