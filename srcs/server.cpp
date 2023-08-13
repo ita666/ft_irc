@@ -16,6 +16,7 @@ Server::Server(char *port, char *pass){
 	_commands["USER"] = &Server::User; //adding User for the command map
 	_commands["JOIN"] = &Server::Join; //adding User for the command map
 	_commands["PART"] = &Server::Part; //adding User for the command map
+	_commands["MODE"] = &Server::Mode; //adding User for the command map
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	initServ(); // INIT SERV DUH
 	runServ();  // RUN THE SERV =)

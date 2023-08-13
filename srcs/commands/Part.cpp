@@ -5,9 +5,6 @@
 void Server::Part(int socket, vector<string>& arg, Client client){
     (void)socket;
 
-	cout << " part " << arg[0] << " \n";
-	cout << "part name " << _channels[arg[0]].getName() << " \n";
-
 	if (arg.size() < 2) {
         client.sendMessage(ERR_NEEDMOREPARAMS(client.getNickname(), "PART"));
         return;

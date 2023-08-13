@@ -46,6 +46,8 @@
 #define ERR_ALREADYREGISTRED(nickname) (std::string(":") + SERVER_NAME + " 462 " + nickname + " :Already registred\r\n")
 #define ERR_PASSWDMISMATCH(nickname) (std::string(":") + SERVER_NAME + " 464 " + nickname + " :Password incorrect" + "\r\n")
 #define ERR_CHANNELISFULL(nickname, channel) (REPLY_FORMAT("471", nickname) + channel + " :Cannot join channel (+l)" + "\r\n")
+#define ERR_UNKNOWNMODE(command, message) (REPLY_FORMAT("472", command) + message + " :is unknown mode char to me" + "\r\n")
+
 #define ERR_BADCHANNELKEY(nickname, channel) (REPLY_FORMAT("475", nickname) + channel + " :Cannot join channel (+k)" + "\r\n")
 #define ERR_NOPRIVILEGES(nickname) (std::string(":") + SERVER_NAME + " 481 " + nickname + " :Permission Denied- You're not an IRC operator" + "\r\n")
 #define ERR_CHANOPRIVSNEEDED(channel, nickname) (std::string(":") + SERVER_NAME + " 482 " + nickname + " " + channel + " :You're not channel operator" + "\r\n")

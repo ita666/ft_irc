@@ -7,6 +7,7 @@
 bool Server::nicknameAlreadyUsed(string name, Client cl) {
 	map<int, Client>::iterator it;
 	for (it = _clients.begin(); it != _clients.end(); it++) {
+		cout << "nickname used" << it->second.getNickname() << " \n";
 		if (it->second.getNickname() == name && it->second.getSocket() != cl.getSocket())
 			return true;
 	}
