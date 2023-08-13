@@ -17,8 +17,7 @@ void Server::Mode(int socket, vector<string>& arg, Client client){
 		client.sendMessage(ERR_NEEDMOREPARAMS(client.getNickname(), "MODE"));
 		return ;
 	}
-
-
+	//to remove implement a isvalid mode instead
 	if (arg[1].length() != 2){
 		cout << "taille\n";
 		client.sendMessage(ERR_UMODEUNKNOWNFLAG(arg[0]));
