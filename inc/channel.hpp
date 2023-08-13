@@ -8,7 +8,7 @@ class Channel{
 	public : 
 		
 		Channel();
-		Channel(std::string& name);
+		Channel(string name);
 		~Channel();
 
 		string	getName();
@@ -19,6 +19,7 @@ class Channel{
 
 		void	addUser(string&, int);
 		void	removeUser(string&, int);
+		bool	isUserInChannel(const string& username);
 		int		getSocket(string& );
 		string	getName(int);	
 
