@@ -20,6 +20,7 @@ class Channel{
 		void	addUser(string&, int);
 		void	removeUser(string&, int);
 		bool	isUserInChannel(const string& username);
+		bool	isEmpty();
 		int		getSocket(string& );
 		string	getName(int);	
 

@@ -15,6 +15,7 @@ Server::Server(char *port, char *pass){
 	_commands["NICK"] = &Server::Nick; // adding user for the command map
 	_commands["USER"] = &Server::User; //adding User for the command map
 	_commands["JOIN"] = &Server::Join; //adding User for the command map
+	_commands["PART"] = &Server::Part; //adding User for the command map
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	initServ(); // INIT SERV DUH
 	runServ();  // RUN THE SERV =)
@@ -95,7 +96,7 @@ void Server::handleClient(int socket){
 // at each \n we need to get the command and pass to the next it works uppon connection and after if only one command is sent
 		while(getline(ss, line, '\n')){
 			if (!line.empty()) {
-    			line.erase(line.length() - 1);
+    			line.erase(line.length());
 			}
 		//get the command from the line and send it to handle command
 		vector<string> command = getCommand(line);
@@ -105,6 +106,7 @@ void Server::handleClient(int socket){
 		//cout <<"client " << _clients[socket].getNickname() << " " <<  _clients[socket].getUser() << _clients[socket].getIsWelcomed() << '\n';
 
 		if(_clients[socket].isReady() && !_clients[socket].getIsWelcomed()){
+		cout << "welcome\n";
 		_clients[socket].setIsWelcomed(true);
 		string nickname = _clients[socket].getNickname();
 		string user = _clients[socket].getUser();

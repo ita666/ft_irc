@@ -24,6 +24,7 @@ class Server: public Command{
 	//commands
 		void	Invite();
 		void	Join(int socket, vector<string>& arg, Client);
+		void	Part(int socket, vector<string>& arg, Client);
 		void	Mode();
 		void	Pass();
 		void	Ping();

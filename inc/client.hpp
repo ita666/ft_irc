@@ -5,7 +5,7 @@
 
 class Client{
 	public : 
-		Client() : _socket(-1), _nickname(""), _username(""), _hostname("IRC_HELL") {}
+		Client() : _socket(-1), _nickname(""), _username(""), _hostname("IRC_HELL"), _iswelcomed(false){}
 		Client(int socket);
 		~Client();
 

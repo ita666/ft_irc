@@ -1,5 +1,6 @@
 #include "server.hpp"
 #include "command.hpp"
+#include "client.hpp"
 
 // comment
 
@@ -41,7 +42,7 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 			newNickname = it->second.getNickname();
 	}
 
-	if (newNickname == currentNickname) {
+	if (newNickname == currentNickname && _clients[socket].getIsWelcomed() == 1) {
    		cl.sendMessage(ERR_NICKNAMEINUSE(newNickname));
 		return ;
 	}
@@ -52,6 +53,7 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 			throw(std::out_of_range("Error while sending"));
 	}
 	// to put in the define line too long
+
 	if (_clients[socket].getIsWelcomed() == 1){
 		string msg = string(":") + _clients[socket].getNickname() + "!" + _clients[socket].getNickname() + "@localhost NICK :" + arg[0] + "\r\n";
 		send(socket, msg.c_str(), msg.length(), 0);
