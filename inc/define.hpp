@@ -6,6 +6,16 @@
 #define MAX_EVENTS 10
 #define VERSION "1"
 
+typedef enum e_modes
+{ 
+	i = 1 << 0, // 000001
+	t = 1 << 1, // 000010
+	k = 1 << 2, // 000100
+	o = 1 << 3, // 001000
+	l = 1 << 4, // 010000
+}	MODES; // i + o -> 000110
+//to set MODES userMode = i | o; add one : userModes |= r; remove userModes &= ~i; to check : if (userModes & o);
+
 #define REPLY_FORMAT(num_rply_numb, nickname) (std::string(":") + SERVER_NAME + " " + num_rply_numb + " " + nickname + " ")
 #define CLIENT_ID(nickname, username, command) (":" + nickname + "!~" + username + "@" + SERVER_NAME + " " + command + " ")
 
@@ -52,7 +62,7 @@
 #define ERR_NOPRIVILEGES(nickname) (std::string(":") + SERVER_NAME + " 481 " + nickname + " :Permission Denied- You're not an IRC operator" + "\r\n")
 #define ERR_CHANOPRIVSNEEDED(channel, nickname) (std::string(":") + SERVER_NAME + " 482 " + nickname + " " + channel + " :You're not channel operator" + "\r\n")
 
-#define ERR_UMODEUNKNOWNFLAG(nickname) (std::string(":") + SERVER_NAME + " 501 " + nickname + " :Unknown MODE flag" + "\r\n")
+#define ERR_UMODEUNKNOWNFLAG(nickname) (string(":") + SERVER_NAME + " 501 " + nickname + " :Unknown MODE flag" + "\r\n")
 #define ERR_USERSDONTMATCH(nickname) (std::string(":") + SERVER_NAME + " 502 " + nickname + " :Cant change mode for other users\r\n")
 
 // COMMANDS MACRO

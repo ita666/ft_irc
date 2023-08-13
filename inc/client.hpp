@@ -2,6 +2,7 @@
 #define _CLIENT_HPP_
 
 #include "includes.hpp"
+#include "define.hpp"
 
 class Client{
 	public : 
@@ -14,9 +15,12 @@ class Client{
 		string&	getUser();
 		string& getHost();
 		bool	getIsWelcomed();
+		string	getMode();
 		void	setUser(string user);
 		void	setNickname(string nickname);
 		void	setIsWelcomed(bool);
+		void	setMode(char);
+		void	removeMode(char);
 		bool	isReady();
 		void	sendMessage(const string& message);
 
@@ -27,5 +31,6 @@ class Client{
 		string	_hostname;
 		string	buffer;
 		bool	_iswelcomed;
+		MODES   _userMode;
 };
 #endif
