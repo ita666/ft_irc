@@ -95,7 +95,7 @@ void Server::handleClient(int socket){
 // at each \n we need to get the command and pass to the next it works uppon connection and after if only one command is sent
 		while(getline(ss, line, '\n')){
 			if (!line.empty()) {
-    			line.erase(line.length() - 1);
+    			line.erase(line.length());
 			}
 		//get the command from the line and send it to handle command
 		vector<string> command = getCommand(line);
