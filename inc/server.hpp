@@ -12,7 +12,7 @@ class Server: public Command{
 		Server(char *, char *);
 		~Server(void);
 		void	setPort(char *);
-		void	acceptClient();
+		int		acceptClient();
 		void	initServ();
 		void	handleClient(int);
 		bool	nicknameAlreadyUsed(string name, Client cl);
