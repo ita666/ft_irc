@@ -15,6 +15,7 @@
 # /* ~~~~~~ SOURCES ~~~~~~ */
 SRCS	=   commands/0-Command.cpp client.cpp channel.cpp commands/Nick.cpp commands/Join.cpp commands/Mode.cpp commands/Part.cpp commands/Privmsg.cpp server.cpp main.cpp
 
+
 SRCDIR		= srcs/
 OBJDIR 		= objs
 OBJS		= ${addprefix ${OBJDIR}/, ${SRCS:.cpp=.o}}

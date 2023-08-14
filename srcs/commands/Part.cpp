@@ -30,7 +30,7 @@ void Server::Part(int socket, vector<string>& arg, Client client){
 
     // If the channel is empty, destroy it
     if (_channels[arg[1]].isEmpty()) {
-		client.sendMessage(ERR_NOSUCHCHANNEL(client.getNickname(), arg[0]));
+		client.sendMessage(ERR_NOUSERLEFT(client.getNickname(), arg[0]));
         _channels.erase(arg[0]); 
     }
 }

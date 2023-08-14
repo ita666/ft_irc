@@ -18,6 +18,7 @@ Server::Server(char *port, char *pass){
 	_commands["PART"] = &Server::Part; //adding Part for the command map
 	_commands["MODE"] = &Server::Mode; //adding Mode for the command map
 	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
+
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	initServ(); // INIT SERV DUH
 	runServ();  // RUN THE SERV =)
