@@ -3,8 +3,9 @@
 
 #include "includes.hpp"
 #include "client.hpp"
+#include "server.hpp"
 
-class Channel{
+class Channel {
 	public : 
 		
 		Channel();
@@ -28,6 +29,7 @@ class Channel{
 		bool	isUserInChannel(const string& username);
 		bool	isEmpty();
 		int		getSocket(string& );
+		int*	getAllUsers();
 		string	getName(int);	
 	private :
 		string _name;
