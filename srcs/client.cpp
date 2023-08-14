@@ -38,6 +38,7 @@ void	Client::setMode(char c){
         default: throw runtime_error("setting wrong mode as input"); break;
     }
 }
+
 void	Client::removeMode(char c){
 	switch (c) {
         case 'i': _userMode = static_cast<e_modes>(_userMode & ~i); break;
@@ -48,6 +49,7 @@ void	Client::removeMode(char c){
         default: throw runtime_error("setting wrong mode as input"); break;
     }
 }
+
 bool	Client::isReady() { return (!_nickname.empty() && !_username.empty());}
 
 void	Client::sendMessage(const string& message) {
