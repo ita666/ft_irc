@@ -1,11 +1,12 @@
 #include "server.hpp"
 #include "command.hpp"
 
-Server::Server(){}
+Server::Server(): _port(0), _password(""), _server_socket(-1), _server_address() {}
 
 Server::~Server(){}
 
 Server::Server(char *port, char *pass){
+    _server_socket = -1;
 	setPort(port);
     if (pass != NULL) {
         _password = string(pass);
@@ -17,6 +18,7 @@ Server::Server(char *port, char *pass){
 	_commands["JOIN"] = &Server::Join; //adding Join for the command map
 	_commands["PART"] = &Server::Part; //adding Part for the command map
 	_commands["MODE"] = &Server::Mode; //adding Mode for the command map
+	_commands["Pass"] = &Server::Pass; //adding Mode for the command map
 	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
 
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
@@ -138,8 +140,6 @@ void Server::runServ(){
 
 		if(select(maxFD + 1, &copy, NULL, NULL, NULL) < 0){
 			throw runtime_error("Select error.");
-		} else {
-			maxFD++;
 		}
 	cout << "valgrind\n";
 		for (int i = 0; i <= maxFD; i++){

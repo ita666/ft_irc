@@ -3,17 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fwong <fwong@student.42.fr>                +#+  +:+       +#+         #
+#    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by yanthoma          #+#    #+#              #
-#    Updated: 2023/08/14 18:39:49 by fwong            ###   ########.fr        #
+#    Updated: 2023/08/14 22:48:27 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 
 # /* ~~~~~~ SOURCES ~~~~~~ */
-SRCS	=   commands/0-Command.cpp client.cpp channel.cpp commands/Nick.cpp commands/Join.cpp commands/Mode.cpp commands/Part.cpp commands/Privmsg.cpp server.cpp main.cpp
+SRCS	=   commands/0-Command.cpp client.cpp channel.cpp commands/Nick.cpp commands/Pass.cpp\
+ 			commands/Join.cpp commands/Mode.cpp commands/Part.cpp commands/Privmsg.cpp\
+			 server.cpp main.cpp\
 
 
 SRCDIR		= srcs/
