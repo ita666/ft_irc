@@ -12,11 +12,12 @@ Server::Server(char *port, char *pass){
     } else {
         throw runtime_error("Null password provided.");
     }
-	_commands["NICK"] = &Server::Nick; // adding user for the command map
+	_commands["NICK"] = &Server::Nick; // adding Nick for the command map
 	_commands["USER"] = &Server::User; //adding User for the command map
-	_commands["JOIN"] = &Server::Join; //adding User for the command map
-	_commands["PART"] = &Server::Part; //adding User for the command map
-	_commands["MODE"] = &Server::Mode; //adding User for the command map
+	_commands["JOIN"] = &Server::Join; //adding Join for the command map
+	_commands["PART"] = &Server::Part; //adding Part for the command map
+	_commands["MODE"] = &Server::Mode; //adding Mode for the command map
+	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	initServ(); // INIT SERV DUH
 	runServ();  // RUN THE SERV =)
@@ -78,7 +79,7 @@ int Server::acceptClient(){
     if (client_socket < 0) {
         throw runtime_error("Cannot accept client !");
     }
-		
+	cout << "CLIENT SOCKET= " << client_socket << endl;
         FD_SET(client_socket, &_master_set);
         _clients[client_socket] = Client(client_socket);// add the new client to the map
 	return (client_socket);
