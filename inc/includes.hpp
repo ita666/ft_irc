@@ -1,7 +1,6 @@
 #ifndef _INCLUDES_HPP_
 #define _INCLUDES_HPP_
 
-
 #include <sys/socket.h> // for socket(), bind(), listen(), accept(), send(), recv()
 #include <netinet/in.h> // for sockaddr_in and inet_ntoa()
 #include <arpa/inet.h>  // for htons(), htonl(), ntohs(), ntohl(), inet_addr()
