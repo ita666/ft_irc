@@ -31,11 +31,7 @@ void	Command::handleCommand(int socket, vector<string> split, Server& server, Cl
 	//421	ERR_UNKNOWNCOMMAND	RFC1459	<command> :<reason>	Returned when the given command is unknown to the server (or hidden because of lack of access rights)
 	//421 + <command> <msg to explain the error \r\n
 	string command = split[0];
-	cout << "SPLIT 000000: " << split[0] << endl;
-	cout << "SPLIT SIZE 0000: " << split.size() << endl;
 	split.erase(split.begin()); // delete first index to keep the args
-	cout << "SPLIT SIZE 1111: " << split.size() << endl;
-	cout << "SPLIT 111111: " << split[0] << endl;
 	//string command = split[0]; //store first index which is the command
 	if (_commands.find(command) != _commands.end()){ // to check if the command exist in the map
 		 (server.*_commands[command])(socket, split, cl); //this killed me copy paste in chat gpt and learned it yourself
