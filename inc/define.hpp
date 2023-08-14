@@ -48,6 +48,8 @@ typedef enum e_modes
 #define ERR_NOSUCHCHANNEL(nickname, channel) (std::string(":") + SERVER_NAME + " 403 " + nickname + " " + channel + " :No such channel" + "\r\n")
 #define ERR_NOUSERLEFT(nickname, channel) (std::string(":") + SERVER_NAME + " 403 " + nickname + " " + channel + " :No user left" + "\r\n")
 #define ERR_NOORIGIN(nickname) (std::string(":") + SERVER_NAME + " 409 " + nickname + " :No origin\r\n")
+#define ERR_NONICKNAMEGIVEN(nickname) (std::string(":") + SERVER_NAME + " 431 *" + nickname + " :No nickname given\r\n")
+#define ERR_ERRONEUSNICKNAME(nickname) (std::string(":") + SERVER_NAME + " 432 *" + nickname + " Erroneus nickname\r\n")
 #define ERR_NICKNAMEINUSE(nickname) ( std::string(":") + SERVER_NAME + " 433 * " + nickname + "\r\n")
 #define ERR_USERNOTINCHANNEL(nickname, channel, concerned_client_nickname) (std::string(":") + SERVER_NAME + " 441 " + nickname + " " + concerned_client_nickname + " " + channel + " :They aren't on that channel" + "\r\n")
 #define ERR_NOTONCHANNEL(nickname, channel) (std::string(":") + SERVER_NAME + " 442 " + nickname + " " + channel + " :You're not on that chanel" + "\r\n")
