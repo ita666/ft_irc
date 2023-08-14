@@ -14,6 +14,9 @@ Server::Server(char *port, char *pass){
     }
 	_commands["NICK"] = &Server::Nick; // adding user for the command map
 	_commands["USER"] = &Server::User; //adding User for the command map
+	_commands["JOIN"] = &Server::Join; //adding User for the command map
+	_commands["PART"] = &Server::Part; //adding User for the command map
+	_commands["MODE"] = &Server::Mode; //adding User for the command map
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	initServ(); // INIT SERV DUH
 	runServ();  // RUN THE SERV =)
@@ -66,14 +69,19 @@ void Server::initServ() {
     FD_SET(_server_socket, &_master_set);
 }
 
-void Server::acceptClient(){
-	int client_socket = accept(_server_socket, NULL, NULL);
+int Server::acceptClient(){
+
+	sockaddr_storage client_addr;
+	socklen_t addr_len = sizeof(client_addr);
+
+	int client_socket = accept(_server_socket, (struct sockaddr *)&client_addr, &addr_len);
     if (client_socket < 0) {
         throw runtime_error("Cannot accept client !");
-    } else {
+    }
+		
         FD_SET(client_socket, &_master_set);
         _clients[client_socket] = Client(client_socket);// add the new client to the map
-    }
+	return (client_socket);
 }
 
 void Server::handleClient(int socket){
@@ -94,16 +102,16 @@ void Server::handleClient(int socket){
 // at each \n we need to get the command and pass to the next it works uppon connection and after if only one command is sent
 		while(getline(ss, line, '\n')){
 			if (!line.empty()) {
-    			line.erase(line.length() - 1);
+    			line.erase(line.length());
 			}
 		//get the command from the line and send it to handle command
 		vector<string> command = getCommand(line);
 		handleCommand(socket, command, *this, _clients[socket]);
 		}
-
-		cout <<"client " << _clients[socket].getNickname() << _clients[socket].getUser() << _clients[socket].getIsWelcomed() << '\n';
+		//cout <<"client " << _clients[socket].getNickname() << " " <<  _clients[socket].getUser() << _clients[socket].getIsWelcomed() << '\n';
 
 		if(_clients[socket].isReady() && !_clients[socket].getIsWelcomed()){
+		cout << "welcome\n";
 		_clients[socket].setIsWelcomed(true);
 		string nickname = _clients[socket].getNickname();
 		string user = _clients[socket].getUser();
@@ -121,21 +129,23 @@ void Server::runServ(){
 
 	// struct timeval timeout;
 	// timeout.tv_sec = 5;  // seconds
-	int maxFD = 0;
+	int maxFD = _server_socket;
 	while (true){
 		fd_set copy = _master_set;
 		//cout  << j++ << "run\n";
 
-		if(select(FD_SETSIZE + 1, &copy, NULL, NULL, NULL) < 0){
-			throw std::runtime_error("Select error.");
+		if(select(maxFD + 1, &copy, NULL, NULL, NULL) < 0){
+			throw runtime_error("Select error.");
 		} else {
 			maxFD++;
 		}
+	cout << "valgrind\n";
 		for (int i = 0; i <= maxFD; i++){
 			//cout  << j++ << "run\n";
 			if(FD_ISSET(i, &copy)){
 				if(i == _server_socket){
-					acceptClient();
+					int newSocket = acceptClient();
+					if (maxFD < newSocket) { maxFD = newSocket; }
 				}else{
 					handleClient(i);
 				}
