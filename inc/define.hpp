@@ -3,6 +3,7 @@
 //comment
 // GENERAL
 #define	SERVER_NAME "localhost"
+#define OPERATOR_PASSWORD "oper"
 #define MAX_EVENTS 10
 #define VERSION "1"
 
@@ -45,6 +46,7 @@ typedef enum e_modes
 #define ERR_NOSUCHNICK(nickname, other_nickname) (std::string(":") + SERVER_NAME + " 401 " + nickname + " " + other_nickname + " :No such nick\r\n")
 #define ERR_NOSUCHSERVER(nickname) (REPLY_FORMAT(" 402", nickname) + SERVER_NAME + " :" + "\r\n")
 #define ERR_NOSUCHCHANNEL(nickname, channel) (std::string(":") + SERVER_NAME + " 403 " + nickname + " " + channel + " :No such channel" + "\r\n")
+#define ERR_NOUSERLEFT(nickname, channel) (std::string(":") + SERVER_NAME + " 403 " + nickname + " " + channel + " :No user left" + "\r\n")
 #define ERR_NOORIGIN(nickname) (std::string(":") + SERVER_NAME + " 409 " + nickname + " :No origin\r\n")
 #define ERR_NICKNAMEINUSE(nickname) ( std::string(":") + SERVER_NAME + " 433 * " + nickname + "\r\n")
 #define ERR_USERNOTINCHANNEL(nickname, channel, concerned_client_nickname) (std::string(":") + SERVER_NAME + " 441 " + nickname + " " + concerned_client_nickname + " " + channel + " :They aren't on that channel" + "\r\n")

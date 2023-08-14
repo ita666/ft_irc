@@ -15,6 +15,38 @@ void	Channel::setName(string& name){ _name = name; }
 string	Channel::getTopic() { return _topic; }
 void	Channel::setTopic(string& topic){ _topic = topic; }
 
+string	Channel::getCMode(){
+	string modes;
+	if((_userMode & i) == i){ modes += 'i';}
+	if((_userMode & t) == t){ modes += 't';}
+	if((_userMode & k) == k){ modes += 'k';}
+	if((_userMode & o) == o){ modes += 'o';}
+	if((_userMode & l) == l){ modes += 'l';}
+	return (modes);
+}
+
+void	Channel::setCMode(char c){
+	switch (c) {
+        case 'i': _userMode = static_cast<e_modes>(_userMode | i); break;
+        case 't': _userMode = static_cast<e_modes>(_userMode | t); break;
+        case 'k': _userMode = static_cast<e_modes>(_userMode | k); break;
+        case 'o': _userMode = static_cast<e_modes>(_userMode | o); break;
+        case 'l': _userMode = static_cast<e_modes>(_userMode | l); break;
+        default: throw runtime_error("setting wrong mode as input"); break;
+    }
+}
+
+void	Channel::removeCMode(char c){
+	switch (c) {
+        case 'i': _userMode = static_cast<e_modes>(_userMode & ~i); break;
+        case 't': _userMode = static_cast<e_modes>(_userMode & ~t); break;
+        case 'k': _userMode = static_cast<e_modes>(_userMode & ~k); break;
+        case 'o': _userMode = static_cast<e_modes>(_userMode & ~o); break;
+        case 'l': _userMode = static_cast<e_modes>(_userMode & ~l); break;
+        default: throw runtime_error("setting wrong mode as input"); break;
+    }
+}
+
 void	Channel::addUser(string& userName, int socket){
     _nameToSocket[userName] = socket;
     _socketToName[socket] = userName;
