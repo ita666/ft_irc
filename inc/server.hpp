@@ -37,7 +37,7 @@ class Server: public Command{
 		void	Nick(int socket, vector<string>& arg, Client);
     	void	User(int socket, vector<string>& arg, Client);
 
-		void	checkFlag(vector<string>& arg, int i, Client);
+		void	checkFlag(int socket, vector<string>& arg, int i, Client);
 
 	private:
 		int							_port;
