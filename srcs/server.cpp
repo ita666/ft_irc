@@ -132,7 +132,6 @@ void Server::runServ(){
 		if(select(maxFD + 1, &copy, NULL, NULL, NULL) < 0){
 			throw runtime_error("Select error.");
 		}
-	cout << "valgrind\n";
 		for (int i = 0; i <= maxFD; i++){
 			//cout  << j++ << "run\n";
 			if(FD_ISSET(i, &copy)){
