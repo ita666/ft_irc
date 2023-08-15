@@ -19,7 +19,7 @@ static bool isSpecialChar(char c)
     return (specialChars.find(c) != string::npos);
 }
 
-static bool isValidNickname(string nickname) {
+static bool isValidNickname(string nickname) { //ok
 	if (nickname.length() > 9)
 		return false;
 	if (nickname[0] == '-' || (nickname[0] >= '0' && nickname[0] <= '9'))
