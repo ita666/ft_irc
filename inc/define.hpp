@@ -7,6 +7,30 @@
 #define MAX_EVENTS 10
 #define VERSION "1"
 
+/*--------------------------------------------COLORS--------------------------------------------*/
+
+# define RESET "\e[0m"
+
+//Regular text
+# define RED "\e[0;31m"
+# define GRN "\e[0;32m"
+# define YEL "\e[0;33m"
+# define BLU "\e[0;34m"
+# define MAG "\e[0;35m"
+# define CYN "\e[0;36m"
+# define WHT "\e[0;37m"
+
+//Regular bold text
+# define BRED "\e[1;31m"
+# define BGRN "\e[1;32m"
+# define BYEL "\e[1;33m"
+# define BBLU "\e[1;34m"
+# define BMAG "\e[1;35m"
+# define BCYN "\e[1;36m"
+# define BWHT "\e[1;37m"
+
+/*----------------------------------------------------------------------------------------------*/
+
 typedef enum e_modes
 { 
 	i = 1 << 0, // 000001

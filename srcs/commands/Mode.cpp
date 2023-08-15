@@ -10,6 +10,8 @@
 
 //  exemple /MODE NICK -i
 void	Server::checkFlag(vector<string>& arg, int i, Client client){
+	if (arg[0] == client.getNickname())
+		return ;
 	for(int j = i; arg[1][j] != '+' || arg[1][j] != '-'; j++){
 		switch (arg[1][j]){
 			case 'i' :
