@@ -31,21 +31,28 @@ class Channel {
 		void	setCMode(char);
 		void	removeCMode(char);
 
+		void	addGuest(const string& nickname);
+		void	removeGuest(const string& nickname);
+
 		void	addUser(string&, int);
 		void	removeUser(string&, int);
+		string	findInvited(string& guest);
 		bool	isUserInChannel(const string& username);
+		bool	isInviteOnly(const string& nickname);
 		bool	isEmpty();
 		int		getSocket(string& );
 		int*	getAllUsers();
-		string	getName(int);	
+		string	getName(int);
+
 	private :
 		string				_name;
 		string				_topic;
 		string				_key;
-		size_t					_limit;
+		size_t				_limit;
+		vector<string>		_invited;
 		map<string, int>	_nameToSocket;
 		map<int, string>	_socketToName;
-		MODES				_userMode;
+		MODES				_chanMode;
 };
 
 #endif 

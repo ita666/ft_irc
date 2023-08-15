@@ -40,6 +40,7 @@ void	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 						_clients[map[arg[2]]].setUMode();
 					} else {_clients[socket].sendMessage(ERR_NOPRIVILEGES(_clients[socket].getNickname())); }
 				}
+				arg.erase(arg.begin() + 2);
 				break;
 			case 'l' :
 				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('l');}
@@ -47,6 +48,9 @@ void	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 				break;
 		}
 	}
+	cout  << "verif bis" << endl;
+	for (size_t i = 0;  i < arg.size(); i++){ cout << arg[i] << "-"; }
+	cout  << "\nend verif bis" << endl;
 }
 
 void Server::Mode(int socket, vector<string>& arg, Client client){
@@ -57,11 +61,11 @@ void Server::Mode(int socket, vector<string>& arg, Client client){
 		return ;
 	}
 	//to remove implement a isvalid mode instead
-	if (arg[1].length() != 2){
-		cout << "taille\n";
-		client.sendMessage(ERR_UMODEUNKNOWNFLAG(arg[0]));
-		return ;
-	}
+	// if (arg[1].length() != 2){
+	// 	cout << "taille\n";
+	// 	client.sendMessage(ERR_UMODEUNKNOWNFLAG(arg[0]));
+	// 	return ;
+	// }
 	for(int i = 0; arg[1][i]; i++ ){
 	cout << "Mode\n";
 		switch (arg[1][i])
