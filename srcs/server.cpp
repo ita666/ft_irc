@@ -18,7 +18,7 @@ Server::Server(char *port, char *pass){
 	_commands["JOIN"] = &Server::Join; //adding Join for the command map
 	_commands["PART"] = &Server::Part; //adding Part for the command map
 	_commands["MODE"] = &Server::Mode; //adding Mode for the command map
-	_commands["Pass"] = &Server::Pass; //adding Mode for the command map
+	_commands["PASS"] = &Server::Pass; //adding Mode for the command map
 	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
 
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
@@ -113,17 +113,8 @@ void Server::handleClient(int socket){
 		handleCommand(socket, command, *this, _clients[socket]);
 		}
 		//cout <<"client " << _clients[socket].getNickname() << " " <<  _clients[socket].getUser() << _clients[socket].getIsWelcomed() << '\n';
-
-		if(_clients[socket].isReady() && !_clients[socket].getIsWelcomed()){
-		cout << "welcome\n";
-		_clients[socket].setIsWelcomed(true);
-		string nickname = _clients[socket].getNickname();
-		string user = _clients[socket].getUser();
-		string host = _clients[socket].getHost();
-		string welcome_msg = (string)":" + SERVER_NAME " 001 " + nickname + " :Welcome to IRC " + nickname + "!" + user + "@" + host + "\r\n";
-		send(socket, welcome_msg.c_str(), welcome_msg.size(), 0);
-
-		}
+		welcome(socket);
+		
 		//cout << "error\n";
 		//cout << message << endl;
 	}

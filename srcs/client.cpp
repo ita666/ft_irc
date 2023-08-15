@@ -13,7 +13,8 @@ Client::~Client(){}
 int		Client::getSocket(){ return _socket; }
 string&	Client::getNickname(){ return _nickname; }
 string&	Client::getUser(){ return _username; }
-string&	Client::getHost(){ return _hostname; }
+string&	Client::getHost() {return _hostname; }
+string&	Client::getPassword(){return _password; }
 bool	Client::getIsWelcomed(){ return _iswelcomed; }
 string	Client::getMode(){
 	string modes;
@@ -27,6 +28,7 @@ string	Client::getMode(){
 
 void	Client::setUser(string user) { _username = user; }
 void	Client::setNickname(string nickname) { _nickname = nickname; }
+void	Client::setPassword(string password) { _password = password ; }
 void	Client::setIsWelcomed(bool info) { _iswelcomed = info; }
 void	Client::setMode(char c){
 	switch (c) {

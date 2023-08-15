@@ -15,11 +15,13 @@ class Client{
 		string&	getUser();
 		string& getHost();
 		bool	getIsWelcomed();
+		string& getPassword();
 		string	getMode();
 
 		void	setUser(string user);
 		void	setNickname(string nickname);
 		void	setIsWelcomed(bool);
+		void	setPassword(string);
 		void	setMode(char);
 		
 		void	removeMode(char);
@@ -32,6 +34,7 @@ class Client{
 		string	_username;
 		string	_hostname;
 		string	buffer;
+		string	_password;
 		bool	_iswelcomed;
 		MODES   _userMode;
 };
