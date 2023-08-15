@@ -20,6 +20,12 @@ class Channel {
 		string	getTopic();
 		void	setTopic(string& );
 
+		string&	getKey();
+		void	setKey(string&);
+
+		int&	getLimit();
+		void	setLimit(int);
+
 		string	getCMode();
 		void	setCMode(char);
 		void	removeCMode(char);
@@ -32,11 +38,13 @@ class Channel {
 		int*	getAllUsers();
 		string	getName(int);	
 	private :
-		string _name;
-		string _topic;
-		map<string, int> _nameToSocket;
-		map<int, string> _socketToName;
-		MODES   _userMode;
+		string				_name;
+		string				_topic;
+		string				_key;
+		int					_limit;
+		map<string, int>	_nameToSocket;
+		map<int, string>	_socketToName;
+		MODES				_userMode;
 };
 
 #endif 
