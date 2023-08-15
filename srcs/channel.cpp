@@ -1,10 +1,12 @@
 #include "channel.hpp"
 
 Channel::Channel(){	
-	_topic = "Elephant are pregnant for 20 month";
+	_topic	= "Elephant are pregnant for 20 month";
+	_key	= "";
 	}
 Channel::Channel(string name) : _name(name){
-	_topic = "Elephant are pregnant for 20 month";
+	_topic	= "Elephant are pregnant for 20 month";
+	_key	= "";
 }
 
 Channel::~Channel(){}
@@ -14,6 +16,9 @@ void	Channel::setName(string& name){ _name = name; }
 
 string	Channel::getTopic() { return _topic; }
 void	Channel::setTopic(string& topic){ _topic = topic; }
+
+int&	Channel::getLimit() { return _limit; }
+void	Channel::setLimit(int limit) { _limit = limit; }
 
 string	Channel::getCMode(){
 	string modes;
@@ -69,12 +74,9 @@ int*	Channel::getAllUsers() {
 
 	for (it = _nameToSocket.begin(); it != _nameToSocket.end(); it++) {
 		users[i] = it->second;
-		cout << "iiiiiiiiiiii = " << i << endl;
 		i++;
 	}
-	for (size_t j = 0; j < sizeof(users); j++)
-		cout << "SACKET " << users[j] << endl;
-	cout << "SIZEOF USERS: " << sizeof(users) << endl;
+
 
 	map<string, int>::iterator ot;
 	for (ot = _nameToSocket.begin(); ot != _nameToSocket.end(); ot++) {

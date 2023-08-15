@@ -16,15 +16,15 @@ class Client{
 		string& getHost();
 		bool	getIsWelcomed();
 		string& getPassword();
-		string	getMode();
+		string	getUMode();
 
 		void	setUser(string user);
 		void	setNickname(string nickname);
 		void	setIsWelcomed(bool);
 		void	setPassword(string);
-		void	setMode(char);
+		void	setUMode(char);
 		
-		void	removeMode(char);
+		void	removeUMode(char);
 		bool	isReady();
 		void	sendMessage(const string& message);
 

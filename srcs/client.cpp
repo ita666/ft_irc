@@ -16,7 +16,7 @@ string&	Client::getUser(){ return _username; }
 string&	Client::getHost() {return _hostname; }
 string&	Client::getPassword(){return _password; }
 bool	Client::getIsWelcomed(){ return _iswelcomed; }
-string	Client::getMode(){
+string	Client::getUMode(){
 	string modes;
 	if((_userMode & i) == i){ modes += 'i';}
 	if((_userMode & t) == t){ modes += 't';}
@@ -30,7 +30,7 @@ void	Client::setUser(string user) { _username = user; }
 void	Client::setNickname(string nickname) { _nickname = nickname; }
 void	Client::setPassword(string password) { _password = password ; }
 void	Client::setIsWelcomed(bool info) { _iswelcomed = info; }
-void	Client::setMode(char c){
+void	Client::setUMode(char c){
 	switch (c) {
         case 'i': _userMode = static_cast<e_modes>(_userMode | i); break;
         case 't': _userMode = static_cast<e_modes>(_userMode | t); break;
@@ -41,7 +41,7 @@ void	Client::setMode(char c){
     }
 }
 
-void	Client::removeMode(char c){
+void	Client::removeUMode(char c){
 	switch (c) {
         case 'i': _userMode = static_cast<e_modes>(_userMode & ~i); break;
         case 't': _userMode = static_cast<e_modes>(_userMode & ~t); break;

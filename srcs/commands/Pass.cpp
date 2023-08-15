@@ -29,6 +29,7 @@ void	Server::Pass(int socket, vector<string>& arg, Client client){
 	if(!arg[0].compare(OPERATOR_PASSWORD)){
 		_clients[socket].setPassword(arg[0]);
 		_clients[socket].sendMessage(RPL_YOUROPER());
+		_clients[socket].setUMode('o');
 		return ;
 	}
 

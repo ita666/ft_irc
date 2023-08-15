@@ -9,6 +9,33 @@
 
 
 //  exemple /MODE NICK -i
+void	Server::checkFlag(vector<string>& arg, int i, Client client){
+	for(int j = i; arg[1][j] != '+' || arg[1][j] != '-'; j++){
+		switch (arg[1][j]){
+			case 'i' :
+				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('i'); }
+				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('i'); }
+				break;
+			case 't' :
+				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('t'); }
+				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('t'); }
+				break;
+			case 'k' :
+				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('k'); }
+				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('k'); }
+				break;
+			case 'o' :
+				if(arg[1][i] == '-'){ client.removeUMode('o'); }
+				else if(arg[1][i] == '+') { client.setUMode('o'); }
+				break;
+			case 'l' :
+				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('l');}
+				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('l'); }
+				break;
+		}
+	}
+}
+
 void Server::Mode(int socket, vector<string>& arg, Client client){
 	(void)socket;
 
@@ -23,27 +50,18 @@ void Server::Mode(int socket, vector<string>& arg, Client client){
 		client.sendMessage(ERR_UMODEUNKNOWNFLAG(arg[0]));
 		return ;
 	}
-
-	switch (arg[1][1]){
-		case 'i' :
-			if(arg[1][0] == '-'){ client.removeMode('i'); }
-			else if(arg[1][0] == '+') { client.setMode('i'); }
+	for(int i = 0; arg[1][i]; i++ ){
+		switch (arg[1][i])
+		{
+		case '-' :
+				checkFlag(arg, i, client);
 			break;
-		case 't' :
-			if(arg[1][0] == '-'){ client.removeMode('t'); }
-			else if(arg[1][0] == '+') { client.setMode('t'); }
+		case '+' : 
+				checkFlag(arg, i, client);
 			break;
-		case 'k' :
-			if(arg[1][0] == '-'){ client.removeMode('k'); }
-			else if(arg[1][0] == '+') { client.setMode('k'); }
+		default:
 			break;
-		case 'o' :
-			if(arg[1][0] == '-'){ client.removeMode('o'); }
-			else if(arg[1][0] == '+') { client.setMode('o'); }
-			break;
-		case 'l' :
-			if(arg[1][0] == '-'){ client.removeMode('l');}
-			else if(arg[1][0] == '+') { client.setMode('l'); }
-			break;
+		}
 	}
+
 }
