@@ -20,12 +20,7 @@ void Server::Privmsg(int socket, vector<string> &arg, Client cl) {
         message += " " + arg[i];
 
 	}
-
-	string message = "";
-    for (size_t i = 1; i < arg.size(); i++){
-        message += " " + arg[i];
-	}
-
+	
 	for (size_t i = 0; i < sizeof(users); i++) {
 		if (users[i] != socket) {
 			string msg = string(":") + cl.getNickname() + "!" + cl.getNickname() + "@localhost PRIVMSG " + channelName + " :" + message + "\r\n";
