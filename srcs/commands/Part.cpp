@@ -5,7 +5,7 @@
 void Server::Part(int socket, vector<string>& arg, Client client){
     (void)socket;
 
-	if (arg.size() < 2) {
+	if (arg.size() != 1) {
         client.sendMessage(ERR_NEEDMOREPARAMS(client.getNickname(), "PART"));
         return;
     }
