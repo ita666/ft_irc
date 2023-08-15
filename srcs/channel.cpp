@@ -17,18 +17,12 @@ void	Channel::setName(string& name){ _name = name; }
 string	Channel::getTopic() { return _topic; }
 void	Channel::setTopic(string& topic){ _topic = topic; }
 
-int&	Channel::getLimit() { return _limit; }
+size_t&	Channel::getLimit() { return _limit; }
 void	Channel::setLimit(int limit) { _limit = limit; }
 
-string	Channel::getCMode(){
-	string modes;
-	if((_userMode & i) == i){ modes += 'i';}
-	if((_userMode & t) == t){ modes += 't';}
-	if((_userMode & k) == k){ modes += 'k';}
-	if((_userMode & o) == o){ modes += 'o';}
-	if((_userMode & l) == l){ modes += 'l';}
-	return (modes);
-}
+map<string, int>&	Channel::getMap() { return _nameToSocket; }
+
+MODES Channel::getCMode(){ return (_userMode); }
 
 void	Channel::setCMode(char c){
 	switch (c) {

@@ -23,10 +23,11 @@ class Channel {
 		string&	getKey();
 		void	setKey(string&);
 
-		int&	getLimit();
+		size_t&	getLimit();
 		void	setLimit(int);
 
-		string	getCMode();
+		map<string, int>&		getMap();
+		MODES	getCMode();
 		void	setCMode(char);
 		void	removeCMode(char);
 
@@ -41,7 +42,7 @@ class Channel {
 		string				_name;
 		string				_topic;
 		string				_key;
-		int					_limit;
+		size_t					_limit;
 		map<string, int>	_nameToSocket;
 		map<int, string>	_socketToName;
 		MODES				_userMode;
