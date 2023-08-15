@@ -24,6 +24,7 @@ Server::Server(char *port, char *pass){
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	initServ(); // INIT SERV DUH
 	runServ();  // RUN THE SERV =)
+	signal(SIGPIPE, SIG_IGN);
 }
 
 void Server::setPort(char *input){
@@ -162,3 +163,4 @@ void Server::User(int socket, vector<string>& arg, Client cl){
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
 }
+
