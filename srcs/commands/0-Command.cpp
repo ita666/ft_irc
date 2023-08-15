@@ -11,7 +11,11 @@ vector<string> Command::getCommand(string input_client){
 
 	string tok;
 	vector<string> split;
-	
+
+	if (!input_client.empty() && input_client[input_client.size() - 1] == '\r') {
+    	input_client.erase(input_client.size() - 1);
+	}
+
 	stringstream ss(input_client);
 	while(getline(ss, tok, ' ')){ split.push_back(tok);	}
 	cout  << "verif" << endl;

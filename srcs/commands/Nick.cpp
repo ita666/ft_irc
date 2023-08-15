@@ -1,5 +1,6 @@
 #include "server.hpp"
 #include "command.hpp"
+#include "client.hpp"
 
 // comment
 
@@ -14,22 +15,8 @@ bool Server::nicknameAlreadyUsed(string name, Client cl) {
 
 static bool isSpecialChar(char c)
 {
-	switch (c)
-	{
-		case '-':
-		case '[':
-		case ']':
-		case '\\':
-		case '`':
-		case '_':
-		case '^':
-		case '{':
-		case '}':
-		case '|':
-			return true;
-		default:
-			return false;
-	}
+    const string specialChars = "-[]\\`_^{}|";
+    return (specialChars.find(c) != string::npos);
 }
 
 static bool isValidNickname(string nickname) {
@@ -49,27 +36,25 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 	map<int, Client>::iterator it;
 	string currentNickname = cl.getNickname();
 	string newNickname = arg[0];
+
+	if (arg.size() == 0)
+		return cl.sendMessage(ERR_NONICKNAMEGIVEN());
 	for (it = _clients.begin(); it != _clients.end(); it++) {
 		if (it->second.getNickname() == currentNickname && it->second.getSocket() != cl.getSocket())
 			newNickname = it->second.getNickname();
 	}
-	if (newNickname == currentNickname) {
+	if (newNickname == currentNickname && _clients[socket].getIsWelcomed() == 1) {
+		// cout << "NICKNAME" << (newNickname == currentNickname) << "CLIENT" <<_clients[socket].getIsWelcomed() << endl;
    		cl.sendMessage(ERR_NICKNAMEINUSE(newNickname));
 		return ;
 	}
-	if (isValidNickname(arg[0]) == false)
-	{
-		string paquet = "CACA PIPI:";
-   		if (send(socket, paquet.c_str(), paquet.length(), 0) < 0)
-			throw(std::out_of_range("Error while sending"));
+	if (isValidNickname(newNickname) == false)
+   		return cl.sendMessage(ERR_ERRONEUSNICKNAME(currentNickname));
+	if (_clients[socket].getIsWelcomed() == 1){
+		string msg = string(":") + _clients[socket].getNickname() + "!" + _clients[socket].getNickname() + "@localhost NICK :" + arg[0] + "\r\n";
+		send(socket, msg.c_str(), msg.length(), 0);
 	}
-
-	_clients[socket].setNickname("test");
 	_clients[socket].setNickname(arg[0]);
 	string user = _clients[socket].getUser();
 	string host = _clients[socket].getHost();
-	string nickname_msg = ":localhost 001 " + arg[0] + " :Welcome to IRC " + arg[0] + "!" + user + "@" + host + "\r\n";
-	send(socket, nickname_msg.c_str(), nickname_msg.size(), 0);
-	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
-     //   send(socket, errMsg.c_str(), errMsg.length(), 0);
 }

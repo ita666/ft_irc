@@ -2,9 +2,20 @@
 
 //comment
 // GENERAL
-#define	SERVER_NAME "ircserv"
+#define	SERVER_NAME "localhost"
+#define OPERATOR_PASSWORD "oper"
 #define MAX_EVENTS 10
 #define VERSION "1"
+
+typedef enum e_modes
+{ 
+	i = 1 << 0, // 000001
+	t = 1 << 1, // 000010
+	k = 1 << 2, // 000100
+	o = 1 << 3, // 001000
+	l = 1 << 4, // 010000
+}	MODES; // i + o -> 000110
+//to set MODES userMode = i | o; add one : userModes |= r; remove userModes &= ~i; to check : if (userModes & o);
 
 #define REPLY_FORMAT(num_rply_numb, nickname) (std::string(":") + SERVER_NAME + " " + num_rply_numb + " " + nickname + " ")
 #define CLIENT_ID(nickname, username, command) (":" + nickname + "!~" + username + "@" + SERVER_NAME + " " + command + " ")
@@ -21,7 +32,7 @@
 #define RPL_ENDOFWHOIS(nickname) (std::string(":") + SERVER_NAME + " 318 " + nickname + " :End of /WHOIS list" + "\r\n")
 #define RPL_NOTOPIC(nickname, channel) (std::string(":") + SERVER_NAME + " 331 " + nickname + " #" + channel + " :No topic is set" + "\r\n")
 #define RPL_TOPIC(nickname, channel, topic) (std::string(":") + SERVER_NAME + " 332 " + nickname + " #" + channel + " :" + topic + "\r\n")
-#define ROL_TOPICWHOTIME(nickname, channel, concerned_client_nickname, time) (std::string(":") + SERVER_NAME + " 333 " + nickname + " " + channel + " " + concerned_client_nickname + " " + time + "\r\n")
+#define RPL_TOPICWHOTIME(nickname, channel, concerned_client_nickname, time) (std::string(":") + SERVER_NAME + " 333 " + nickname + " " + channel + " " + concerned_client_nickname + " " + time + "\r\n")
 #define RPL_INVITING(nickname, target, channel) (std::string(":") + SERVER_NAME + " 341 " + nickname + " " + target + " " + channel + "\r\n")
 #define RPL_NAMREPLY(nickname, channel, list_client) (std::string(":") + SERVER_NAME + " 353 " + nickname + " = " + channel + " :" + list_client  + "\r\n")
 #define RPL_ENDOFNAMES(nickname, channel) (std::string(":") + SERVER_NAME + " 366 " + nickname + " " + channel + " :End of /NAMES list" + "\r\n")
@@ -35,8 +46,11 @@
 #define ERR_NOSUCHNICK(nickname, other_nickname) (std::string(":") + SERVER_NAME + " 401 " + nickname + " " + other_nickname + " :No such nick\r\n")
 #define ERR_NOSUCHSERVER(nickname) (REPLY_FORMAT(" 402", nickname) + SERVER_NAME + " :" + "\r\n")
 #define ERR_NOSUCHCHANNEL(nickname, channel) (std::string(":") + SERVER_NAME + " 403 " + nickname + " " + channel + " :No such channel" + "\r\n")
+#define ERR_NOUSERLEFT(nickname, channel) (std::string(":") + SERVER_NAME + " 403 " + nickname + " " + channel + " :No user left" + "\r\n")
 #define ERR_NOORIGIN(nickname) (std::string(":") + SERVER_NAME + " 409 " + nickname + " :No origin\r\n")
-#define ERR_NICKNAMEINUSE(nickname) (std::string(":") + SERVER_NAME + " 433 " + nickname + " :Nickname is already in use\r\n")
+#define ERR_NONICKNAMEGIVEN(nickname) (std::string(":") + SERVER_NAME + " 431 *" + nickname + " :No nickname given\r\n")
+#define ERR_ERRONEUSNICKNAME(nickname) (std::string(":") + SERVER_NAME + " 432 *" + nickname + " Erroneus nickname\r\n")
+#define ERR_NICKNAMEINUSE(nickname) ( std::string(":") + SERVER_NAME + " 433 * " + nickname + "\r\n")
 #define ERR_USERNOTINCHANNEL(nickname, channel, concerned_client_nickname) (std::string(":") + SERVER_NAME + " 441 " + nickname + " " + concerned_client_nickname + " " + channel + " :They aren't on that channel" + "\r\n")
 #define ERR_NOTONCHANNEL(nickname, channel) (std::string(":") + SERVER_NAME + " 442 " + nickname + " " + channel + " :You're not on that chanel" + "\r\n")
 #define ERR_USERONCHANNEL(nickname, channel, concerned_client_nickname) (std::string(":") + SERVER_NAME + " 443 " + nickname + " " + concerned_client_nickname + " #" + channel + " :is already on channel" + "\r\n")
@@ -46,11 +60,13 @@
 #define ERR_ALREADYREGISTRED(nickname) (std::string(":") + SERVER_NAME + " 462 " + nickname + " :Already registred\r\n")
 #define ERR_PASSWDMISMATCH(nickname) (std::string(":") + SERVER_NAME + " 464 " + nickname + " :Password incorrect" + "\r\n")
 #define ERR_CHANNELISFULL(nickname, channel) (REPLY_FORMAT("471", nickname) + channel + " :Cannot join channel (+l)" + "\r\n")
+#define ERR_UNKNOWNMODE(command, message) (REPLY_FORMAT("472", command) + message + " :is unknown mode char to me" + "\r\n")
+
 #define ERR_BADCHANNELKEY(nickname, channel) (REPLY_FORMAT("475", nickname) + channel + " :Cannot join channel (+k)" + "\r\n")
 #define ERR_NOPRIVILEGES(nickname) (std::string(":") + SERVER_NAME + " 481 " + nickname + " :Permission Denied- You're not an IRC operator" + "\r\n")
 #define ERR_CHANOPRIVSNEEDED(channel, nickname) (std::string(":") + SERVER_NAME + " 482 " + nickname + " " + channel + " :You're not channel operator" + "\r\n")
 
-#define ERR_UMODEUNKNOWNFLAG(nickname) (std::string(":") + SERVER_NAME + " 501 " + nickname + " :Unknown MODE flag" + "\r\n")
+#define ERR_UMODEUNKNOWNFLAG(nickname) (string(":") + SERVER_NAME + " 501 " + nickname + " :Unknown MODE flag" + "\r\n")
 #define ERR_USERSDONTMATCH(nickname) (std::string(":") + SERVER_NAME + " 502 " + nickname + " :Cant change mode for other users\r\n")
 
 // COMMANDS MACRO
