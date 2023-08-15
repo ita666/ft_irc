@@ -18,6 +18,7 @@
 #include <stdexcept>
 #include <set>
 #include <map>
+#include <signal.h>
 #include "define.hpp"
 
 

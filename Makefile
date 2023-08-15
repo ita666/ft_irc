@@ -6,7 +6,7 @@
 #    By: fwong <fwong@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by yanthoma          #+#    #+#              #
-#    Updated: 2023/08/15 14:47:55 by fwong            ###   ########.fr        #
+#    Updated: 2023/08/15 18:20:19 by fwong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,18 +34,22 @@ RM		= rm -rf
 all:		${NAME}
 
 ${OBJDIR}/%.o : ${SRCDIR}%.cpp ${INC}
-				mkdir -p $(dir $@)
-				${CC} ${CFLAGS} ${CINC} -c $< -o $@
+				@echo "\e[1;32mFT_IRC [COMPILING...]\e[0m"
+				@mkdir -p $(dir $@)
+				@${CC} ${CFLAGS} ${CINC} -c $< -o $@
 
 ${NAME}:	${OBJS}
-			${CC} ${CFLAGS} ${OBJS} -o ${NAME}
+			@${CC} ${CFLAGS} ${OBJS} -o ${NAME}
+			@echo "\e[1;34mFT_IRC [READY]\e[0m"
 
 clean:
-			${RM} ${OBJS}${OBJDIR}
+			@${RM} ${OBJS}${OBJDIR}
+			@echo "\e[1;31mFT_IRC [CLEAN]\e[0m"
 
 fclean:		
-			${RM} ${OBJS} ${OBJDIR}
-			${RM} ${NAME}
+			@${RM} ${OBJS} ${OBJDIR}
+			@${RM} ${NAME}
+			@echo "\e[1;31mFT_IRC [ALL CLEAN]\e[0m"
 
 re:			fclean all
 
