@@ -35,7 +35,12 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 	
 	map<int, Client>::iterator it;
 	string currentNickname = cl.getNickname();
-	string newNickname = arg[0];
+
+	stringstream ss;
+	string str;
+	ss << socket;
+	ss >> str;
+	string newNickname = arg[0] + str;
 
 	if (arg.size() == 0)
 		return cl.sendMessage(ERR_NONICKNAMEGIVEN());
@@ -44,7 +49,6 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 			newNickname = it->second.getNickname();
 	}
 	if (newNickname == currentNickname && _clients[socket].getIsWelcomed() == 1) {
-		// cout << "NICKNAME" << (newNickname == currentNickname) << "CLIENT" <<_clients[socket].getIsWelcomed() << endl;
    		cl.sendMessage(ERR_NICKNAMEINUSE(newNickname));
 		return ;
 	}
@@ -54,7 +58,7 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 		string msg = string(":") + _clients[socket].getNickname() + "!" + _clients[socket].getNickname() + "@localhost NICK :" + arg[0] + "\r\n";
 		send(socket, msg.c_str(), msg.length(), 0);
 	}
-	_clients[socket].setNickname(arg[0]);
+	_clients[socket].setNickname(newNickname);
 	string user = _clients[socket].getUser();
 	string host = _clients[socket].getHost();
 }
