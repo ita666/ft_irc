@@ -24,7 +24,6 @@ Server::Server(char *port, char *pass){
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	initServ(); // INIT SERV DUH
 	runServ();  // RUN THE SERV =)
-	signal(SIGPIPE, SIG_IGN);
 }
 
 void Server::setPort(char *input){
@@ -121,11 +120,19 @@ void Server::handleClient(int socket){
 	}
 }
 
+void handler(int sig){
+	(void)sig;
+	stop = true;
+	throw runtime_error("Ctrl C pressed.");
+	exit(0);
+}
+
 void Server::runServ(){
 
 	// struct timeval timeout;
 	// timeout.tv_sec = 5;  // seconds
 	int maxFD = _server_socket;
+	signal(SIGINT, handler); // handle ctrl c
 	while (true){
 		fd_set copy = _master_set;
 		//cout  << j++ << "run\n";
