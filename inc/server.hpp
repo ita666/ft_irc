@@ -20,7 +20,8 @@ class Server: public Command{
 		bool	nicknameAlreadyUsed(string name, Client cl);
 		bool	isNicknamePresent(string nickName);
 		// removeClient();
-		// passwordAuth(int client_socket);
+		bool	passwordAuth(int socket);
+		void	welcome(int socket);
 		void	runServ();
 
 	//commands
