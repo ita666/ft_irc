@@ -26,30 +26,49 @@ string	Client::getUMode(){
 	return (modes);
 }
 
+void	Client::giveOMode(Client client){
+	
+	
+	cout << "CLIENT RIGHTS: " << client.getUMode() << endl;
+	if ((_userMode & o) == o) {
+		cout << "AVANT SET " << client.getUMode() << endl;
+        client.setUMode();
+		cout << "APRES SET " << client.getUMode() << endl;
+		cout << "HAS PRIVILEGE" << endl;
+	} else {
+        sendMessage(ERR_NOPRIVILEGES(_nickname));
+		cout << "NO PRIVILEGE" << endl;
+	}
+}
+
+void	Client::giveOMode(Client* client){
+	
+	cout << "CLIENT RIGHTS: " << _userMode << endl;
+	if ((_userMode & o) == o) {
+		cout << "AVANT SET " << client->getUMode() << endl;
+        client->setUMode();
+		cout << "APRES SET " << client->getUMode() << endl;
+		cout << "HAS PRIVILEGE" << endl;
+	} else {
+        sendMessage(ERR_NOPRIVILEGES(_nickname));
+		cout << "NO PRIVILEGE" << endl;
+	}
+}
+
 void	Client::setUser(string user) { _username = user; }
 void	Client::setNickname(string nickname) { _nickname = nickname; }
 void	Client::setPassword(string password) { _password = password ; }
 void	Client::setIsWelcomed(bool info) { _iswelcomed = info; }
-void	Client::setUMode(char c){
-	switch (c) {
-        case 'i': _userMode = static_cast<e_modes>(_userMode | i); break;
-        case 't': _userMode = static_cast<e_modes>(_userMode | t); break;
-        case 'k': _userMode = static_cast<e_modes>(_userMode | k); break;
-        case 'o': _userMode = static_cast<e_modes>(_userMode | o); break;
-        case 'l': _userMode = static_cast<e_modes>(_userMode | l); break;
-        default: throw runtime_error("setting wrong mode as input"); break;
-    }
-}
+void	Client::setUMode() { _userMode = static_cast<e_modes>(_userMode | o); }
 
-void	Client::removeUMode(char c){
-	switch (c) {
-        case 'i': _userMode = static_cast<e_modes>(_userMode & ~i); break;
-        case 't': _userMode = static_cast<e_modes>(_userMode & ~t); break;
-        case 'k': _userMode = static_cast<e_modes>(_userMode & ~k); break;
-        case 'o': _userMode = static_cast<e_modes>(_userMode & ~o); break;
-        case 'l': _userMode = static_cast<e_modes>(_userMode & ~l); break;
-        default: throw runtime_error("setting wrong mode as input"); break;
-    }
+void	Client::removeUMode(Client* client) {
+	if ((_userMode & o) == o) {
+		client->_userMode = static_cast<e_modes>(_userMode & ~o);
+		cout << "HAS PRIVILEGE TO REMOVE" << endl;
+	} else {
+        sendMessage(ERR_NOPRIVILEGES(_nickname));
+		cout << "NO PRIVILEGE TO REMOVE" << endl;
+	}
 }
 
 bool	Client::isReady() { return (!_nickname.empty() && !_username.empty());}
