@@ -28,20 +28,6 @@ string	Client::getUMode(){
 bool	Client::checkRight(){return (_userMode & o) == o;}
 
 
-void	Client::giveOMode(Client client){
-	
-	cout << "CLIENT RIGHTS: " << _userMode << endl;
-	if ((_userMode & o) == o) {
-		cout << "avant client usermod " << client._userMode << "\n";
-        client.setUMode();
-		cout << "apres client usermod " << client._userMode << "\n";
-		cout << "HAS PRIVILEGE" << endl;
-	} else {
-        sendMessage(ERR_NOPRIVILEGES(_nickname));
-		cout << "NO PRIVILEGE" << endl;
-	}
-}
-
 void	Client::setUser(string user) { _username = user; }
 void	Client::setNickname(string nickname) { _nickname = nickname; }
 void	Client::setPassword(string password) { _password = password ; }
