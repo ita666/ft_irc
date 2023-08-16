@@ -20,7 +20,13 @@ string	Channel::getTopic() { return _topic; }
 void	Channel::setTopic(string& topic){ _topic = topic; }
 
 size_t&	Channel::getLimit() { return _limit; }
-void	Channel::setLimit(int limit) { _limit = limit; }
+void	Channel::setLimit(string limit) {
+	
+	size_t limitInt;
+	istringstream iss(limit);
+	iss >> limitInt;
+	_limit = limitInt;
+	}
 
 map<string, int>&	Channel::getMap() { return _nameToSocket; }
 
