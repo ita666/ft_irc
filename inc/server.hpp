@@ -39,7 +39,7 @@ class Server: public Command{
     	void	User(int socket, vector<string>& arg, Client);
 
 		void	checkFlag(int socket, vector<string>& arg, int i, Client);
-		bool	checkChannelName(string name);
+		bool	checkChannelName(string channelName);
 
 	private:
 		int							_port;
