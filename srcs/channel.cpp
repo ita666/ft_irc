@@ -110,10 +110,10 @@ bool Channel::isUserInChannel(const string& username) {
 bool Channel::isInviteOnly(const string& nickname) {
 	vector<string>::iterator it;
 	if ((_chanMode & i) == i) {
-		if (std::find(_invited.begin(), _invited.end(), nickname) != _invited.end()) { return true;}
-		return false;
+		if (find(_invited.begin(), _invited.end(), nickname) != _invited.end()) { return false;}
+		return true;
 	}
-	return true;
+	return false;
 }
 
 string Channel::findInvited(string& guest) {
