@@ -66,9 +66,9 @@ void	Channel::removeUser(string& userName, int socket){
     _socketToName.erase(socket);
 }
 
-int		Channel::getSocket(string& userName){
-	if (_nameToSocket.find(userName) != _nameToSocket.end()){
-		return (_nameToSocket[userName]);
+int		Channel::getSocket(string& nickName){
+	if (_nameToSocket.find(nickName) != _nameToSocket.end()){
+		return (_nameToSocket[nickName]);
 	} else { throw runtime_error("Username not found in the channel."); }
 }
 int*	Channel::getAllUsers() {
