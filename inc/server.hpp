@@ -48,6 +48,7 @@ class Server: public Command{
 		struct sockaddr_in			_server_address;
 		fd_set						_master_set;
 		map<int, Client>			_clients; // a map of client with their info to handle them the key is the socket
+		map<string, Client>			_stringToClients;
 		map<string, Channel>		_channels; // to store the future channel name and check if they already exist
 };
 

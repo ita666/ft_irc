@@ -67,10 +67,9 @@ void	Channel::removeUser(string& userName, int socket){
 }
 
 int		Channel::getSocket(string& userName){
-	if (_nameToSocket.find(userName) != _nameToSocket.end()){
 		return (_nameToSocket[userName]);
-	} else { throw runtime_error("Username not found in the channel."); }
 }
+
 int*	Channel::getAllUsers() {
 	map<string, int>::iterator it;
 	int *users = new int[_nameToSocket.size()];
@@ -81,10 +80,9 @@ int*	Channel::getAllUsers() {
 		i++;
 	}
 
-
 	map<string, int>::iterator ot;
 	for (ot = _nameToSocket.begin(); ot != _nameToSocket.end(); ot++) {
-		cout << "name " << ot->first << " socket " << ot->second << '\n';
+		cout << "NAME IN CHANNEL \n" << ot->first << " SOCKET IN CHANNEL " << ot->second << '\n';
 	}
 	return users;
 }

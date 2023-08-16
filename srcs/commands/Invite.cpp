@@ -10,7 +10,7 @@ void Server::Invite(int socket, vector<string>& arg, Client cl) {
 	string currentClientUsername = _clients[socket].getUser();
 	string guest = arg[0];
 	string channelName = arg[1];
-	Client guestCl = _clients[_channels[channelName].getSocket(guest)];
+	Client guestCl = _stringToClients[guest];
 
 	if (_clients[socket].checkRight() == false)
 		return _clients[socket].sendMessage(ERR_CHANOPRIVSNEEDED(channelName, cl.getNickname()));
