@@ -17,18 +17,18 @@ class Client{
 		bool	getIsWelcomed();
 		string& getPassword();
 		string	getUMode();
-		void	giveOMode(Client);
-		void	giveOMode(Client*); 
 
 		void	setUser(string user);
 		void	setNickname(string nickname);
 		void	setIsWelcomed(bool);
 		void	setPassword(string);
 		void	setUMode();
-		
-		void	removeUMode(Client*);
+
 		bool	isReady();
 		void	sendMessage(const string& message);
+
+		bool	checkRight();
+		void	unsetUMode();
 
 	private	:
 		int		_socket;

@@ -6,7 +6,7 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 	
 	(void)socket;
 	cout << "join " << arg[0] << " \n";
-	if (_channels.find(arg[0]) == _channels.end()){
+	if (_channels.find(arg[0]) == _channels.end()){ // if the chan does not exist create it and add the user and give him the operator right
 		_channels[arg[0]] = Channel (arg[0]);
 
 		cout << " join name " << _channels[arg[0]].getName() << " \n";
@@ -15,12 +15,24 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 		_clients[socket].setUMode();
 		cout <<"channel user "<< client.getNickname() << "\n";
 	} else {
-    if (!_channels[arg[0]].isUserInChannel(client.getUser())) {
-		if ((_channels[arg[0]].getCMode() & l) == l && _channels[arg[0]].getMap().size() < _channels[arg[0]].getLimit()){
+    if (!_channels[arg[0]].isUserInChannel(client.getUser())) { // if chan already exist and user is not in chan then check if there is a limit and if it's invite only
+		if ((_channels[arg[0]].getCMode() & l) == l && _channels[arg[0]].getMap().size() < _channels[arg[0]].getLimit() ){
+			cout << "join 1 \n";
+
+			string errorMsg = ERR_CHANNELISFULL(client.getNickname(), arg[0]);
+			send(client.getSocket(), errorMsg.c_str(), errorMsg.length(), 0);
+
+
+
+		} else if(_channels[arg[0]].isInviteOnly(client.getNickname())) {
+			cout << "isinviteonly value" << _channels[arg[0]].isInviteOnly(client.getNickname()) << "\n";
+			string errorMsg = ERR_INVITEONLYCHAN(client.getNickname(), arg[0]);
+			send(client.getSocket(), errorMsg.c_str(), errorMsg.length(), 0);
+		} else {
         	_channels[arg[0]].addUser(client.getNickname(), client.getSocket());
+			_channels[arg[0]].removeGuest(_clients[socket].getNickname());
 
 		}
-		//verify mode then verify limit then add if ok else erreur 
     } else {
         string errorMsg = ERR_USERONCHANNEL(client.getNickname(), arg[0], client.getNickname());
 		send(client.getSocket(), errorMsg.c_str(), errorMsg.length(), 0);

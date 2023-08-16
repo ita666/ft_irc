@@ -15,39 +15,44 @@ void	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 	map<string, int> map;
 	map = _channels[arg[0]].getMap();
 
-	cout << " ARG 2222222 " << arg[2] << endl;
-	cout << "CHANNEL = " << arg[0] << endl;
-	cout << "SOCKET = " << _channels[arg[0]].getMap()[arg[2]] << endl;
-	
 	for(int j = i; arg[1][j] && (arg[1][j] != '+' || arg[1][j] != '-'); j++){
 		switch (arg[1][j]){
 			case 'i' :
+			cout << "verif i" << endl;
 				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('i'); }
 				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('i'); }
-				cout << "Mode i\n";
 				break;
 			case 't' :
 				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('t'); }
 				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('t'); }
-				cout << "Mode t\n";
 				break;
 			case 'k' :
 				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('k'); }
 				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('k'); }
-				cout << "Mode k\n";
 				break;
 			case 'o' :
-				if(arg[1][i] == '-'){ _clients[socket].removeUMode(&_clients[map[arg[2]]]); }
-				else if(arg[1][i] == '+') { _clients[socket].giveOMode(&_clients[map[arg[2]]]); }
-				cout << "Mode o\n";
+				if(arg[1][i] == '-'){ 
+					if(_clients[socket].checkRight()){
+						_clients[map[arg[2]]].unsetUMode();
+					} else {_clients[socket].sendMessage(ERR_NOPRIVILEGES(_clients[socket].getNickname())); }
+				}
+				else if(arg[1][i] == '+') { 
+					if(_clients[socket].checkRight()){
+						_clients[map[arg[2]]].setUMode();
+					} else {_clients[socket].sendMessage(ERR_NOPRIVILEGES(_clients[socket].getNickname())); }
+				}
+				arg.erase(arg.begin() + 2);
 				break;
 			case 'l' :
 				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('l');}
 				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('l'); }
-				cout << "Mode l\n";
 				break;
 		}
+		cout << "verif" << _channels[arg[0]].getCMode()<<endl;
 	}
+	cout  << "verif bis" << endl;
+	for (size_t i = 0;  i < arg.size(); i++){ cout << arg[i] << "-"; }
+	cout  << "\nend verif bis" << endl;
 }
 
 void Server::Mode(int socket, vector<string>& arg, Client client){
@@ -58,11 +63,11 @@ void Server::Mode(int socket, vector<string>& arg, Client client){
 		return ;
 	}
 	//to remove implement a isvalid mode instead
-	if (arg[1].length() != 2){
-		cout << "taille\n";
-		client.sendMessage(ERR_UMODEUNKNOWNFLAG(arg[0]));
-		return ;
-	}
+	// if (arg[1].length() != 2){
+	// 	cout << "taille\n";
+	// 	client.sendMessage(ERR_UMODEUNKNOWNFLAG(arg[0]));
+	// 	return ;
+	// }
 	for(int i = 0; arg[1][i]; i++ ){
 	cout << "Mode\n";
 		switch (arg[1][i])
