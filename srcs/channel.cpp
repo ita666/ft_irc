@@ -3,10 +3,12 @@
 Channel::Channel(){	
 	_topic	= "Elephant are pregnant for 20 month";
 	_key	= "";
+	_chanMode   = static_cast<MODES>(0);
 	}
 Channel::Channel(string name) : _name(name){
 	_topic	= "Elephant are pregnant for 20 month";
 	_key	= "";
+	_chanMode   = static_cast<MODES>(0);
 }
 
 Channel::~Channel(){}
@@ -26,7 +28,9 @@ MODES Channel::getCMode(){ return (_chanMode); }
 
 void	Channel::setCMode(char c){
 	switch (c) {
-        case 'i': _chanMode = static_cast<e_modes>(_chanMode | i); break;
+        case 'i': _chanMode = static_cast<e_modes>(_chanMode | i);
+					cout << "set i mode" << endl;
+		 break;
         case 't': _chanMode = static_cast<e_modes>(_chanMode | t); break;
         case 'k': _chanMode = static_cast<e_modes>(_chanMode | k); break;
         case 'o': _chanMode = static_cast<e_modes>(_chanMode | o); break;
@@ -100,10 +104,7 @@ bool Channel::isUserInChannel(const string& username) {
 bool Channel::isInviteOnly(const string& nickname) {
 	vector<string>::iterator it;
 	if ((_chanMode & i) == i) {
-		for (it = _invited.begin(); it != _invited.end(); it++) {
-			if (nickname == *it)
-				return true;
-		}
+		if (std::find(_invited.begin(), _invited.end(), nickname) != _invited.end()) { return true;}
 		return false;
 	}
 	return true;

@@ -18,6 +18,7 @@ void	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 	for(int j = i; arg[1][j] && (arg[1][j] != '+' || arg[1][j] != '-'); j++){
 		switch (arg[1][j]){
 			case 'i' :
+			cout << "verif i" << endl;
 				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('i'); }
 				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('i'); }
 				break;
@@ -47,6 +48,7 @@ void	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('l'); }
 				break;
 		}
+		cout << "verif" << _channels[arg[0]].getCMode()<<endl;
 	}
 	cout  << "verif bis" << endl;
 	for (size_t i = 0;  i < arg.size(); i++){ cout << arg[i] << "-"; }
