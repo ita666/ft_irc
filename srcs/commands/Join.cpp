@@ -16,7 +16,7 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 		cout <<"channel user "<< client.getNickname() << "\n";
 	} else {
     if (!_channels[arg[0]].isUserInChannel(client.getUser())) { // if chan already exist and user is not in chan then check if there is a limit and if it's invite only
-		if ((_channels[arg[0]].getCMode() & l) == l && _channels[arg[0]].getMap().size() < _channels[arg[0]].getLimit() ){
+		if ((_channels[arg[0]].getCMode() & l) == l && _channels[arg[0]].getMap().size() >=  _channels[arg[0]].getLimit() ){
 			cout << "join 1 \n";
 
 			string errorMsg = ERR_CHANNELISFULL(client.getNickname(), arg[0]);

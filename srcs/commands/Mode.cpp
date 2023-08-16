@@ -45,11 +45,17 @@ void	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 				break;
 			case 'l' :
 				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('l');}
-				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('l'); }
+				else if(arg[1][i] == '+') {
+					_channels[arg[0]].setCMode('l');
+					_channels[arg[0]].setLimit(arg[2]);
+				}
 				break;
 		}
 		cout << "verif" << _channels[arg[0]].getCMode()<<endl;
 	}
+
+
+	cout << _channels[arg[0]].getLimit() << endl;
 	cout  << "verif bis" << endl;
 	for (size_t i = 0;  i < arg.size(); i++){ cout << arg[i] << "-"; }
 	cout  << "\nend verif bis" << endl;
