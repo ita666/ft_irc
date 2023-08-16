@@ -165,3 +165,13 @@ void Server::User(int socket, vector<string>& arg, Client cl){
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
 }
 
+bool Server::checkChannelName(string channelName) {
+	map<string, Channel>::iterator it;
+
+	for (it = _channels.begin(); it != _channels.end(); it++) {
+		if (channelName == it->first) {
+			return true;
+		}
+	}
+	return false;
+}
