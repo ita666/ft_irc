@@ -1,11 +1,15 @@
 #include "server.hpp"
 #include "command.hpp"
 
-static bool running = true;
-
 Server::Server(): _port(0), _password(""), _server_socket(-1), _server_address() {}
 
-Server::~Server(){}
+Server::~Server(){
+	for (map<int, Client>::iterator it = _clients.begin(); it != _clients.end(); ++it)
+	{
+		close(it->first);
+	}
+	close(_server_socket);
+}
 
 Server::Server(char *port, char *pass){
     _server_socket = -1;
@@ -122,19 +126,6 @@ void Server::handleClient(int socket){
 	}
 }
 
-static void handler(int sig){
-	(void)sig;
-	running = false;
-}
-
-void Server::eraseClient(int socket){
-	for (map<int, Client>::iterator it = _clients.begin(); it != _clients.end(); ++it)
-	{
-		_clients.erase(socket);
-		close(socket); 
-	}
-}
-
 void Server::runServ(){
 
 	// struct timeval timeout;
@@ -142,17 +133,7 @@ void Server::runServ(){
 	int maxFD = _server_socket;
 	while (true){
 		fd_set copy = _master_set;
-		std::cout << "running: " << running << '\n' << std::endl;
-		signal(SIGINT, handler);
-		std::cout << "running: " << running << '\n' << std::endl;
-		if (running == false)
-		{
-			throw runtime_error("Signal error.");
-			eraseClient(_server_socket);
-			exit(0);
-		}
 		//cout  << j++ << "run\n";
-
 		if(select(maxFD + 1, &copy, NULL, NULL, NULL) < 0){
 			throw runtime_error("Select error.");
 		}

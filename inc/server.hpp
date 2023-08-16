@@ -23,7 +23,6 @@ class Server: public Command{
 		bool	passwordAuth(int socket);
 		void	welcome(int socket);
 		void	runServ();
-		void    eraseClient(int socket);
 
 	//commands
 		void	Invite();
