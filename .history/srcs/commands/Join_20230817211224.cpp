@@ -59,9 +59,12 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 				_clients[socket].sendMessage(ERR_BADCHANNELKEY(_clients[socket].getNickname(),arg[0]));
 
 		} else {
-			_channels[arg[0]].setTopicNickname(client.getNickname());
-			_clients[socket].sendMessage(RPL_TOPIC(_channels[arg[0]].getTopicNickname(), arg[0], _channels[arg[0]].getTopic()));
-			_clients[socket].sendMessage(RPL_TOPICWHOTIME(_channels[arg[0]].getTopicNickname(), arg[0], _clients[socket].getNickname(), _channels[arg[0]].getTimestamp()));
+				string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
+				string msg = RPL_TOPIC(concernedClientNickname, channelName, topic);
+			}
+			for (int i = 0; i < sizeof(usersInChannel); i++) {
+				string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
+				string msg = RPL_TOPICWHOTIME(concernedClientNickname, channelName, currentClientNickname, _channels[channelName].getTimestamp());
         	_channels[arg[0]].addUser(client.getNickname(), client.getSocket());
 			_channels[arg[0]].removeGuest(_clients[socket].getNickname());
 		}

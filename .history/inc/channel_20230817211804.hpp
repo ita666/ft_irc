@@ -30,8 +30,7 @@ class Channel {
 		string&	getTimestamp();
 		void	setTimestamp(string&);
 
-		string& getTopicNickname();
-		void	setTopicNickname(string&);
+		string& get
 
 		map<string, int>&		getMap();
 		MODES	getCMode();

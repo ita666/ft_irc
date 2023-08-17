@@ -30,9 +30,6 @@ class Channel {
 		string&	getTimestamp();
 		void	setTimestamp(string&);
 
-		string& getTopicNickname();
-		void	setTopicNickname(string&);
-
 		map<string, int>&		getMap();
 		MODES	getCMode();
 		void	setCMode(char);
@@ -54,7 +51,7 @@ class Channel {
 		void	broadcast(string msg);
 
 	private :
-		string				_topicNickname;	
+		string				_name;	
 		string				_name;
 		string				_topic;
 		string				_key;

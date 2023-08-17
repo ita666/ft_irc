@@ -37,6 +37,7 @@ map<string, int>&	Channel::getMap() { return _nameToSocket; }
 
 string&	Channel::getTimestamp(){ return (_timestamp); }
 void	Channel::setTimestamp(string& timestamp){ _timestamp = timestamp; }
+
 string&	Channel::getTopicNickname(){ return (_topicNickname); }
 void	Channel::setTopicNickname(string& topicNickname){ _topicNickname = topicNickname; }
 

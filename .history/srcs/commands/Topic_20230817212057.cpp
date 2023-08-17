@@ -29,7 +29,7 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 				strftime(timestamp, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
 				_channels[channelName].setTimestamp(timestamp);
 				_channels[channelName].setTopic("");
-				_channels[channelName].setTopicNickname(currentClientNickname);
+				_channels[channelName].set
 				_channels[channelName].broadcast(RPL_TOPIC(currentClientNickname, channelName, topic));
 				int* usersInChannel = _channels[channelName].getAllUsers();
 				for (int i = 0; i < sizeof(usersInChannel); i++) {
@@ -53,7 +53,6 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 				strftime(_channels[channelName]._timestamp, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
 				_channels[channelName].setTimestamp(timestamp);
 				_channels[channelName].setTopic(topic);
-				_channels[channelName].setTopicNickname(currentClientNickname);
 				_channels[channelName].broadcast(RPL_TOPIC(currentClientNickname, channelName, topic));
 				int* usersInChannel = _channels[channelName].getAllUsers();
 				for (int i = 0; i < sizeof(usersInChannel); i++) {
