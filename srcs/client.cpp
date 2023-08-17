@@ -10,6 +10,17 @@ Client::Client(int socket) : _socket(socket) {
 
 Client::~Client(){}
 
+
+Client& Client:: operator=(Client const &other){
+	this->_socket = other._socket;
+	this->_nickname = other._nickname;
+	this->_username = other._username;
+	this->_hostname = other._hostname;
+	this->_iswelcomed = other._iswelcomed;
+	this->_userMode = other._userMode;
+	return (*this);
+}
+
 int		Client::getSocket(){ return _socket; }
 string&	Client::getNickname(){ return _nickname; }
 string&	Client::getUser(){ return _username; }

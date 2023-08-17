@@ -9,6 +9,7 @@ class Client{
 		Client() : _socket(-1), _nickname(""), _username(""), _hostname("IRC_HELL"), _iswelcomed(false){}
 		Client(int socket);
 		~Client();
+		Client&	operator=(Client const &other);
 
 		int		getSocket();
 		string&	getNickname();
