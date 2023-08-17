@@ -31,6 +31,12 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 			_channels[channelName].setTopic("");
 			_channels[channelName].setTopicNickname(currentClientNickname);
 			_channels[channelName].broadcast(RPL_NOTOPIC(currentClientNickname, channelName));
+			int* usersInChannel = _channels[channelName].getAllUsers();
+			for (size_t i = 0; i < sizeof(usersInChannel); i++) {
+				string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
+				string msg = RPL_TOPIC(concernedClientNickname, channelName, topic);
+				send(usersInChannel[i], msg.c_str(), msg.length(), 0);
+			}
 		}
 	} else if (arg.size() == 2) {
 		if (checkChannelName(channelName) == false) {
@@ -44,6 +50,12 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 			_channels[channelName].setTopic(topic);
 			_channels[channelName].setTopicNickname(currentClientNickname);
 			_channels[channelName].broadcast(RPL_TOPIC(currentClientNickname, channelName, topic));
+			int* usersInChannel = _channels[channelName].getAllUsers();
+			for (size_t i = 0; i < sizeof(usersInChannel); i++) {
+				string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
+				string msg = RPL_TOPIC(concernedClientNickname, channelName, topic);
+				send(usersInChannel[i], msg.c_str(), msg.length(), 0);
+			}
 		}
 	}
 }

@@ -11,13 +11,13 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 	Client currentClient = _clients[socket];
 	
 	
-	if (arg.size() == 0){
-		cout << "TOPIC current client needmore param\n";
-		return currentClient.sendMessage(ERR_NEEDMOREPARAMS(currentClientNickname, "TOPIC"));
-	}
 	if (currentClient.checkRight() == false){
 		cout << "TOPIC current client right\n";
 		return currentClient.sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
+	}
+	if (arg.size() == 0){
+		cout << "TOPIC current client needmore param\n";
+		return currentClient.sendMessage(ERR_NEEDMOREPARAMS(currentClientNickname, "TOPIC"));
 	}
 	else if (arg.size() == 1) {
 		if (checkChannelName(channelName) == false) {
@@ -30,7 +30,18 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 			cout << "TOPIC clean sending to all user \n";
 			_channels[channelName].setTopic("");
 			_channels[channelName].setTopicNickname(currentClientNickname);
-			_channels[channelName].broadcast(RPL_NOTOPIC(currentClientNickname, channelName));
+			_channels[channelName].broadcast(RPL_TOPIC(currentClientNickname, channelName, topic));
+			int* usersInChannel = _channels[channelName].getAllUsers();
+			for (size_t i = 0; i < sizeof(usersInChannel); i++) {
+				string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
+				string msg = RPL_TOPIC(concernedClientNickname, channelName, topic);
+				send(usersInChannel[i], msg.c_str(), msg.length(), 0);
+			}
+			for (size_t i = 0; i < sizeof(usersInChannel); i++) {
+				string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
+				string msg = RPL_TOPICWHOTIME(concernedClientNickname, channelName, currentClientNickname, _channels[channelName].getTimestamp());
+				send(usersInChannel[i], msg.c_str(), msg.length(), 0);
+			}
 		}
 	} else if (arg.size() == 2) {
 		if (checkChannelName(channelName) == false) {
@@ -44,6 +55,17 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 			_channels[channelName].setTopic(topic);
 			_channels[channelName].setTopicNickname(currentClientNickname);
 			_channels[channelName].broadcast(RPL_TOPIC(currentClientNickname, channelName, topic));
+			int* usersInChannel = _channels[channelName].getAllUsers();
+			for (size_t i = 0; i < sizeof(usersInChannel); i++) {
+				string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
+				string msg = RPL_TOPIC(concernedClientNickname, channelName, topic);
+				send(usersInChannel[i], msg.c_str(), msg.length(), 0);
+			}
+			for (size_t i = 0; i < sizeof(usersInChannel); i++) {
+				string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
+				string msg = RPL_TOPICWHOTIME(concernedClientNickname, channelName, currentClientNickname, _channels[channelName].getTimestamp());
+				send(usersInChannel[i], msg.c_str(), msg.length(), 0);
+			}
 		}
 	}
 }

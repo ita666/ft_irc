@@ -61,7 +61,7 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 
 		} else {
 			_channels[arg[0]].setTopicNickname(client.getNickname());
-			_clients[socket].sendMessage(RPL_TOPIC(_channels[arg[0]].getTopicNickname(), arg[0], _channels[arg[0]].getTopic()));
+			_clients[socket].sendMessage(RPL_TOPIC(_channels[arg[0]].getTopicNickname(), arg[0], ));
         	_channels[arg[0]].addUser(client.getNickname(), client.getSocket());
 			_channels[arg[0]].removeGuest(_clients[socket].getNickname());
 		}
