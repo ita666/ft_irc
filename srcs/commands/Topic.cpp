@@ -14,17 +14,24 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 	time_t rawtime;
 	time(&rawtime);
 
-	if (currentClient.checkRight() == false)
+	if (currentClient.checkRight() == false){
+		cout << "TOPIC current client right\n";
 		return currentClient.sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
+	}
 	else {
-		if (arg.size() == 0)
+		if (arg.size() == 0){
+			cout << "TOPIC current client needmore param\n";
 			return currentClient.sendMessage(ERR_NEEDMOREPARAMS(currentClientNickname, "TOPIC"));
+		}
 		else if (arg.size() == 1) {
 			if (checkChannelName(channelName) == false) {
+				cout << "TOPIC clean no such channel \n";
 				return currentClient.sendMessage(ERR_NOSUCHCHANNEL(currentClientNickname, channelName));
 			} else if (_channels[channelName].isUserInChannel(currentClientNickname) == false) {
+				cout << "TOPIC clean not on channel \n";
 				return currentClient.sendMessage(ERR_NOTONCHANNEL(currentClientNickname, channelName));
 			} else {
+				cout << "TOPIC clean sending to all user \n"
 				struct tm* timeinfo = localtime(&rawtime);
 				strftime(timestamp, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
 				_channels[channelName].setTimestamp(timestamp);
@@ -45,10 +52,14 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 			}
 		} else if (arg.size == 2) {
 			if (checkChannelName(channelName) == false) {
+				cout << "TOPIC SEND no such channel\n";
 				return currentClient.sendMessage(ERR_NOSUCHCHANNEL(currentClientNickname, channelName));
 			} else if (_channels[channelName].isUserInChannel(currentClientNickname) == false) {
+				cout << "TOPIC SEND not on channel\n";
 				return currentClient.sendMessage(ERR_NOTONCHANNEL(currentClientNickname, channelName));
 			} else {
+
+				cout << "TOPIC SEND to all user\n";
 				struct tm* timeinfo = localtime(&rawtime);
 				strftime(_channels[channelName]._timestamp, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
 				_channels[channelName].setTimestamp(timestamp);
