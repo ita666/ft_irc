@@ -36,7 +36,7 @@ string	Client::getUMode(){
 	if((_userMode & l) == l){ modes += 'l';}
 	return (modes);
 }
-bool	Client::checkRight() {return (_userMode & o) == o;}
+bool	Client::checkRight(){return (_userMode & o) == o;}
 
 
 void	Client::setUser(string user) { _username = user; }

@@ -9,10 +9,9 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 	string channelName = arg[0];
 	string topic = arg[1];
 	Client currentClient = _clients[socket];
-	
-	char[20] timestamp;
 	time_t rawtime;
 	time(&rawtime);
+	struct tm* timeinfo
 
 	if (currentClient.checkRight() == false)
 		return currentClient.sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
@@ -25,9 +24,6 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 			} else if (_channels[channelName].isUserInChannel(currentClientNickname) == false) {
 				return currentClient.sendMessage(ERR_NOTONCHANNEL(currentClientNickname, channelName));
 			} else {
-				struct tm* timeinfo = localtime(&rawtime);
-				strftime(timestamp, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
-				_channels[channelName].setTimestamp(timestamp);
 				_channels[channelName].setTopic("");
 				_channels[channelName].broadcast(RPL_TOPIC(currentClientNickname, channelName, topic));
 				int* usersInChannel = _channels[channelName].getAllUsers();
@@ -38,7 +34,7 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 				}
 				for (int i = 0; i < sizeof(usersInChannel); i++) {
 					string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
-					string msg = RPL_TOPICWHOTIME(concernedClientNickname, channelName, currentClientNickname, _channels[channelName].getTimestamp());
+					string msg = RPL_TOPICWHOTIME(concernedClientNickname, channelName, currentClientNickname, time);
 					send(usersInChannel[i], msg.c_str(), msg.length(), 0);
 				}
 			}
@@ -48,9 +44,6 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 			} else if (_channels[channelName].isUserInChannel(currentClientNickname) == false) {
 				return currentClient.sendMessage(ERR_NOTONCHANNEL(currentClientNickname, channelName));
 			} else {
-				struct tm* timeinfo = localtime(&rawtime);
-				strftime(_channels[channelName]._timestamp, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
-				_channels[channelName].setTimestamp(timestamp);
 				_channels[channelName].setTopic(topic);
 				_channels[channelName].broadcast(RPL_TOPIC(currentClientNickname, channelName, topic));
 				int* usersInChannel = _channels[channelName].getAllUsers();
@@ -61,10 +54,17 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 				}
 				for (int i = 0; i < sizeof(usersInChannel); i++) {
 					string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
-					string msg = RPL_TOPICWHOTIME(concernedClientNickname, channelName, currentClientNickname, _channels[channelName].getTimestamp());
+					string msg = RPL_TOPICWHOTIME(concernedClientNickname, channelName, currentClientNickname, time);
 					send(usersInChannel[i], msg.c_str(), msg.length(), 0);
 				}
 			}
 		}
 	}
 }
+// RPL_TOPIC
+// RPL_NOTOPIC
+RPL_TOPICWHOTIME
+ERR_NOPRIVILEGES
+// ERR_NEEDMOREPARAMS
+ERR_NOTONCHANNEL
+// ERR_NOSUCHCHANNEL
