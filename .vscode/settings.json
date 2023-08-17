@@ -3,6 +3,7 @@
 	"map": "cpp",
 	"iostream": "cpp",
 	"string_view": "cpp",
-	"string": "cpp"
+	"string": "cpp",
+	"ostream": "cpp"
 }
 }

@@ -26,7 +26,7 @@ void	Channel::setLimit(string limit) {
 	istringstream iss(limit);
 	iss >> limitInt;
 	_limit = limitInt;
-	}
+}
 
 map<string, int>&	Channel::getMap() { return _nameToSocket; }
 
@@ -36,7 +36,7 @@ void	Channel::setCMode(char c){
 	switch (c) {
         case 'i': _chanMode = static_cast<e_modes>(_chanMode | i);
 					cout << "set i mode" << endl;
-		 break;
+		break;
         case 't': _chanMode = static_cast<e_modes>(_chanMode | t); break;
         case 'k': _chanMode = static_cast<e_modes>(_chanMode | k); break;
         case 'o': _chanMode = static_cast<e_modes>(_chanMode | o); break;
