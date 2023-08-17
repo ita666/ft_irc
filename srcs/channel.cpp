@@ -133,7 +133,12 @@ bool Channel::isEmpty(){
 }
 
 string	Channel::getName(int socket){
-	if (_socketToName.find(socket) != _socketToName.end()){
 		return (_socketToName[socket]);
-	} else { throw runtime_error("Socket not found in the channel."); }
-} 
+}
+
+void Channel::broadcast(string msg) {
+	int* usersInChannel = getAllUsers();
+	for (int i = 0; i < (int)_nameToSocket.size(); i++) {
+		send(usersInChannel[i], msg.c_str(), msg.length(), 0);
+	}
+}

@@ -33,7 +33,7 @@ class Server: public Command{
 		void 	Kick();
 		void	Ping();
 		void	Privmsg(int socket, vector<string>& arg, Client);
-		void	Topic();
+		void	Topic(int socket, vector<string>& arg, Client);
 		void	Whois();
 		void	Nick(int socket, vector<string>& arg, Client);
     	void	User(int socket, vector<string>& arg, Client);

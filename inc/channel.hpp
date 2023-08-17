@@ -45,6 +45,8 @@ class Channel {
 		int*	getAllUsers();
 		string	getName(int);
 
+		void	broadcast(string msg);
+
 	private :
 		string				_name;
 		string				_topic;
