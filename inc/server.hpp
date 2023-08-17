@@ -30,7 +30,7 @@ class Server: public Command{
 		void	Part(int socket, vector<string>& arg, Client);
 		void	Mode(int socket, vector<string>& arg, Client);
 		void	Pass(int socket, vector<string>& arg, Client);
-		void 	Kick();
+		void 	Kick(int socket, vector<string>& arg, Client);
 		void	Ping();
 		void	Privmsg(int socket, vector<string>& arg, Client);
 		void	Topic(int socket, vector<string>& arg, Client);
