@@ -19,7 +19,7 @@ void Server::Privmsg(int socket, vector<string> &arg, Client cl) {
         message += " " + arg[i];
 
 	}
-
+	//add the verification for user in channel
 	for (size_t i = 0; i < sizeof(users); i++) {
 		if (users[i] != socket) {
 			string msg = string(":") + cl.getNickname() + "!" + cl.getNickname() + "@localhost PRIVMSG " + channelName + " :" + message + "\r\n";

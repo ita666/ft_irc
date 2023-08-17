@@ -20,8 +20,10 @@ void Server::Invite(int socket, vector<string>& arg, Client cl) {
 		return _clients[socket].sendMessage(ERR_NOSUCHCHANNEL(currentClientNickname, channelName));
 	if (_channels[channelName].isUserInChannel(currentClientNickname) == false)
 		return _clients[socket].sendMessage(ERR_NOTONCHANNEL(currentClientNickname, channelName));
-	if (_channels[channelName].isUserInChannel(guest) == false)
+	if (_channels[channelName].isUserInChannel(guest) == false){
+		cout << "user not in channel" << endl;
 		return _clients[socket].sendMessage(ERR_USERNOTINCHANNEL(currentClientNickname, channelName, guest));
+	}
 	if (_channels[channelName].findInvited(guest) != guest) {
 		_channels[channelName].addGuest(guest);
 		_clients[socket].sendMessage(RPL_INVITING(currentClientNickname, guest, channelName));
