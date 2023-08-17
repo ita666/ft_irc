@@ -28,6 +28,11 @@ void	Channel::setLimit(string limit) {
 	_limit = limitInt;
 }
 
+
+string& Channel::getKey(){ return (_key); }
+void	Channel::setKey(string& key){ _key = key; }
+void	Channel::unsetKey(){ _key = "" ;}
+
 map<string, int>&	Channel::getMap() { return _nameToSocket; }
 
 MODES Channel::getCMode(){ return (_chanMode); }
