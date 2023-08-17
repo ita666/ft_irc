@@ -80,3 +80,4 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 		}
 	}
 }
+}

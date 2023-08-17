@@ -18,7 +18,7 @@ class Channel {
 		void	setName(string&);
 
 		string	getTopic();
-		void	setTopic(string);
+		void	setTopic(string& );
 
 		string&	getKey();
 		void	setKey(string&);
@@ -27,8 +27,8 @@ class Channel {
 		size_t&	getLimit();
 		void	setLimit(string);
 
-		char*		getTimestamp();
-		void		setTimestamp(char*);
+		char*&	getTimestamp();
+		void		setTimestamp(char*&);
 
 		string& getTopicNickname();
 		void	setTopicNickname(string&);
@@ -58,7 +58,7 @@ class Channel {
 		string				_name;
 		string				_topic;
 		string				_key;
-		char*				_timestamp;
+		time_t*				_timestamp;
 		size_t				_limit;
 		vector<string>		_invited;
 		map<string, int>	_nameToSocket;

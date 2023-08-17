@@ -18,7 +18,7 @@ class Channel {
 		void	setName(string&);
 
 		string	getTopic();
-		void	setTopic(string);
+		void	setTopic(string& );
 
 		string&	getKey();
 		void	setKey(string&);
@@ -27,8 +27,8 @@ class Channel {
 		size_t&	getLimit();
 		void	setLimit(string);
 
-		char*		getTimestamp();
-		void		setTimestamp(char*);
+		char*&	getTimestamp();
+		void		setTimestamp(char*&);
 
 		string& getTopicNickname();
 		void	setTopicNickname(string&);

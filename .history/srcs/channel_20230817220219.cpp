@@ -1,12 +1,12 @@
 #include "channel.hpp"
 
 Channel::Channel(){	
-	_topic	= "";
+	_topic	= "Elephant are pregnant for 20 month";
 	_key	= "";
 	_chanMode   = static_cast<MODES>(0);
 	}
 Channel::Channel(string name) : _name(name){
-	_topic	= "";
+	_topic	= "Elephant are pregnant for 20 month";
 	_key	= "";
 	_chanMode   = static_cast<MODES>(0);
 }
@@ -17,7 +17,7 @@ string	Channel::getName() { return _name; }
 void	Channel::setName(string& name){ _name = name; }
 
 string	Channel::getTopic() { return _topic; }
-void	Channel::setTopic(string topic){ _topic = topic; }
+void	Channel::setTopic(string& topic){ _topic = topic; }
 
 size_t&	Channel::getLimit() { return _limit; }
 void	Channel::setLimit(string limit) {

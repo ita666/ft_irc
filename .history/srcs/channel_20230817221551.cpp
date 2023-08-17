@@ -6,7 +6,7 @@ Channel::Channel(){
 	_chanMode   = static_cast<MODES>(0);
 	}
 Channel::Channel(string name) : _name(name){
-	_topic	= "";
+	_topic	= "Elephant are pregnant for 20 month";
 	_key	= "";
 	_chanMode   = static_cast<MODES>(0);
 }

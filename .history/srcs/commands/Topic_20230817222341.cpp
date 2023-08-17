@@ -23,7 +23,7 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 		cout << "TOPIC current client needmore param\n";
 		return currentClient.sendMessage(ERR_NEEDMOREPARAMS(currentClientNickname, "TOPIC"));
 	}
-	else if (arg.size() == 1) {
+	if (arg.size() == 1) {
 		if (checkChannelName(channelName) == false) {
 			cout << "TOPIC clean no such channel \n";
 			return currentClient.sendMessage(ERR_NOSUCHCHANNEL(currentClientNickname, channelName));

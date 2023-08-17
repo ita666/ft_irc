@@ -18,7 +18,7 @@ class Channel {
 		void	setName(string&);
 
 		string	getTopic();
-		void	setTopic(string);
+		void	setTopic(string& );
 
 		string&	getKey();
 		void	setKey(string&);
