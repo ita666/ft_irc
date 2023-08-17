@@ -22,6 +22,7 @@ class Channel {
 
 		string&	getKey();
 		void	setKey(string&);
+		void	unsetKey();
 
 		size_t&	getLimit();
 		void	setLimit(string);

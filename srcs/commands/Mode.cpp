@@ -27,8 +27,15 @@ void	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('t'); }
 				break;
 			case 'k' :
-				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('k'); }
-				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('k'); }
+				if(arg[1][i] == '-'){ 
+					_channels[arg[0]].removeCMode('k'); 
+					_channels[arg[0]].unsetKey();
+				}
+				else if(arg[1][i] == '+') { 
+					_channels[arg[0]].setCMode('k');
+					_channels[arg[0]].setKey(arg[2]);
+					arg.erase(arg.begin() + 2);
+				}
 				break;
 			case 'o' :
 				if(arg[1][i] == '-'){ 
