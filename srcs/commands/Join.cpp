@@ -11,11 +11,12 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 	cout << "SODFIJSOIDFJ " << client.getNickname() << "\n";
 	cout << "FDOSIFJ BIS" << _clients[socket].getNickname() << "\n";
 
-	bool isInvite = _channels[arg[0]].isInviteOnly(client.getNickname()) == true;
-	bool isKey = arg.size() < 2 && (_channels[arg[0]].getCMode() & k) == k && arg[1] != _channels[arg[0]].getKey();
-	bool isLimit = (_channels[arg[0]].getCMode() & l) == l && _channels[arg[0]].getMap().size() >= _channels[arg[0]].getLimit();
+	bool isInvite = (_channels[arg[0]].isInviteOnly(client.getNickname()) == true);
+	bool isKey = (arg.size() < 2 && (_channels[arg[0]].getCMode() & k) == k && arg[1] != _channels[arg[0]].getKey());
+	bool isLimit = ((_channels[arg[0]].getCMode() & l) == l && _channels[arg[0]].getMap().size() >= _channels[arg[0]].getLimit());
 
-	if (_channels.find(arg[0]) == _channels.end()){ // if the chan does not exist create it and add the user and give him the operator right
+	cout << "test join " << (_channels.find(arg[0]) == _channels.end()) << "\n";
+	if (!(_channels.find(arg[0]) == _channels.end())){ // if the chan does not exist create it and add the user and give him the operator right
 		_channels[arg[0]] = Channel (arg[0]);
 
 		cout << " join name " << _channels[arg[0]].getName() << " \n";

@@ -20,6 +20,7 @@ Server::Server(char *port, char *pass){
 	_commands["MODE"] = &Server::Mode; //adding Mode for the command map
 	_commands["PASS"] = &Server::Pass; //adding PAss for the command map
 	_commands["INVITE"] = &Server::Invite; //adding Invite for the command map
+	_commands["KICK"] = &Server::Kick; //adding Kick for the command map
 	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
 
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
