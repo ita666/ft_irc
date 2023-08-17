@@ -6,7 +6,7 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by yanthoma          #+#    #+#              #
-#    Updated: 2023/08/14 22:48:27 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/08/16 00:58:13 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@
 # /* ~~~~~~ SOURCES ~~~~~~ */
 SRCS	=   commands/0-Command.cpp client.cpp channel.cpp commands/Nick.cpp commands/Pass.cpp\
  			commands/Join.cpp commands/Mode.cpp commands/Part.cpp commands/Privmsg.cpp\
+			commands/Invite.cpp\
 			 server.cpp main.cpp\
 
 
@@ -34,18 +35,22 @@ RM		= rm -rf
 all:		${NAME}
 
 ${OBJDIR}/%.o : ${SRCDIR}%.cpp ${INC}
-				mkdir -p $(dir $@)
-				${CC} ${CFLAGS} ${CINC} -c $< -o $@
+				@echo "\e[1;32mFT_IRC [COMPILING...]\e[0m"
+				@mkdir -p $(dir $@)
+				@${CC} ${CFLAGS} ${CINC} -c $< -o $@
 
 ${NAME}:	${OBJS}
-			${CC} ${CFLAGS} ${OBJS} -o ${NAME}
+			@${CC} ${CFLAGS} ${OBJS} -o ${NAME}
+			@echo "\e[1;34mFT_IRC [READY]\e[0m"
 
 clean:
-			${RM} ${OBJS}${OBJDIR}
+			@${RM} ${OBJS}${OBJDIR}
+			@echo "\e[1;31mFT_IRC [CLEAN]\e[0m"
 
 fclean:		
-			${RM} ${OBJS} ${OBJDIR}
-			${RM} ${NAME}
+			@${RM} ${OBJS} ${OBJDIR}
+			@${RM} ${NAME}
+			@echo "\e[1;31mFT_IRC [ALL CLEAN]\e[0m"
 
 re:			fclean all
 

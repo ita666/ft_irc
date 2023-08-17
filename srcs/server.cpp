@@ -18,13 +18,16 @@ Server::Server(char *port, char *pass){
 	_commands["JOIN"] = &Server::Join; //adding Join for the command map
 	_commands["PART"] = &Server::Part; //adding Part for the command map
 	_commands["MODE"] = &Server::Mode; //adding Mode for the command map
-	_commands["Pass"] = &Server::Pass; //adding Mode for the command map
+	_commands["PASS"] = &Server::Pass; //adding PAss for the command map
+	_commands["INVITE"] = &Server::Invite; //adding Invite for the command map
 	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
 
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	initServ(); // INIT SERV DUH
 	runServ();  // RUN THE SERV =)
+	signal(SIGPIPE, SIG_IGN);
 }
+
 
 void Server::setPort(char *input){
 	//convert the char * port to an int go cpp0 if you are an idiot
@@ -113,17 +116,8 @@ void Server::handleClient(int socket){
 		handleCommand(socket, command, *this, _clients[socket]);
 		}
 		//cout <<"client " << _clients[socket].getNickname() << " " <<  _clients[socket].getUser() << _clients[socket].getIsWelcomed() << '\n';
-
-		if(_clients[socket].isReady() && !_clients[socket].getIsWelcomed()){
-		cout << "welcome\n";
-		_clients[socket].setIsWelcomed(true);
-		string nickname = _clients[socket].getNickname();
-		string user = _clients[socket].getUser();
-		string host = _clients[socket].getHost();
-		string welcome_msg = (string)":" + SERVER_NAME " 001 " + nickname + " :Welcome to IRC " + nickname + "!" + user + "@" + host + "\r\n";
-		send(socket, welcome_msg.c_str(), welcome_msg.size(), 0);
-
-		}
+		welcome(socket);
+		
 		//cout << "error\n";
 		//cout << message << endl;
 	}
@@ -141,7 +135,6 @@ void Server::runServ(){
 		if(select(maxFD + 1, &copy, NULL, NULL, NULL) < 0){
 			throw runtime_error("Select error.");
 		}
-	cout << "valgrind\n";
 		for (int i = 0; i <= maxFD; i++){
 			//cout  << j++ << "run\n";
 			if(FD_ISSET(i, &copy)){
@@ -171,4 +164,15 @@ void Server::User(int socket, vector<string>& arg, Client cl){
 	_clients[socket].setUser(arg[0]);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
+}
+
+bool Server::checkChannelName(string channelName) {
+	map<string, Channel>::iterator it;
+
+	for (it = _channels.begin(); it != _channels.end(); it++) {
+		if (channelName == it->first) {
+			return true;
+		}
+	}
+	return false;
 }

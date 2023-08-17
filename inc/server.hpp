@@ -20,21 +20,26 @@ class Server: public Command{
 		bool	nicknameAlreadyUsed(string name, Client cl);
 		bool	isNicknamePresent(string nickName);
 		// removeClient();
-		// passwordAuth(int client_socket);
+		bool	passwordAuth(int socket);
+		void	welcome(int socket);
 		void	runServ();
 
 	//commands
-		void	Invite();
+		void	Invite(int socket, vector<string>& arg, Client);
 		void	Join(int socket, vector<string>& arg, Client);
 		void	Part(int socket, vector<string>& arg, Client);
 		void	Mode(int socket, vector<string>& arg, Client);
 		void	Pass(int socket, vector<string>& arg, Client);
+		void 	Kick(int socket, vector<string>& arg, Client);
 		void	Ping();
 		void	Privmsg(int socket, vector<string>& arg, Client);
-		void	Topic();
+		void	Topic(int socket, vector<string>& arg, Client);
 		void	Whois();
 		void	Nick(int socket, vector<string>& arg, Client);
     	void	User(int socket, vector<string>& arg, Client);
+
+		void	checkFlag(int socket, vector<string>& arg, int i, Client);
+		bool	checkChannelName(string channelName);
 
 	private:
 		int							_port;
@@ -43,6 +48,7 @@ class Server: public Command{
 		struct sockaddr_in			_server_address;
 		fd_set						_master_set;
 		map<int, Client>			_clients; // a map of client with their info to handle them the key is the socket
+		map<string, Client>			_stringToClients;
 		map<string, Channel>		_channels; // to store the future channel name and check if they already exist
 };
 
