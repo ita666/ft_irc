@@ -16,6 +16,7 @@
 SRCS	=   commands/0-Command.cpp client.cpp channel.cpp commands/Nick.cpp commands/Pass.cpp\
  			commands/Join.cpp commands/Mode.cpp commands/Part.cpp commands/Privmsg.cpp\
 			commands/Invite.cpp commands/Kick.cpp\
+			commands/Invite.cpp commands/Topic.cpp\
 			 server.cpp main.cpp\
 
 

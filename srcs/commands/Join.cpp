@@ -60,6 +60,10 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 				_clients[socket].sendMessage(ERR_BADCHANNELKEY(_clients[socket].getNickname(),arg[0]));
 
 		} else {
+			_channels[arg[0]].setTopicNickname(client.getNickname());
+			_clients[socket].sendMessage(RPL_NOTOPIC(_channels[arg[0]].getTopicNickname(), arg[0]));
+			if (_channels[arg[0]].getTopic() != "")
+				_clients[socket].sendMessage(RPL_TOPICWHOTIME(_channels[arg[0]].getTopicNickname(), arg[0], _clients[socket].getNickname(), _channels[arg[0]].getTimestamp()));
         	_channels[arg[0]].addUser(client.getNickname(), client.getSocket());
 			_channels[arg[0]].removeGuest(_clients[socket].getNickname());
 		}
@@ -68,7 +72,6 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 		send(client.getSocket(), errorMsg.c_str(), errorMsg.length(), 0);
     	}
 	}
-	_channels[arg[0]].getAllUsers();
 }
 
 // lik
