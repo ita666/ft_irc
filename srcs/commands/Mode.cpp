@@ -48,6 +48,7 @@ void	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 				else if(arg[1][i] == '+') {
 					_channels[arg[0]].setCMode('l');
 					_channels[arg[0]].setLimit(arg[2]);
+					arg.erase(arg.begin() + 2);
 				}
 				break;
 		}
