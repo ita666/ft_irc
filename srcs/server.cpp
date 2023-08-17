@@ -28,6 +28,7 @@ Server::Server(char *port, char *pass){
 	signal(SIGPIPE, SIG_IGN);
 }
 
+
 void Server::setPort(char *input){
 	//convert the char * port to an int go cpp0 if you are an idiot
 	int port;
