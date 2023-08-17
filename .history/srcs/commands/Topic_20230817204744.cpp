@@ -68,3 +68,10 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 		}
 	}
 }
+// RPL_TOPIC
+// RPL_NOTOPIC
+RPL_TOPICWHOTIME
+ERR_NOPRIVILEGES
+// ERR_NEEDMOREPARAMS
+ERR_NOTONCHANNEL
+// ERR_NOSUCHCHANNEL
