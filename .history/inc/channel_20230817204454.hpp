@@ -27,9 +27,6 @@ class Channel {
 		size_t&	getLimit();
 		void	setLimit(string);
 
-		string&	getTimestamp();
-		void	setTimestamp(string&);
-
 		map<string, int>&		getMap();
 		MODES	getCMode();
 		void	setCMode(char);

@@ -38,7 +38,7 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 				}
 				for (int i = 0; i < sizeof(usersInChannel); i++) {
 					string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
-					string msg = RPL_TOPICWHOTIME(concernedClientNickname, channelName, currentClientNickname, _channels[channelName].getTimestamp());
+					string msg = RPL_TOPICWHOTIME(concernedClientNickname, channelName, currentClientNickname, _channels[channelName]._timestamp);
 					send(usersInChannel[i], msg.c_str(), msg.length(), 0);
 				}
 			}
@@ -61,10 +61,17 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 				}
 				for (int i = 0; i < sizeof(usersInChannel); i++) {
 					string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
-					string msg = RPL_TOPICWHOTIME(concernedClientNickname, channelName, currentClientNickname, _channels[channelName].getTimestamp());
+					string msg = RPL_TOPICWHOTIME(concernedClientNickname, channelName, currentClientNickname, _channels[channelName].g);
 					send(usersInChannel[i], msg.c_str(), msg.length(), 0);
 				}
 			}
 		}
 	}
 }
+// RPL_TOPIC
+// RPL_NOTOPIC
+RPL_TOPICWHOTIME
+ERR_NOPRIVILEGES
+// ERR_NEEDMOREPARAMS
+ERR_NOTONCHANNEL
+// ERR_NOSUCHCHANNEL

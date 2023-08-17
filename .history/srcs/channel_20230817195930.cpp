@@ -35,9 +35,6 @@ void	Channel::unsetKey(){ _key = "" ;}
 
 map<string, int>&	Channel::getMap() { return _nameToSocket; }
 
-string&	Channel::getTimestamp(){ return (_timestamp); }
-void	Channel::setTimestamp(string& timestamp){ _timestamp = timestamp; }
-
 MODES Channel::getCMode(){ return (_chanMode); }
 
 void	Channel::setCMode(char c){

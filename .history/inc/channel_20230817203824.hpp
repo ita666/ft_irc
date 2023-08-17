@@ -27,9 +27,6 @@ class Channel {
 		size_t&	getLimit();
 		void	setLimit(string);
 
-		string&	getTimestamp();
-		void	setTimestamp(string&);
-
 		map<string, int>&		getMap();
 		MODES	getCMode();
 		void	setCMode(char);
@@ -54,7 +51,7 @@ class Channel {
 		string				_name;
 		string				_topic;
 		string				_key;
-		string				_timestamp;
+		char[20]			_timestamp;
 		size_t				_limit;
 		vector<string>		_invited;
 		map<string, int>	_nameToSocket;
