@@ -50,6 +50,6 @@ void 	Server::Kick(int socket, vector<string>& arg, Client cl){
 	string msg = ":" + currentClientNickname + "!" + currentClientUsername + "@localhost KICK " + arg[0] + " " + arg[1] + "\r\n";
 	cout << " tu degages " << guest << "\n";
 	guestCl.sendMessage(msg);
-	_clients[socket].sendMessage(KICK(currentClientNickname, _clients[socket].getUser(), channelName, guest, comment));
+	_channels[channelName].broadcast(KICK(currentClientNickname, _clients[socket].getUser(), channelName, guest, comment));
 	_channels[channelName].removeUser(channelName, guestCl.getSocket());
 }
