@@ -139,6 +139,8 @@ string	Channel::getName(int socket){
 		return (_socketToName[socket]);
 }
 
+MODES&	Channel::getMode(){ return (_chanMode); }
+
 void Channel::broadcast(string msg) {
 	int* usersInChannel = getAllUsers();
 	for (int i = 0; i < (int)_nameToSocket.size(); i++) {

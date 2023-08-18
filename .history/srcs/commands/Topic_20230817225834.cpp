@@ -1,4 +1,5 @@
 #include "server.hpp"
+#include "command.hpp"
 #include "client.hpp"
 
 void Server::Topic(int socket, vector<string>& arg, Client cl) {
@@ -9,17 +10,14 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 	string topic = arg[1];
 	Client currentClient = _clients[socket];
 	
-	if (arg.size() == 0){
-		cout << "TOPIC current client needmore param\n";
-		return currentClient.sendMessage(ERR_NEEDMOREPARAMS(currentClientNickname, "TOPIC"));
-	}
-	if (currentClient.checkRight() == false) {
+	
+	if (currentClient.checkRight() == false){
 		cout << "TOPIC current client right\n";
 		return currentClient.sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
 	}
-	if ((_channels[channelName].getCMode() & t) == t) {
-		cout << "TOPIC current client -T not activated\n";
-		return currentClient.sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
+	if (arg.size() == 0){
+		cout << "TOPIC current client needmore param\n";
+		return currentClient.sendMessage(ERR_NEEDMOREPARAMS(currentClientNickname, "TOPIC"));
 	}
 	else if (arg.size() == 1) {
 		if (checkChannelName(channelName) == false) {
@@ -30,8 +28,15 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 			return currentClient.sendMessage(ERR_NOTONCHANNEL(currentClientNickname, channelName));
 		} else {
 			cout << "TOPIC clean sending to all user \n";
-			// _channels[channelName].setTopicNickname(currentClientNickname);
-			_channels[channelName].broadcast(RPL_TOPIC(currentClientNickname, channelName, _channels[channelName].getTopic()));
+			_channels[channelName].setTopic("");
+			_channels[channelName].setTopicNickname(currentClientNickname);
+			_channels[channelName].broadcast(RPL_TOPIC(currentClientNickname, channelName, topic));
+			int* usersInChannel = _channels[channelName].getAllUsers();
+			for (size_t i = 0; i < sizeof(usersInChannel); i++) {
+				string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
+				string msg = RPL_TOPIC(concernedClientNickname, channelName, topic);
+				send(usersInChannel[i], msg.c_str(), msg.length(), 0);
+			}
 		}
 	} else if (arg.size() == 2) {
 		if (checkChannelName(channelName) == false) {
@@ -44,7 +49,13 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 			cout << "TOPIC SEND to all user\n";
 			_channels[channelName].setTopic(topic);
 			_channels[channelName].setTopicNickname(currentClientNickname);
-			_channels[channelName].broadcast(TOPIC(currentClientNickname, currentClientUsername, channelName, topic));
+			_channels[channelName].broadcast(RPL_TOPIC(currentClientNickname, channelName, topic));
+			int* usersInChannel = _channels[channelName].getAllUsers();
+			for (size_t i = 0; i < sizeof(usersInChannel); i++) {
+				string concernedClientNickname = _channels[channelName].getName(usersInChannel[i]);
+				string msg = RPL_TOPIC(concernedClientNickname, channelName, topic);
+				send(usersInChannel[i], msg.c_str(), msg.length(), 0);
+			}
 		}
 	}
 }
