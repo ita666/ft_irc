@@ -22,6 +22,7 @@ Server::Server(char *port, char *pass){
 	_commands["INVITE"] = &Server::Invite; //adding Invite for the command map
 	_commands["KICK"] = &Server::Kick; //adding Kick for the command map
 	_commands["PING"] = &Server::Kick; //adding Ping for the command map
+	_commands["TOPIC"] = &Server::Topic; //adding Topic for the command map
 	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
 
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
