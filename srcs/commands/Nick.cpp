@@ -1,5 +1,4 @@
 #include "server.hpp"
-#include "command.hpp"
 #include "client.hpp"
 
 bool Server::nicknameAlreadyUsed(string name, Client cl) {
