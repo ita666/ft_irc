@@ -16,9 +16,7 @@ class Server{
 		Server(char *, char *);
 		~Server(void);
 
-		vector<string> getCommand(string);
-		void	handleCommand(int socket, vector<string> split, Server& server, Client cl);
-		void	initMap();
+
 		void	setPort(char *);
 		int		acceptClient();
 		void	initServ();
@@ -54,8 +52,6 @@ class Server{
 	private:
 		int							_port;
 		string						_password;
-		typedef void (Server::*commandFunc)(int, vector<string>&, Client); // go to chatgpt
-		map<string, commandFunc> _commands; 
 		int							_server_socket;
 		struct sockaddr_in			_server_address;
 		fd_set						_master_set;
