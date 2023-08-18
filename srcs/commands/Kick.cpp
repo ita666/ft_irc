@@ -49,10 +49,7 @@ void 	Server::Kick(int socket, vector<string>& arg, Client cl){
 	//_clients[socket].sendMessage(RPL_INVITING(currentClientNickname, guest, channelName));
 	string msg = ":" + currentClientNickname + "!" + currentClientUsername + "@localhost KICK " + arg[0] + " " + arg[1] + "\r\n";
 	cout << " tu degages " << guest << "\n";
-	guestCl.sendMessage(msg);
-	guestCl.sendMessage(KICK(currentClientNickname, _clients[socket].getUser(), channelName, guest, comment));
+	_clients[socket].sendMessage(msg);
+	_clients[socket].sendMessage(KICK(currentClientNickname, _clients[socket].getUser(), channelName, guest, comment));
+	_channels[channelName].removeUser(channelName, guest);
 }
-
-
-	
-	//}
