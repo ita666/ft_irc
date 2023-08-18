@@ -9,6 +9,7 @@ class Client{
 		Client() : _socket(-1), _nickname(""), _username(""), _hostname("IRC_HELL"), _iswelcomed(false){}
 		Client(int socket);
 		~Client();
+		Client&	operator=(Client const &other);
 
 		int		getSocket();
 		string&	getNickname();
@@ -22,11 +23,13 @@ class Client{
 		void	setNickname(string nickname);
 		void	setIsWelcomed(bool);
 		void	setPassword(string);
-		void	setUMode(char);
-		
-		void	removeUMode(char);
+		void	setUMode();
+
 		bool	isReady();
 		void	sendMessage(const string& message);
+
+		bool	checkRight();
+		void	unsetUMode();
 
 	private	:
 		int		_socket;

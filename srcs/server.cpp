@@ -25,13 +25,17 @@ Server::Server(char *port, char *pass){
 	_commands["JOIN"] = &Server::Join; //adding Join for the command map
 	_commands["PART"] = &Server::Part; //adding Part for the command map
 	_commands["MODE"] = &Server::Mode; //adding Mode for the command map
-	_commands["PASS"] = &Server::Pass; //adding Mode for the command map
+	_commands["PASS"] = &Server::Pass; //adding PAss for the command map
+	_commands["INVITE"] = &Server::Invite; //adding Invite for the command map
+	_commands["KICK"] = &Server::Kick; //adding Kick for the command map
+	_commands["TOPIC"] = &Server::Topic; //adding Topic for the command map
 	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
 
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	initServ(); // INIT SERV DUH
 	runServ();  // RUN THE SERV =)
 }
+
 
 void Server::setPort(char *input){
 	//convert the char * port to an int go cpp0 if you are an idiot
@@ -170,6 +174,15 @@ void Server::User(int socket, vector<string>& arg, Client cl){
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
 }
 
+bool Server::checkChannelName(string channelName) {
+	map<string, Channel>::iterator it;
+
+	for (it = _channels.begin(); it != _channels.end(); it++) {
+		if (channelName == it->first) {
+			return true;
+		}
+	}
+	return false;
 vector<string> Server::getCommand(string input_client){
 
 	string tok;

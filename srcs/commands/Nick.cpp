@@ -1,8 +1,6 @@
 #include "server.hpp"
 #include "client.hpp"
 
-// comment
-
 bool Server::nicknameAlreadyUsed(string name, Client cl) {
 	map<int, Client>::iterator it;
 	for (it = _clients.begin(); it != _clients.end(); it++) {
@@ -12,8 +10,7 @@ bool Server::nicknameAlreadyUsed(string name, Client cl) {
 	return false;
 }
 
-static bool isSpecialChar(char c)
-{
+static bool isSpecialChar(char c) {
     const string specialChars = "-[]\\`_^{}|";
     return (specialChars.find(c) != string::npos);
 }
@@ -30,11 +27,16 @@ static bool isValidNickname(string nickname) {
 	return true;
 }
 
-void Server::Nick(int socket, vector<string>& arg, Client cl){
+void Server::Nick(int socket, vector<string>& arg, Client cl) {
 	
 	map<int, Client>::iterator it;
 	string currentNickname = cl.getNickname();
-	string newNickname = arg[0];
+
+	stringstream ss;
+	string str;
+	ss << socket;
+	ss >> str;
+	string newNickname = arg[0] + str;
 
 	if (arg.size() == 0)
 		return cl.sendMessage(ERR_NONICKNAMEGIVEN());
@@ -43,7 +45,6 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 			newNickname = it->second.getNickname();
 	}
 	if (newNickname == currentNickname && _clients[socket].getIsWelcomed() == 1) {
-		// cout << "NICKNAME" << (newNickname == currentNickname) << "CLIENT" <<_clients[socket].getIsWelcomed() << endl;
    		cl.sendMessage(ERR_NICKNAMEINUSE(newNickname));
 		return ;
 	}
@@ -53,7 +54,8 @@ void Server::Nick(int socket, vector<string>& arg, Client cl){
 		string msg = string(":") + _clients[socket].getNickname() + "!" + _clients[socket].getNickname() + "@localhost NICK :" + arg[0] + "\r\n";
 		send(socket, msg.c_str(), msg.length(), 0);
 	}
-	_clients[socket].setNickname(arg[0]);
+	_clients[socket].setNickname(newNickname);
+	_stringToClients[newNickname] = _clients[socket]; // NEED TO CODE OVERLOAD OPERATOR
 	string user = _clients[socket].getUser();
 	string host = _clients[socket].getHost();
 }
