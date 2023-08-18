@@ -44,7 +44,11 @@ int main() {
 			if (FD_ISSET(i, &copy)) {
 				if (i == listening) {
 					// this is a new connection
+<<<<<<< HEAD
+					i client_socket = accept(listening, nullptr, nullptr);
+=======
 					client_socket = accept(listening, NULL, NULL);
+>>>>>>> 17510d0f7a6cbd5c320d2c3cb8a23297f2541057
 					char password_request[] = "Enter password: ";
 					send(client_socket, password_request, sizeof(password_request), 0);
 					FD_SET(client_socket, &master);
