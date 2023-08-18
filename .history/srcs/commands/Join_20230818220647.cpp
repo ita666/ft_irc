@@ -11,6 +11,7 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 	cout << "join " << arg[0] << " \n";
 	cout << "SODFIJSOIDFJ " << client.getNickname() << "\n";
 	cout << "FDOSIFJ BIS " << _clients[socket].getNickname() << "\n";
+
 	
 
 	//cout << "test join " << (_channels.find(arg[0]) == _channels.end()) << "\n";
