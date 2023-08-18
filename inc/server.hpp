@@ -2,17 +2,22 @@
 #define _SERVER_HPP_
 
 #include	"includes.hpp"
-#include	"command.hpp"
 #include	"channel.hpp"
 #include	"client.hpp"
 
+extern bool running;
+
 class Channel;
 
-class Server: public Command{
-	public : 
+class Server{
+	public:
 		Server(void);
 		Server(char *, char *);
 		~Server(void);
+
+		vector<string> getCommand(string);
+		void	handleCommand(int socket, vector<string> split, Server& server, Client cl);
+		void	initMap();
 		void	setPort(char *);
 		int		acceptClient();
 		void	initServ();
@@ -44,6 +49,8 @@ class Server: public Command{
 	private:
 		int							_port;
 		string						_password;
+		typedef void (Server::*commandFunc)(int, vector<string>&, Client); // go to chatgpt
+		map<string, commandFunc> _commands; 
 		int							_server_socket;
 		struct sockaddr_in			_server_address;
 		fd_set						_master_set;
