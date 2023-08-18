@@ -14,7 +14,7 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 		cout << "TOPIC current client needmore param\n";
 		return currentClient.sendMessage(ERR_NEEDMOREPARAMS(currentClientNickname, "TOPIC"));
 	}
-	if (currentClient.checkRight() == false) {
+	if (currentClient.checkRight() == false){
 		cout << "TOPIC current client right\n";
 		return currentClient.sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
 	}

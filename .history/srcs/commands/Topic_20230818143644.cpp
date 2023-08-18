@@ -10,16 +10,12 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 	string topic = arg[1];
 	Client currentClient = _clients[socket];
 	
-	if (arg.size() == 0){
-		cout << "TOPIC current client needmore param\n";
-		return currentClient.sendMessage(ERR_NEEDMOREPARAMS(currentClientNickname, "TOPIC"));
-	}
-	if (currentClient.checkRight() == false) {
+	// if (arg.size() == 0){
+	// 	cout << "TOPIC current client needmore param\n";
+	// 	return currentClient.sendMessage(ERR_NEEDMOREPARAMS(currentClientNickname, "TOPIC"));
+	// }
+	if (currentClient.checkRight() == false){
 		cout << "TOPIC current client right\n";
-		return currentClient.sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
-	}
-	if ((_channels[channelName].getCMode() & t) == t) {
-		cout << "TOPIC current client -T not activated\n";
 		return currentClient.sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
 	}
 	else if (arg.size() == 1) {
