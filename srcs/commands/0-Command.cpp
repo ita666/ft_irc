@@ -1,13 +1,13 @@
-#include "command.hpp"
+#include "server.hpp"
 
-// comment
-Command::Command(){
-	//init the map with all the functions;
-};
+// // comment
+// Command::Command(){
+// 	//init the map with all the functions;
+// };
 
-Command::~Command(){};
+// Command::~Command(){};
 
-vector<string> Command::getCommand(string input_client){
+vector<string> Server::getCommand(string input_client){
 
 	string tok;
 	vector<string> split;
@@ -24,7 +24,7 @@ vector<string> Command::getCommand(string input_client){
 	return (split);
 }
 
-void	Command::handleCommand(int socket, vector<string> split, Server& server, Client cl){
+void	Server::handleCommand(int socket, vector<string> split, Server& server, Client cl){
 	
 	string errmsg; // variable if the command is not found int the map
 
