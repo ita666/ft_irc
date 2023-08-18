@@ -184,6 +184,8 @@ bool Server::checkChannelName(string channelName) {
 		}
 	}
 	return false;
+}
+
 vector<string> Server::getCommand(string input_client){
 
 	string tok;
