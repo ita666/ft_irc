@@ -1,5 +1,4 @@
 #include "server.hpp"
-#include "command.hpp"
 #include "client.hpp"
 
 // comment

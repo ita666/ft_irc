@@ -1,5 +1,4 @@
 #include "server.hpp"
-#include "command.hpp"
 
 bool Server::isNicknamePresent(string nickName) {
 	map<int, Client>::iterator it;

@@ -1,24 +1,20 @@
 #include "server.hpp"
 
-static bool running = true;
+bool running = false;
 
 static void handler(int sig){
 	(void)sig;
-	running = false;
-	std::cout << "running: " << running << '\n' << std::endl;	
-	throw std::runtime_error("SIGINT received");
-	exit(0);
+	running = true;
+	cout << "SIGINT received" << endl;
 }
 
 int main (int ac, char **av){
-
-	signal(SIGINT, handler);
 
 	if (ac != 3){
 		cerr << "not the right argument" << endl;
 		return (-1);
 	}
-	
-	try { Server ircserv(av[1], av[2]); }
+	signal(SIGINT, handler);
+	try { Server ircserv(av[1], av[2]);}
 	catch (const exception &e){cerr << e.what(); }
 }

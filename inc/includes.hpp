@@ -19,6 +19,7 @@
 #include <set>
 #include <map>
 #include <signal.h>
+#include <csignal>
 #include "define.hpp"
 
 

@@ -1,14 +1,15 @@
 #include "server.hpp"
-#include "command.hpp"
 
 Server::Server(): _port(0), _password(""), _server_socket(-1), _server_address() {}
 
 Server::~Server(){
-	for (map<int, Client>::iterator it = _clients.begin(); it != _clients.end(); ++it)
-	{
-		close(it->first);
+	cout << "destructor: " << running	<< endl; 
+	if (running == true){
+		for (map<int, Client>::iterator it = _clients.begin(); it != _clients.end(); it++){
+			close(it->first);
+		}
+		close(_server_socket);
 	}
-	close(_server_socket);
 }
 
 Server::Server(char *port, char *pass){
@@ -131,11 +132,12 @@ void Server::runServ(){
 	// struct timeval timeout;
 	// timeout.tv_sec = 5;  // seconds
 	int maxFD = _server_socket;
-	while (true){
+	while (running == false){
 		fd_set copy = _master_set;
 		//cout  << j++ << "run\n";
 		if(select(maxFD + 1, &copy, NULL, NULL, NULL) < 0){
-			throw runtime_error("Select error.");
+//			throw runtime_error("Select error.");
+			break ;
 		}
 		for (int i = 0; i <= maxFD; i++){
 			//cout  << j++ << "run\n";
@@ -168,3 +170,36 @@ void Server::User(int socket, vector<string>& arg, Client cl){
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
 }
 
+vector<string> Server::getCommand(string input_client){
+
+	string tok;
+	vector<string> split;
+
+	if (!input_client.empty() && input_client[input_client.size() - 1] == '\r') {
+    	input_client.erase(input_client.size() - 1);
+	}
+
+	stringstream ss(input_client);
+	while(getline(ss, tok, ' ')){ split.push_back(tok);	}
+	cout  << "verif" << endl;
+	for (size_t i = 0;  i < split.size(); i++){ cout << split[i] << "-"; }
+	cout  << "\nend verif" << endl;
+	return (split);
+}
+
+void	Server::handleCommand(int socket, vector<string> split, Server& server, Client cl){
+	
+	string errmsg; // variable if the command is not found int the map
+
+	//421	ERR_UNKNOWNCOMMAND	RFC1459	<command> :<reason>	Returned when the given command is unknown to the server (or hidden because of lack of access rights)
+	//421 + <command> <msg to explain the error \r\n
+	string command = split[0];
+	split.erase(split.begin()); // delete first index to keep the args
+	//string command = split[0]; //store first index which is the command
+	if (_commands.find(command) != _commands.end()){ // to check if the command exist in the map
+		 (server.*_commands[command])(socket, split, cl); //this killed me copy paste in chat gpt and learned it yourself
+	} else {
+		errmsg = "421 " + command + " was not coded =)\r\n"; // /r/n = Carriage Return Line Feed
+		send(socket, errmsg.c_str(), errmsg.size(), 0); //c_str to convert to a const
+	}
+}
