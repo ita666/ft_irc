@@ -145,3 +145,4 @@ void Channel::broadcast(string msg) {
 		send(usersInChannel[i], msg.c_str(), msg.length(), 0);
 	}
 }
+
