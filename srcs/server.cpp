@@ -3,7 +3,6 @@
 Server::Server(): _port(0), _password(""), _server_socket(-1), _server_address() {}
 
 Server::~Server(){
-	cout << "destructor: " << running	<< endl; 
 	if (running == true){
 		for (map<int, Client>::iterator it = _clients.begin(); it != _clients.end(); it++){
 			close(it->first);
@@ -171,6 +170,7 @@ void Server::User(int socket, vector<string>& arg, Client cl){
 	(void)cl;
 	cout << "user " << arg[0] << '\n';
 	_clients[socket].setUser(arg[0]);
+	_clients[socket].setHost(arg[2]);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
 }

@@ -15,12 +15,14 @@ class Client{
 		string&	getNickname();
 		string&	getUser();
 		string& getHost();
+		string& getRealhost();
 		bool	getIsWelcomed();
 		string& getPassword();
 		string	getUMode();
 
 		void	setUser(string user);
 		void	setNickname(string nickname);
+		void	setHost(string host);
 		void	setIsWelcomed(bool);
 		void	setPassword(string);
 		void	setUMode();
@@ -36,6 +38,7 @@ class Client{
 		string 	_nickname;
 		string	_username;
 		string	_hostname;
+		string	_realhost;
 		string	buffer;
 		string	_password;
 		bool	_iswelcomed;
