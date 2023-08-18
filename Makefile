@@ -6,16 +6,16 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by yanthoma          #+#    #+#              #
-#    Updated: 2023/08/18 14:00:28 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/08/18 17:08:07 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 
 # /* ~~~~~~ SOURCES ~~~~~~ */
-SRCS	=   commands/0-Command.cpp client.cpp channel.cpp commands/Nick.cpp commands/Pass.cpp\
+SRCS	=   client.cpp channel.cpp commands/Nick.cpp commands/Pass.cpp\
  			commands/Join.cpp commands/Mode.cpp commands/Part.cpp commands/Privmsg.cpp\
-			commands/Invite.cpp commands/Kick.cpp\
+			commands/Kick.cpp\
 			commands/Invite.cpp commands/Topic.cpp\
 			 server.cpp main.cpp\
 

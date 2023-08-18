@@ -28,6 +28,7 @@ Server::Server(char *port, char *pass){
 	_commands["PASS"] = &Server::Pass; //adding PAss for the command map
 	_commands["INVITE"] = &Server::Invite; //adding Invite for the command map
 	_commands["KICK"] = &Server::Kick; //adding Kick for the command map
+	_commands["PING"] = &Server::Kick; //adding Ping for the command map
 	_commands["TOPIC"] = &Server::Topic; //adding Topic for the command map
 	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
 
@@ -183,6 +184,8 @@ bool Server::checkChannelName(string channelName) {
 		}
 	}
 	return false;
+}
+
 vector<string> Server::getCommand(string input_client){
 
 	string tok;
