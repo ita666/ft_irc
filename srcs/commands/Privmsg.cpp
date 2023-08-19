@@ -45,4 +45,9 @@ void Server::Privmsg(int socket, vector<string> &arg, Client cl) {
 			send(_stringToClients[arg[0]].getSocket(), msg.c_str(), msg.length(), 0);
 		}
 	}
+	string clientReceiverNick = arg[1];
+	string temp = _stringToClients[clientReceiverNick].getNickname();
+	Client clientReceiver = _stringToClients[clientReceiverNick];
+	if (clientReceiverNick == temp)
+		return clientReceiver.sendMessage(PRIVMSG(client.getNickname(), client.getUser(), clientReceiverNick, message));
 }
