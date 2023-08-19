@@ -153,6 +153,7 @@ void Channel::broadcast(string msg) {
 	for (int i = 0; i < (int)_nameToSocket.size(); i++) {
 		send(usersInChannel[i], msg.c_str(), msg.length(), 0);
 	}
+	delete usersInChannel;
 }
 
 void	Server::broadcastJoin(int socket, vector<string>& arg) {

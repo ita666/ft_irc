@@ -44,6 +44,7 @@ void	Client::setNickname(string nickname) { _nickname = nickname; }
 void	Client::setPassword(string password) { _password = password ; }
 void	Client::setIsWelcomed(bool info) { _iswelcomed = info; }
 void	Client::setUMode() { _userMode = static_cast<e_modes>(_userMode | o); }
+void	Client::setIMode() { _userMode = static_cast<e_modes>(_userMode | o); }
 
 void	Client::unsetUMode() { _userMode = static_cast<e_modes>(_userMode & ~o); }
 
