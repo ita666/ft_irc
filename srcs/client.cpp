@@ -4,6 +4,7 @@ Client::Client(int socket) : _socket(socket) {
 	_nickname = "";
 	_username = "";
 	_hostname = "IRC_HELL";
+	_realhost = "";
 	_iswelcomed = false;
 	_userMode   = static_cast<MODES>(0);
 }
@@ -16,6 +17,7 @@ Client& Client:: operator=(Client const &other){
 	this->_nickname = other._nickname;
 	this->_username = other._username;
 	this->_hostname = other._hostname;
+	this->_realhost = other._realhost;
 	this->_iswelcomed = other._iswelcomed;
 	this->_userMode = other._userMode;
 	return (*this);
@@ -25,6 +27,7 @@ int		Client::getSocket(){ return _socket; }
 string&	Client::getNickname(){ return _nickname; }
 string&	Client::getUser(){ return _username; }
 string&	Client::getHost() {return _hostname; }
+string& Client::getRealhost() {return _realhost; }
 string&	Client::getPassword(){return _password; }
 bool	Client::getIsWelcomed(){ return _iswelcomed; }
 string	Client::getUMode(){
@@ -41,9 +44,11 @@ bool	Client::checkRight() {return (_userMode & o) == o;}
 
 void	Client::setUser(string user) { _username = user; }
 void	Client::setNickname(string nickname) { _nickname = nickname; }
+void	Client::setHost(string host) { _realhost = host; }
 void	Client::setPassword(string password) { _password = password ; }
 void	Client::setIsWelcomed(bool info) { _iswelcomed = info; }
 void	Client::setUMode() { _userMode = static_cast<e_modes>(_userMode | o); }
+void	Client::setIMode() { _userMode = static_cast<e_modes>(_userMode | o); }
 
 void	Client::unsetUMode() { _userMode = static_cast<e_modes>(_userMode & ~o); }
 

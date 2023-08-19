@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fwong <fwong@student.42.fr>                +#+  +:+       +#+         #
+#    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by yanthoma          #+#    #+#              #
-#    Updated: 2023/08/18 17:31:21 by fwong            ###   ########.fr        #
+#    Updated: 2023/08/19 15:07:18 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@
 # /* ~~~~~~ SOURCES ~~~~~~ */
 SRCS	=   client.cpp channel.cpp commands/Nick.cpp commands/Pass.cpp\
  			commands/Join.cpp commands/Mode.cpp commands/Part.cpp commands/Privmsg.cpp\
-			commands/Kick.cpp\
-			commands/Invite.cpp commands/Topic.cpp\
+			commands/Kick.cpp commands/Ping.cpp commands/Cap.cpp\
+			commands/Invite.cpp commands/Topic.cpp commands/Whois.cpp\
 			 server.cpp main.cpp\
 
 

@@ -18,9 +18,11 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 		return _channels[channelName].broadcast(TOPIC(currentClientNickname, currentClientUsername, channelName, topic));
 	}
 	if (currentClient.checkRight() == false) {
+		cout << "CALLLED TOPIC\n";
 		return currentClient.sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
 	}
 	if ((_channels[channelName].getCMode() & t) != t) {
+		cout << "CALLLED TOPIC channel right\n";
 		return currentClient.sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
 	}
 	else if (arg.size() == 1) {
@@ -38,6 +40,7 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 		} else if (_channels[channelName].isUserInChannel(currentClientNickname) == false) {
 			return currentClient.sendMessage(ERR_NOTONCHANNEL(currentClientNickname, channelName));
 		} else {
+			cout << "CALLLED TOPIC AND SET IT\n";
 			_channels[channelName].setTopic(topic);
 			_channels[channelName].setTopicNickname(currentClientNickname);
 			_channels[channelName].broadcast(TOPIC(currentClientNickname, currentClientUsername, channelName, topic));
