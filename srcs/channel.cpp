@@ -78,13 +78,13 @@ int		Channel::getSocket(string& userName){
 		return (_nameToSocket[userName]);
 }
 
-int*	Channel::getAllUsers() {
+vector<int>	Channel::getAllUsers() {
 	map<string, int>::iterator it;
-	int *users = new int[_nameToSocket.size()];
+	vector<int> users;
 	int i = 0;
 
 	for (it = _nameToSocket.begin(); it != _nameToSocket.end(); it++) {
-		users[i] = it->second;
+		users.push_back(it->second);
 		i++;
 	}
 
@@ -149,11 +149,11 @@ vector<string> Channel::getAllNickname() {
 }
 
 void Channel::broadcast(string msg) {
-	int* usersInChannel = getAllUsers();
+	vector<int> usersInChannel = getAllUsers();
 	for (int i = 0; i < (int)_nameToSocket.size(); i++) {
 		send(usersInChannel[i], msg.c_str(), msg.length(), 0);
 	}
-	delete usersInChannel;
+	//delete usersInChannel;
 }
 
 void	Server::broadcastJoin(int socket, vector<string>& arg) {
