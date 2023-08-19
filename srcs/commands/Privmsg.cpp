@@ -12,7 +12,7 @@ bool Server::isNicknamePresent(string nickName) {
 void Server::Privmsg(int socket, vector<string> &arg, Client cl) {
 
 	string channelName = arg[0];
-	int* users = _channels[channelName].getAllUsers();
+	vector<int> users = _channels[channelName].getAllUsers();
 	string message = "";
     for (size_t i = 1; i < arg.size(); i++) { 
         message += " " + arg[i];
@@ -25,5 +25,5 @@ void Server::Privmsg(int socket, vector<string> &arg, Client cl) {
 			send(users[i], msg.c_str(), msg.length(), 0);
 		}
 	}
-	delete users;
+	//delete users;
 }
