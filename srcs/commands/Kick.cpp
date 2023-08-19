@@ -20,7 +20,7 @@ void 	Server::Kick(int socket, vector<string>& arg, Client cl){
 	cout << "current client user " << currentClientUsername << "\n";
 	if (_clients[socket].checkRight() == false) // check if the user is an operator
 	{
-
+		cout << "KICK CALLED\n";
 		return _clients[socket].sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
 	}
 	if (arg.size() < 2) // check if there is enough arguments
