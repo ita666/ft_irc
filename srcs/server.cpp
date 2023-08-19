@@ -30,6 +30,7 @@ Server::Server(char *port, char *pass){
 	_commands["KICK"] = &Server::Kick; //adding Kick for the command map
 	_commands["PING"] = &Server::Kick; //adding Ping for the command map
 	_commands["TOPIC"] = &Server::Topic; //adding Topic for the command map
+	_commands["WHOIS"] = &Server::Topic; //adding Whois for the command map
 	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
 
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
@@ -170,7 +171,7 @@ void Server::runServ(){
 void Server::User(int socket, vector<string>& arg, Client cl){
 	//to do handle error msg
 	(void)cl;
-	cout << "user " << arg[0] << '\n';
+	cout << "user test" << arg[0] << '\n';
 	_clients[socket].setUser(arg[0]);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
      //   send(socket, errMsg.c_str(), errMsg.length(), 0);
