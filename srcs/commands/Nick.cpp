@@ -54,8 +54,10 @@ void Server::Nick(int socket, vector<string>& arg, Client cl) {
 		string msg = string(":") + _clients[socket].getNickname() + "!" + _clients[socket].getNickname() + "@localhost NICK :" + arg[0] + "\r\n";
 		send(socket, msg.c_str(), msg.length(), 0);
 	}
-	_clients[socket].setNickname(newNickname);
-	_stringToClients[newNickname] = _clients[socket]; // NEED TO CODE OVERLOAD OPERATOR
+	_stringToClients.erase(_clients[socket].getNickname());
+    _clients[socket].setNickname(newNickname);
+    _stringToClients[newNickname] = _clients[socket];	
+		 // NEED TO CODE OVERLOAD OPERATOR
 	string user = _clients[socket].getUser();
 	string host = _clients[socket].getHost();
 }

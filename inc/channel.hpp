@@ -14,51 +14,48 @@ class Channel {
 
 		vector<string> ban;
 		
-		string	getName();
-		void	setName(string&);
+		string					getName();
+		void					setName(string&);
 
-		string	getTopic();
-		void	setTopic(string);
+		string					getTopic();
+		void					setTopic(string);
 
-		string&	getKey();
-		void	setKey(string&);
-		void	unsetKey();
+		string&					getKey();
+		void					setKey(string&);
+		void					unsetKey();
 
-		size_t&	getLimit();
-		void	setLimit(string);
+		size_t&					getLimit();
+		void					setLimit(string);
 
-		char*		getTimestamp();
-		void		setTimestamp(char*);
-
-		string& getTopicNickname();
-		void	setTopicNickname(string&);
+		string& 				getTopicNickname();
+		void					setTopicNickname(string&);
 
 		map<string, int>&		getMap();
-		MODES	getCMode();
-		void	setCMode(char);
-		void	removeCMode(char);
+		MODES					getCMode();
+		void					setCMode(char);
+		void					removeCMode(char);
 
-		void	addGuest(const string& nickname);
-		void	removeGuest(const string& nickname);
+		void					addGuest(const string& nickname);
+		void					removeGuest(const string& nickname);
 
-		void	addUser(string&, int);
-		void	removeUser(string&, int);
-		string	findInvited(string& guest);
-		bool	isUserInChannel(const string& username);
-		bool	isInviteOnly(const string& nickname);
-		bool	isEmpty();
-		int		getSocket(string& );
-		int*	getAllUsers();
-		string	getName(int);
+		void					addUser(string&, int);
+		void					removeUser(string&, int);
+		string					findInvited(string& guest);
+		bool					isUserInChannel(const string& username);
+		bool					isInviteOnly(const string& nickname);
+		bool					isEmpty();
+		int						getSocket(string& );
+		vector<int>				getAllUsers();
+		vector<string>			getAllNickname();
+		string					getName(int);
 
-		void	broadcast(string msg);
+		void					broadcast(string msg);
 
 	private :
 		string				_topicNickname;	
 		string				_name;
 		string				_topic;
 		string				_key;
-		char*				_timestamp;
 		size_t				_limit;
 		vector<string>		_invited;
 		map<string, int>	_nameToSocket;

@@ -33,6 +33,7 @@ class Server{
 		void	initMap();
 
 	//commands
+		void	Cap(int socket, vector<string>& arg, Client cl);
 		void	Invite(int socket, vector<string>& arg, Client);
 		void	Join(int socket, vector<string>& arg, Client);
 		void	Part(int socket, vector<string>& arg, Client);
@@ -45,9 +46,12 @@ class Server{
 		void	Whois(int socket, vector<string>& arg, Client);
 		void	Nick(int socket, vector<string>& arg, Client);
     	void	User(int socket, vector<string>& arg, Client);
+		void	Bot(int socket, vector<string>& arg, Client);
 
 		void	checkFlag(int socket, vector<string>& arg, int i, Client);
+		void	invisibleMode(int socket, vector<string>& arg, Client);
 		bool	checkChannelName(string channelName);
+		void	broadcastJoin(int socket, vector<string>& arg);
 
 	private:
 		int							_port;

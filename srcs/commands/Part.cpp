@@ -21,7 +21,9 @@ void Server::Part(int socket, vector<string>& arg, Client client){
         return;
     }
 
-    string partingMessage = (arg.size() == 3) ? arg[0] : client.getNickname() + " has left the channel";
+    string partingMessage =  arg[0] + client.getNickname() + " has left the channel";
+    cout << "parting message " << partingMessage << "\n";
+    _channels[arg[0]].broadcast(partingMessage);
 
     _channels[arg[0]].removeUser(client.getUser(), client.getSocket());
 

@@ -35,8 +35,6 @@ void	Channel::unsetKey(){ _key = "" ;}
 
 map<string, int>&	Channel::getMap() { return _nameToSocket; }
 
-char*	Channel::getTimestamp(){ return (_timestamp); }
-void	Channel::setTimestamp(char* timestamp){ _timestamp = timestamp; }
 string&	Channel::getTopicNickname(){ return (_topicNickname); }
 void	Channel::setTopicNickname(string& topicNickname){ _topicNickname = topicNickname; }
 
@@ -80,13 +78,13 @@ int		Channel::getSocket(string& userName){
 		return (_nameToSocket[userName]);
 }
 
-int*	Channel::getAllUsers() {
+vector<int>	Channel::getAllUsers() {
 	map<string, int>::iterator it;
-	int *users = new int[_nameToSocket.size()];
+	vector<int> users;
 	int i = 0;
 
 	for (it = _nameToSocket.begin(); it != _nameToSocket.end(); it++) {
-		users[i] = it->second;
+		users.push_back(it->second);
 		i++;
 	}
 
@@ -141,9 +139,41 @@ string	Channel::getName(int socket){
 		return (_socketToName[socket]);
 }
 
+vector<string> Channel::getAllNickname() {
+	vector<string> users;
+	map<string, int>::iterator it;
+	for (it = _nameToSocket.begin(); it != _nameToSocket.end(); it++) {
+		users.push_back(it->first);
+	}
+	return users;
+}
+
 void Channel::broadcast(string msg) {
-	int* usersInChannel = getAllUsers();
+	vector<int> usersInChannel = getAllUsers();
 	for (int i = 0; i < (int)_nameToSocket.size(); i++) {
 		send(usersInChannel[i], msg.c_str(), msg.length(), 0);
 	}
+	//delete usersInChannel;
+}
+
+void	Server::broadcastJoin(int socket, vector<string>& arg) {
+	string channelName = arg[0];
+	string currentClientNickname = _clients[socket].getNickname();
+	string currentClientUsername = _clients[socket].getUser();
+	std::vector<string> users = _channels[channelName].getAllNickname();
+
+	//for loop to add '@' for every operators in the channel
+	for (size_t i = 0; i < users.size(); i++) {
+		if (_stringToClients[users[i]].checkRight() == true) {
+			users[i] = "@" + users[i];
+		}
+	}
+	cout << "MDE OKOKOK"<< endl;
+	string usersList = "";
+	for (size_t i = 0; i < users.size(); i++) {
+		usersList += users[i];
+		if (i != users.size() - 1)
+			usersList += " ";
+	}
+	_clients[socket].sendMessage(RPL_NAMREPLY(currentClientNickname, usersList, channelName));
 }

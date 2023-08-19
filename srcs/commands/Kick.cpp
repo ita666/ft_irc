@@ -21,7 +21,7 @@ void 	Server::Kick(int socket, vector<string>& arg, Client cl){
 	cout << "current hostname " << _clients[socket].getRealhost() << "\n";
 	if (_clients[socket].checkRight() == false) // check if the user is an operator
 	{
-
+		cout << "KICK CALLED\n";
 		return _clients[socket].sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
 	}
 	if (arg.size() < 2) // check if there is enough arguments
@@ -51,6 +51,6 @@ void 	Server::Kick(int socket, vector<string>& arg, Client cl){
 	string msg = ":" + currentClientNickname + "!" + currentClientUsername + "@localhost KICK " + arg[0] + " " + arg[1] + "\r\n";
 	cout << " tu degages " << guest << "\n";
 	guestCl.sendMessage(msg);
-	_clients[socket].sendMessage(KICK(currentClientNickname, _clients[socket].getUser(), channelName, guest, comment));
+	_channels[channelName].broadcast(KICK(currentClientNickname, _clients[socket].getUser(), channelName, guest, comment));
 	_channels[channelName].removeUser(channelName, guestCl.getSocket());
 }

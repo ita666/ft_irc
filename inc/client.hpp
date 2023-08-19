@@ -26,6 +26,7 @@ class Client{
 		void	setIsWelcomed(bool);
 		void	setPassword(string);
 		void	setUMode();
+		void	setIMode();
 
 		bool	isReady();
 		void	sendMessage(const string& message);

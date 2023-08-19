@@ -11,14 +11,10 @@ Server::~Server(){
 	}
 }
 
-Server::Server(char *port, char *pass){
-    _server_socket = -1;
-	setPort(port);
-    if (pass != NULL) {
-        _password = string(pass);
-    } else {
-        throw runtime_error("Null password provided.");
-    }
+void	Server::initMap(){
+	
+	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
+	_commands["CAP"] = &Server::Cap; //adding Cap for the command map
 	_commands["NICK"] = &Server::Nick; // adding Nick for the command map
 	_commands["USER"] = &Server::User; //adding User for the command map
 	_commands["JOIN"] = &Server::Join; //adding Join for the command map
@@ -27,11 +23,21 @@ Server::Server(char *port, char *pass){
 	_commands["PASS"] = &Server::Pass; //adding PAss for the command map
 	_commands["INVITE"] = &Server::Invite; //adding Invite for the command map
 	_commands["KICK"] = &Server::Kick; //adding Kick for the command map
-	_commands["PING"] = &Server::Kick; //adding Ping for the command map
+	_commands["PING"] = &Server::Ping; //adding Ping for the command map
 	_commands["TOPIC"] = &Server::Topic; //adding Topic for the command map
+	_commands["WHOIS"] = &Server::Whois; //adding Whois for the command map
 	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
+}
 
-	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
+Server::Server(char *port, char *pass){
+    _server_socket = -1;
+	setPort(port);
+    if (pass != NULL) {
+        _password = string(pass);
+    } else {
+        throw runtime_error("Null password provided.");
+    }
+	initMap();
 	initServ(); // INIT SERV DUH
 	runServ();  // RUN THE SERV =)
 }
@@ -96,6 +102,7 @@ int Server::acceptClient(){
 	cout << "CLIENT SOCKET= " << client_socket << endl;
         FD_SET(client_socket, &_master_set);
         _clients[client_socket] = Client(client_socket);// add the new client to the map
+		_stringToClients[_clients[client_socket].getNickname()] = _clients[client_socket];
 	return (client_socket);
 }
 
@@ -168,7 +175,7 @@ void Server::runServ(){
 void Server::User(int socket, vector<string>& arg, Client cl){
 	//to do handle error msg
 	(void)cl;
-	cout << "user " << arg[0] << '\n';
+	cout << "user test" << arg[0] << '\n';
 	_clients[socket].setUser(arg[0]);
 	_clients[socket].setHost(arg[2]);
 	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
@@ -214,6 +221,7 @@ void	Server::handleCommand(int socket, vector<string> split, Server& server, Cli
 	//string command = split[0]; //store first index which is the command
 	if (_commands.find(command) != _commands.end()){ // to check if the command exist in the map
 		 (server.*_commands[command])(socket, split, cl); //this killed me copy paste in chat gpt and learned it yourself
+	cout << "handle command" << endl;
 	} else {
 		errmsg = "421 " + command + " was not coded =)\r\n"; // /r/n = Carriage Return Line Feed
 		send(socket, errmsg.c_str(), errmsg.size(), 0); //c_str to convert to a const
