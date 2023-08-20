@@ -7,10 +7,13 @@
 void	Server::Join(int socket, vector<string>& arg, Client client){
 	
 	(void)socket;
+	cout << "\nend of join\n" << _clients[socket].checkRight() << "\n";
+	cout << "\nend of join\n" << _clients[socket].getUMode() << "\n";
+
 	string channelName = arg[0];
-	cout << "join " << arg[0] << " \n";
-	cout << "SODFIJSOIDFJ " << client.getNickname() << "\n";
-	cout << "FDOSIFJ BIS " << _clients[socket].getNickname() << "\n";
+	// cout << "join " << arg[0] << " \n";
+	// cout << "SODFIJSOIDFJ " << client.getNickname() << "\n";
+	// cout << "FDOSIFJ BIS " << _clients[socket].getNickname() << "\n";
 	
 
 	//cout << "test join " << (_channels.find(arg[0]) == _channels.end()) << "\n";
@@ -101,4 +104,6 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 		send(client.getSocket(), errorMsg.c_str(), errorMsg.length(), 0);
     	}
 	}
+	cout << "\nend of join\n" << _clients[socket].checkRight() << "\n";
+	cout << "\nend of join\n" << _clients[socket].getUMode() << "\n";
 }

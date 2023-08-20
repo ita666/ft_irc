@@ -42,7 +42,7 @@ typedef enum e_modes
 //to set MODES userMode = i | o; add one : userModes |= r; remove userModes &= ~i; to check : if (userModes & o);
 
 #define REPLY_FORMAT(num_rply_numb, nickname) (std::string(":") + SERVER_NAME + " " + num_rply_numb + " " + nickname + " ")
-#define CLIENT_ID(nickname, username, command) (":" + nickname + "!~" + username + "@" + SERVER_NAME + " " + command + " ")
+#define CLIENT_ID(nickname, username, command) (":" + nickname + "!" + username + "@" + SERVER_NAME + " " + command + " ")
 
 // 000
 #define RPL_WELCOME(nickname) (std::string(":") + SERVER_NAME + " 001 " + nickname + " :Welcome to the  " + SERVER_NAME + " Server " + nickname + "\r\n")

@@ -221,7 +221,7 @@ void	Server::handleCommand(int socket, vector<string> split, Server& server, Cli
 	//string command = split[0]; //store first index which is the command
 	if (_commands.find(command) != _commands.end()){ // to check if the command exist in the map
 		 (server.*_commands[command])(socket, split, cl); //this killed me copy paste in chat gpt and learned it yourself
-	cout << "handle command" << endl;
+
 	} else {
 		errmsg = "421 " + command + " was not coded =)\r\n"; // /r/n = Carriage Return Line Feed
 		send(socket, errmsg.c_str(), errmsg.size(), 0); //c_str to convert to a const
