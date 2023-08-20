@@ -40,6 +40,7 @@ void Server::Nick(int socket, vector<string>& arg, Client cl) {
 		ss >> str;
 		newNickname = arg[0] + str;
 		_clients[socket].setNickname(newNickname);
+		_stringToClients[newNickname] = _clients[socket];
 	} else {
 		newNickname = arg[0];
 		if (arg.size() == 0)
