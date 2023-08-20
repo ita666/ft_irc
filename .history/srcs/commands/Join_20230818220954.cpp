@@ -5,7 +5,7 @@
 
 
 void	Server::Join(int socket, vector<string>& arg, Client client){
-	
+
 	(void)socket;
 	string channelName = arg[0];
 	cout << "join " << arg[0] << " \n";
@@ -29,7 +29,7 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 	bool isKey = (arg.size() < 2 && (_channels[channelName].getCMode() & k) == k && arg[1] != _channels[channelName].getKey());
 	bool isLimit = ((_channels[channelName].getCMode() & l) == l && _channels[channelName].getMap().size() >= _channels[channelName].getLimit());
 
-    if (!_channels[channelName].isUserInChannel(_clients[socket].getNickname())) { // if chan already exist and user is not in chan then check if there is a limit and if it's invite only
+    if (!_channels[channelName].isUserInChannel(client.getUser())) { // if chan already exist and user is not in chan then check if there is a limit and if it's invite only
 		if(isInvite && isLimit && isKey){
 			
 			cout << "isinviteonly value" << _channels[channelName].isInviteOnly(client.getNickname()) << "\n";
@@ -86,12 +86,12 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 
 				_clients[socket].sendMessage(ERR_BADCHANNELKEY(_clients[socket].getNickname(),channelName));
 		} else {
-			_channels[channelName].setTopicNickname(_clients[socket].getNickname());
+			_channels[channelName].setTopicNickname(client.getNickname());
 			if (_channels[channelName].getTopic() == "")
 				_clients[socket].sendMessage(RPL_NOTOPIC(_channels[channelName].getTopicNickname(), channelName));
 			else
 				_clients[socket].sendMessage(RPL_TOPIC(_channels[channelName].getTopicNickname(), channelName, _channels[channelName].getTopic()));
-        	_channels[channelName].addUser(_clients[socket].getNickname(), socket);
+        	_channels[channelName].addUser(client.getNickname(), client.getSocket());
 			_channels[channelName].removeGuest(_clients[socket].getNickname());
 			_channels[channelName].broadcast(JOIN(_clients[socket].getNickname(), _clients[socket].getUser(), channelName));
 			broadcastJoin(socket, arg);

@@ -30,34 +30,42 @@ static bool isValidNickname(string nickname) {
 void Server::Nick(int socket, vector<string>& arg, Client cl) {
 	
 	map<int, Client>::iterator it;
-	string currentNickname = cl.getNickname();
+	string currentNickname = _clients[socket].getNickname();
+	string newNickname = "";
 
-	stringstream ss;
-	string str;
-	ss << socket;
-	ss >> str;
-	string newNickname = arg[0] + str;
-
-	if (arg.size() == 0)
-		return cl.sendMessage(ERR_NONICKNAMEGIVEN());
-	for (it = _clients.begin(); it != _clients.end(); it++) {
-		if (it->second.getNickname() == currentNickname && it->second.getSocket() != cl.getSocket())
-			newNickname = it->second.getNickname();
+	if (_clients[socket].getIsWelcomed() == 0) {
+		stringstream ss;
+		string str;
+		ss << socket;
+		ss >> str;
+		newNickname = arg[0] + str;
+		_clients[socket].setNickname(newNickname);
+		_stringToClients[newNickname] = _clients[socket];
+	} else {
+		newNickname = arg[0];
+		if (arg.size() == 0)
+			return cl.sendMessage(ERR_NONICKNAMEGIVEN());
+		for (it = _clients.begin(); it != _clients.end(); it++) {
+			if (it->second.getNickname() == newNickname && it->second.getSocket() != cl.getSocket())
+				currentNickname = it->second.getNickname();
+		}
+		if (newNickname == currentNickname && _clients[socket].getIsWelcomed() == 1) {
+			cl.sendMessage(ERR_NICKNAMEINUSE(newNickname));
+			return ;
+		}
+		if (isValidNickname(newNickname) == false)
+			return cl.sendMessage(ERR_ERRONEUSNICKNAME(currentNickname));
+		if (_clients[socket].getIsWelcomed() == 1){
+			string msg = string(":") + _clients[socket].getNickname() + "!" + _clients[socket].getNickname() + "@localhost NICK :" + arg[0] + "\r\n";
+			send(socket, msg.c_str(), msg.length(), 0);
+		}
+		// remettre une condition pour la map (specifique)
+		_stringToClients.erase(_clients[socket].getNickname());
+		_clients[socket].setNickname(newNickname);
+		_stringToClients[newNickname] = _clients[socket];
+		cout << "NEW Nick = " << _stringToClients[newNickname].getNickname() << endl;
+			// NEED TO CODE OVERLOAD OPERATOR
+		string user = _clients[socket].getUser();
+		string host = _clients[socket].getHost();
 	}
-	if (newNickname == currentNickname && _clients[socket].getIsWelcomed() == 1) {
-   		cl.sendMessage(ERR_NICKNAMEINUSE(newNickname));
-		return ;
-	}
-	if (isValidNickname(newNickname) == false)
-   		return cl.sendMessage(ERR_ERRONEUSNICKNAME(currentNickname));
-	if (_clients[socket].getIsWelcomed() == 1){
-		string msg = string(":") + _clients[socket].getNickname() + "!" + _clients[socket].getNickname() + "@localhost NICK :" + arg[0] + "\r\n";
-		send(socket, msg.c_str(), msg.length(), 0);
-	}
-	_stringToClients.erase(_clients[socket].getNickname());
-    _clients[socket].setNickname(newNickname);
-    _stringToClients[newNickname] = _clients[socket];	
-		 // NEED TO CODE OVERLOAD OPERATOR
-	string user = _clients[socket].getUser();
-	string host = _clients[socket].getHost();
 }
