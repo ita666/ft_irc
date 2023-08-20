@@ -18,6 +18,7 @@ void 	Server::Kick(int socket, vector<string>& arg, Client cl){
 	cout  << "channelname " << arg[0] << "\n";
 	cout << "current client nick " << currentClientNickname << "\n";
 	cout << "current client user " << currentClientUsername << "\n";
+	cout << "current hostname " << _clients[socket].getRealhost() << "\n";
 	if (_clients[socket].checkRight() == false) // check if the user is an operator
 	{
 		cout << "KICK CALLED\n";

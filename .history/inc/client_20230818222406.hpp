@@ -12,21 +12,18 @@ class Client{
 		Client&	operator=(Client const &other);
 
 		int		getSocket();
-		string&	getNickname();
+		string	getNickname();
 		string&	getUser();
 		string& getHost();
-		string& getRealhost();
 		bool	getIsWelcomed();
 		string& getPassword();
 		string	getUMode();
 
 		void	setUser(string user);
 		void	setNickname(string nickname);
-		void	setHost(string host);
 		void	setIsWelcomed(bool);
 		void	setPassword(string);
 		void	setUMode();
-		void	setIMode();
 
 		bool	isReady();
 		void	sendMessage(const string& message);
@@ -39,7 +36,6 @@ class Client{
 		string 	_nickname;
 		string	_username;
 		string	_hostname;
-		string	_realhost;
 		string	buffer;
 		string	_password;
 		bool	_iswelcomed;

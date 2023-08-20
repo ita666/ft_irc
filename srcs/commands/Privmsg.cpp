@@ -20,12 +20,38 @@ void Server::Privmsg(int socket, vector<string> &arg, Client cl) {
 		cout << "MESSAGE: " << arg[i] << endl;
 	}
 	//add the verification for user in channel
-	for (size_t i = 0; i < users.size(); i++) {
-		if (users[i] != socket) {
-	cout << "CALLLED PRIVMSG\n";
-			string msg = string(":") + cl.getNickname() + "!" + cl.getUser() + "@localhost PRIVMSG " + channelName + " :" + message + "\r\n";
-			send(users[i], msg.c_str(), msg.length(), 0);
-		}
-	}
-	//delete users;
+	// for (size_t i = 0; i < users.size(); i++) {
+	// 	if (users[i] != socket) {
+	// cout << "CALLLED PRIVMSG\n";
+	// 		string msg = string(":") + cl.getNickname() + "!" + cl.getUser() + "@localhost PRIVMSG " + channelName + " :" + message + "\r\n";
+	// 		send(users[i], msg.c_str(), msg.length(), 0);
+	// 	}
+	// }
+	// for (size_t i = 0; i < sizeof(users); i++) {
+	// 	if (users[i] != socket) {
+	// 		string msg = string(":") + cl.getNickname() + "!" + cl.getUser() + "@" + cl.getRealhost() + " PRIVMSG " + channelName + " :" + message + "\r\n";
+	// 		send(users[i], msg.c_str(), msg.length(), 0);
+	// 	}
+	// }
+	// delete users;
+	// (void)socket;
+	// map<string, Client>::iterator it;
+	// for (it = _stringToClients.begin(); it != _stringToClients.end(); it++) {
+	// 	cout << "nick: " << it->second.getNickname() << endl;}
+	// if (_stringToClients.find(arg[0]) != _stringToClients.end()) {
+	// 	{
+	// 		cout << "private message\n" << endl;
+	// 		string msg = string(":") + cl.getNickname() + "!" + cl.getUser() + "@" + cl.getRealhost() + " PRIVMSG " + arg[0] + " :" + message + "\r\n";
+	// 		send(_stringToClients[arg[0]].getSocket(), msg.c_str(), msg.length(), 0);
+	// 	}
+	// }
+	(void)socket;
+	string clientReceiverNick = arg[0];
+	for (size_t i = 0; i < arg.size(); i++)
+		cout << "ARG[" << i << "] " << arg[i] << endl;
+	string temp = _stringToClients[clientReceiverNick].getNickname();
+	cout << "TEMP= " << temp << endl;
+	Client clientReceiver = _stringToClients[clientReceiverNick];
+	if (clientReceiverNick == temp)
+		return clientReceiver.sendMessage(PRIVMSG(cl.getNickname(), cl.getUser(), clientReceiverNick, message));
 }
