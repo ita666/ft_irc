@@ -6,6 +6,10 @@
 
 void Server::Invite(int socket, vector<string>& arg, Client cl) {
 	(void)cl;
+
+	if (arg.empty()){
+		return _clients[socket].sendMessage(ERR_NEEDMOREPARAMS(_clients[socket].getNickname(), "INVITE"));
+	}
 	string currentClientNickname = _clients[socket].getNickname();
 	string currentClientUsername = _clients[socket].getUser();
 	string guest = arg[0];

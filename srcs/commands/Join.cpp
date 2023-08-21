@@ -14,7 +14,8 @@ void	Server::Join(int socket, vector<string>& arg, Client client){
 	// cout << "join " << arg[0] << " \n";
 	// cout << "SODFIJSOIDFJ " << client.getNickname() << "\n";
 	// cout << "FDOSIFJ BIS " << _clients[socket].getNickname() << "\n";
-	
+	if (arg.size() < 1)
+		return _clients[socket].sendMessage(ERR_NEEDMOREPARAMS(_clients[socket].getNickname(), "JOIN"));
 
 	//cout << "test join " << (_channels.find(arg[0]) == _channels.end()) << "\n";
 	if (_channels.find(channelName) == _channels.end()){ // if the chan does not exist create it and add the user and give him the operator right
