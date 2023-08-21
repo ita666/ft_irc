@@ -10,7 +10,7 @@ int	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 	map<string, int> map;
 	map = _channels[arg[0]].getMap();
 	cout << "looking in arg mode i " << arg[1][i] << "\n";
-	int j = i + 1;
+	int j = i + 1; //to be ahead and avoid the + or -
 	cout << "looking in arg mode j " << arg[1][j] << "\n";
 	for(; arg[1][j] && arg[1][j] != '+' && arg[1][j] != '-'; j++){
 		cout << "looking in arg mode " << arg[1][j] << "\n";
@@ -83,7 +83,7 @@ int	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 		cout << "\nverif\n" << _channels[arg[0]].getCMode()<<endl;
 	}
 
-	return (j-1);
+	return (j-1); //avoid invalid of size
 
 	cout << _channels[arg[0]].getLimit() << endl;
 	cout  << "verif bis" << endl;
@@ -122,12 +122,12 @@ void Server::Mode(int socket, vector<string>& arg, Client client){
 	}
 	cout << "\nMODE VERIF\n";
 	for (size_t i = 0; i < arg.size(); i++){ cout << arg[i] << ","; }
-	for(; arg[1][i]; i++ ){
+	for(; arg[1][i]; i++ ){//i is the index of the next sign + or -
 		cout << "\nMode\n";
 			cout <<  " looking in arg mode " << arg[1][i] << "\n";
 		switch (arg[1][i]){
 			case '-' :
-				i = checkFlag(socket, arg, i, client);
+				i = checkFlag(socket, arg, i, client); 
 				cout << "index - = " << i << "\n";
 				cout << "\nMode 1\n";
 				break;
