@@ -63,7 +63,10 @@ int	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 						client.sendMessage(MODE_USER(_clients[socket].getNickname(), _clients[socket].getUser(), arg[2], " +o"));
 					} else {
 						cout << "MODE +O CALLED\n";
-						_clients[socket].sendMessage(ERR_NOPRIVILEGES(_clients[socket].getNickname())); }
+						_clients[socket].sendMessage(ERR_NOPRIVILEGES(_clients[socket].getNickname()));
+					}
+					if (_channels[arg[0]].isUserInChannel(arg[2]) == false)
+						client.sendMessage(ERR_USERNOTINCHANNEL(client.getNickname(), arg[0], arg[2]));
 				}
 				arg.erase(arg.begin() + 2);
 				break;
