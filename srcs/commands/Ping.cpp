@@ -4,6 +4,6 @@
 
 
 void	Server::Ping(int socket, vector<string>& arg, Client){
-	(void)arg;
-	_clients[socket].sendMessage(PONG(_clients[socket].getNickname()));
+	string	message = ":" + _clients[socket].getRealhost() + " PONG " + arg[0] + "\r\n";
+	_clients[socket].sendMessage(message);
 }
