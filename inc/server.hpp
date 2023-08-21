@@ -34,6 +34,7 @@ class Server{
 
 	//commands
 		void	Cap(int socket, vector<string>& arg, Client cl);
+		void	Oper(int socket, vector<string>& arg, Client cl);
 		void	Invite(int socket, vector<string>& arg, Client);
 		void	Join(int socket, vector<string>& arg, Client);
 		void	Part(int socket, vector<string>& arg, Client);

@@ -15,6 +15,7 @@ void	Server::initMap(){
 	
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	_commands["CAP"] = &Server::Cap; //adding Cap for the command map
+	_commands["OPER"] = &Server::Oper; //adding Cap for the command map
 	_commands["NICK"] = &Server::Nick; // adding Nick for the command map
 	_commands["USER"] = &Server::User; //adding User for the command map
 	_commands["JOIN"] = &Server::Join; //adding Join for the command map
