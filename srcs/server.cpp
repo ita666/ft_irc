@@ -100,7 +100,6 @@ int Server::acceptClient() {
     if (client_socket < 0) {
        cerr << "Can't accept client!" << endl;
     }
-	cout << "CLIENT SOCKET= " << client_socket << endl;
         FD_SET(client_socket, &_master_set);
         _clients[client_socket] = Client(client_socket);// add the new client to the map
 		_stringToClients[_clients[client_socket].getNickname()] = _clients[client_socket];
@@ -157,7 +156,6 @@ void Server::runServ() {
 void Server::User(int socket, vector<string>& arg, Client cl) {
 	//to do handle error msg
 	(void)cl;
-	cout << "user test" << arg[0] << '\n';
 	_clients[socket].setUser(arg[0]);
 	_clients[socket].setHost(arg[2]);
 }
@@ -184,9 +182,6 @@ vector<string> Server::getCommand(string input_client) {
     	input_client.erase(input_client.size() - 1);
 	stringstream ss(input_client);
 	while (getline(ss, tok, ' ')) { split.push_back(tok); }
-	cout  << "verif" << endl;
-	for (size_t i = 0;  i < split.size(); i++){ cout << split[i] << "-"; }
-	cout  << "\nend verif" << endl;
 	return (split);
 }
 

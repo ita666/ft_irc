@@ -62,7 +62,6 @@ void Server::Nick(int socket, vector<string>& arg, Client cl) {
 		_stringToClients.erase(_clients[socket].getNickname());
 		_clients[socket].setNickname(newNickname);
 		_stringToClients[newNickname] = _clients[socket];
-		cout << "NEW Nick = " << _stringToClients[newNickname].getNickname() << endl;
 		string user = _clients[socket].getUser();
 		string host = _clients[socket].getHost();
 	}

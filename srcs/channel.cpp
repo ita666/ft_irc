@@ -39,7 +39,6 @@ const string	Channel::getTopicNickname() const { return (_topicNickname); }
 void	Channel::setCMode(char c){
 	switch (c) {
         case 'i': _chanMode = static_cast<e_modes>(_chanMode | i);
-					cout << "set i mode" << endl;
 		break;
         case 't': _chanMode = static_cast<e_modes>(_chanMode | t); break;
         case 'k': _chanMode = static_cast<e_modes>(_chanMode | k); break;
@@ -83,10 +82,6 @@ vector<int>	Channel::getAllUsers() {
 	for (it = _nameToSocket.begin(); it != _nameToSocket.end(); it++) {
 		users.push_back(it->second);
 		i++;
-	}
-	map<string, int>::iterator ot;
-	for (ot = _nameToSocket.begin(); ot != _nameToSocket.end(); ot++) {
-		cout << "NAME IN CHANNEL \n" << ot->first << " SOCKET IN CHANNEL " << ot->second << '\n';
 	}
 	return users;
 }
@@ -163,7 +158,6 @@ void	Server::broadcastJoin(int socket, vector<string>& arg) {
 			users[i] = "@" + users[i];
 		}
 	}
-	cout << "MDE OKOKOK"<< endl;
 	string usersList = "";
 	for (size_t i = 0; i < users.size(); i++) {
 		usersList += users[i];

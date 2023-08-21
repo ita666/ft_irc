@@ -9,11 +9,8 @@ int	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 		return (i);
 	map<string, int> map;
 	map = _channels[arg[0]].getMap();
-	cout << "looking in arg mode i " << arg[1][i] << "\n";
 	int j = i + 1; //to be ahead and avoid the + or -
-	cout << "looking in arg mode j " << arg[1][j] << "\n";
 	for(; arg[1][j] && arg[1][j] != '+' && arg[1][j] != '-'; j++){
-		cout << "looking in arg mode " << arg[1][j] << "\n";
 		switch (arg[1][j]){
 			case 'i' :
 				if(arg[1][i] == '-'){
@@ -54,7 +51,6 @@ int	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 						_clients[map[arg[2]]].unsetUMode();
 						client.sendMessage(MODE_USER(_clients[socket].getNickname(), _clients[socket].getUser(), arg[2], " -o"));
 					} else {
-						cout << "MODE -O CALLED\n";
 						_clients[socket].sendMessage(ERR_NOPRIVILEGES(_clients[socket].getNickname())); }
 				}
 				else if(arg[1][i] == '+') { 
@@ -62,7 +58,6 @@ int	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 						_clients[map[arg[2]]].setUMode();
 						client.sendMessage(MODE_USER(_clients[socket].getNickname(), _clients[socket].getUser(), arg[2], " +o"));
 					} else {
-						cout << "MODE +O CALLED\n";
 						_clients[socket].sendMessage(ERR_NOPRIVILEGES(_clients[socket].getNickname()));
 					}
 					if (_channels[arg[0]].isUserInChannel(arg[2]) == false)
@@ -83,23 +78,15 @@ int	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 				}
 				break;
 		}
-		cout << "\nverif\n" << _channels[arg[0]].getCMode()<<endl;
 	}
 
 	return (j-1); //avoid invalid of size
-
-	cout << _channels[arg[0]].getLimit() << endl;
-	cout  << "verif bis" << endl;
-	for (size_t i = 0;  i < arg.size(); i++){ cout << arg[i] << "-"; }
-	cout  << "\nend verif bis" << endl;
 }
 
 
 void Server::invisibleMode(int socket, vector<string>& arg, Client client){
 	(void)socket;
 	(void)client;
-	cout << "invisible mode\n";
-	for (size_t i = 0; i < arg.size(); i++){ cout << arg[i] << ","; }
 	if (arg.size() < 2){
 		client.sendMessage(ERR_NEEDMOREPARAMS(client.getNickname(), "MODE"));
 		return ;
@@ -108,7 +95,6 @@ void Server::invisibleMode(int socket, vector<string>& arg, Client client){
 	string targetNickname = _stringToClients[arg[0]].getNickname();
 
 	if (arg[0] == targetNickname){
-		cout << "invisible mode enabled for target\n";
 		_clients[targetSocket].setIMode();
 		_stringToClients[targetNickname].setIMode();
 		return ;
@@ -123,24 +109,15 @@ void Server::Mode(int socket, vector<string>& arg, Client client){
 		client.sendMessage(ERR_NEEDMOREPARAMS(client.getNickname(), "MODE"));
 		return ;
 	}
-	cout << "\nMODE VERIF\n";
-	for (size_t i = 0; i < arg.size(); i++){ cout << arg[i] << ","; }
 	for(; arg[1][i]; i++ ){//i is the index of the next sign + or -
-		cout << "\nMode\n";
-			cout <<  " looking in arg mode " << arg[1][i] << "\n";
 		switch (arg[1][i]){
 			case '-' :
 				i = checkFlag(socket, arg, i, client); 
-				cout << "index - = " << i << "\n";
-				cout << "\nMode 1\n";
 				break;
 			case '+' : 
 				i = checkFlag(socket, arg, i, client);
-				cout << "index + = " << i << "\n";
-				cout << "\nMode 2\n";
 				break;
 			default:
-				cout << "\nMode 3\n";
 				invisibleMode(socket, arg, client);
 				break;
 		}
