@@ -181,9 +181,14 @@ vector<string> Server::getCommand(string input_client){
 	string tok;
 	vector<string> split;
 
+	if (input_client.empty())
+		return (split);
 	if (!input_client.empty() && input_client[input_client.size() - 1] == '\r') {
     	input_client.erase(input_client.size() - 1);
 	}
+	// if (!input_client.empty() && input_client[input_client.size() - 1] == '\n') {
+    // 	input_client.erase(input_client.size() - 1);
+	// }
 
 	stringstream ss(input_client);
 	while(getline(ss, tok, ' ')){ split.push_back(tok);	}
@@ -199,6 +204,8 @@ void	Server::handleCommand(int socket, vector<string> split, Server& server, Cli
 
 	//421	ERR_UNKNOWNCOMMAND	RFC1459	<command> :<reason>	Returned when the given command is unknown to the server (or hidden because of lack of access rights)
 	//421 + <command> <msg to explain the error \r\n
+	if (split.empty())
+		return ;
 	string command = split[0];
 	split.erase(split.begin()); // delete first index to keep the args
 	//string command = split[0]; //store first index which is the command
@@ -209,4 +216,5 @@ void	Server::handleCommand(int socket, vector<string> split, Server& server, Cli
 		errmsg = "421 " + command + " was not coded =)\r\n"; // /r/n = Carriage Return Line Feed
 		send(socket, errmsg.c_str(), errmsg.size(), 0); //c_str to convert to a const
 	}
+	//split.clear();
 }
