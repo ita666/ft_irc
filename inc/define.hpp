@@ -1,6 +1,5 @@
 #pragma once
 
-//comment
 // GENERAL
 #define	SERVER_NAME "localhost"
 #define OPERATOR_PASSWORD "oper"

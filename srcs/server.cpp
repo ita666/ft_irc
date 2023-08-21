@@ -2,7 +2,7 @@
 
 Server::Server(): _port(0), _password(""), _server_socket(-1), _server_address() {}
 
-Server::~Server(){
+Server::~Server() {
 	if (running == true){
 		for (map<int, Client>::iterator it = _clients.begin(); it != _clients.end(); it++){
 			close(it->first);
@@ -11,7 +11,7 @@ Server::~Server(){
 	}
 }
 
-void	Server::initMap(){
+void	Server::initMap() {
 	
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	_commands["CAP"] = &Server::Cap; //adding Cap for the command map
@@ -30,7 +30,7 @@ void	Server::initMap(){
 	_commands["PRIVMSG"] = &Server::Privmsg; 
 }
 
-Server::Server(char *port, char *pass){
+Server::Server(char *port, char *pass) {
     _server_socket = -1;
 	setPort(port);
     if (pass != NULL) {
@@ -44,7 +44,7 @@ Server::Server(char *port, char *pass){
 }
 
 
-void Server::setPort(char *input){
+void Server::setPort(char *input) {
 	//convert the char * port to an int go cpp0 if you are an idiot
 	int port;
 	stringstream ss(input);
@@ -91,7 +91,7 @@ void Server::initServ() {
     FD_SET(_server_socket, &_master_set);
 }
 
-int Server::acceptClient(){
+int Server::acceptClient() {
 
 	sockaddr_storage client_addr;
 	socklen_t addr_len = sizeof(client_addr);
@@ -107,11 +107,11 @@ int Server::acceptClient(){
 	return (client_socket);
 }
 
-void Server::handleClient(int socket){
+void Server::handleClient(int socket) {
 	char	client_input[2048] = {0};
 	int		bytes_received = recv(socket, client_input, sizeof(client_input) - 1, 0);
 
-	if(bytes_received <= 0){
+	if (bytes_received <= 0){
 		FD_CLR(socket, &_master_set);
 		_clients.erase(socket);
 		close(socket); 
@@ -123,10 +123,9 @@ void Server::handleClient(int socket){
 		istringstream ss(message); 
 		string line;
 // at each \n we need to get the command and pass to the next it works uppon connection and after if only one command is sent
-		while(getline(ss, line, '\n')){
-			if (!line.empty()) {
+		while (getline(ss, line, '\n')){
+			if (!line.empty())
     			line.erase(line.length());
-			}
 		vector<string> command = getCommand(line);
 		handleCommand(socket, command, *this, _clients[socket]);
 		}
@@ -134,17 +133,17 @@ void Server::handleClient(int socket){
 	}
 }
 
-void Server::runServ(){
+void Server::runServ() {
 
 	int maxFD = _server_socket;
-	while (running == false){
+	while (running == false) {
 		fd_set copy = _master_set;
-		if(select(maxFD + 1, &copy, NULL, NULL, NULL) < 0){
+		if (select(maxFD + 1, &copy, NULL, NULL, NULL) < 0){
 			break ;
 		}
 		for (int i = 0; i <= maxFD; i++){
-			if(FD_ISSET(i, &copy)){
-				if(i == _server_socket){
+			if (FD_ISSET(i, &copy)) {
+				if (i == _server_socket) {
 					int newSocket = acceptClient();
 					if (maxFD < newSocket) { maxFD = newSocket; }
 				}else{
@@ -155,14 +154,12 @@ void Server::runServ(){
 	}
 }
 
-void Server::User(int socket, vector<string>& arg, Client cl){
+void Server::User(int socket, vector<string>& arg, Client cl) {
 	//to do handle error msg
 	(void)cl;
 	cout << "user test" << arg[0] << '\n';
 	_clients[socket].setUser(arg[0]);
 	_clients[socket].setHost(arg[2]);
-	//std::string errMsg = "461 NICK :Not enough parameters\r\n";
-     //   send(socket, errMsg.c_str(), errMsg.length(), 0);
 }
 
 bool Server::checkChannelName(string channelName) {
@@ -176,22 +173,17 @@ bool Server::checkChannelName(string channelName) {
 	return false;
 }
 
-vector<string> Server::getCommand(string input_client){
+vector<string> Server::getCommand(string input_client) {
 
 	string tok;
 	vector<string> split;
 
 	if (input_client.empty())
 		return (split);
-	if (!input_client.empty() && input_client[input_client.size() - 1] == '\r') {
+	if (!input_client.empty() && input_client[input_client.size() - 1] == '\r')
     	input_client.erase(input_client.size() - 1);
-	}
-	// if (!input_client.empty() && input_client[input_client.size() - 1] == '\n') {
-    // 	input_client.erase(input_client.size() - 1);
-	// }
-
 	stringstream ss(input_client);
-	while(getline(ss, tok, ' ')){ split.push_back(tok);	}
+	while (getline(ss, tok, ' ')) { split.push_back(tok); }
 	cout  << "verif" << endl;
 	for (size_t i = 0;  i < split.size(); i++){ cout << split[i] << "-"; }
 	cout  << "\nend verif" << endl;
@@ -206,15 +198,12 @@ void	Server::handleCommand(int socket, vector<string> split, Server& server, Cli
 	//421 + <command> <msg to explain the error \r\n
 	if (split.empty())
 		return ;
-	string command = split[0];
+	string command = split[0]; // store first index which is the command
 	split.erase(split.begin()); // delete first index to keep the args
-	//string command = split[0]; //store first index which is the command
-	if (_commands.find(command) != _commands.end()){ // to check if the command exist in the map
-		 (server.*_commands[command])(socket, split, cl); //this killed me copy paste in chat gpt and learned it yourself
-
+	if (_commands.find(command) != _commands.end()) { // to check if the command exist in the map
+		 (server.*_commands[command])(socket, split, cl);
 	} else {
 		errmsg = "421 " + command + " was not coded =)\r\n"; // /r/n = Carriage Return Line Feed
 		send(socket, errmsg.c_str(), errmsg.size(), 0); //c_str to convert to a const
 	}
-	//split.clear();
 }

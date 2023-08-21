@@ -17,23 +17,20 @@ class Server{
 		Server(char *, char *);
 		~Server(void);
 
+		void			setPort(char *);
+		int				acceptClient();
+		void			initServ();
+		void			handleClient(int);
+		bool			nicknameAlreadyUsed(string name, Client cl);
+		bool			isNicknamePresent(string nickName);
+		bool			passwordAuth(int socket);
+		void			welcome(int socket);
+		void			runServ();
+		vector<string>	getCommand(string);
+		void			handleCommand(int socket, vector<string> split, Server& server, Client cl);
+		void			initMap();
 
-		void	setPort(char *);
-		int		acceptClient();
-		void	initServ();
-		void	handleClient(int);
-		bool	nicknameAlreadyUsed(string name, Client cl);
-		bool	isNicknamePresent(string nickName);
-		// removeClient();
-		bool	passwordAuth(int socket);
-		void	welcome(int socket);
-		void	runServ();
-
-		vector<string> getCommand(string);
-		void	handleCommand(int socket, vector<string> split, Server& server, Client cl);
-		void	initMap();
-
-	//commands
+		//commands
 		void	Cap(int socket, vector<string>& arg, Client cl);
 		void	Oper(int socket, vector<string>& arg, Client cl);
 		void	Invite(int socket, vector<string>& arg, Client);
