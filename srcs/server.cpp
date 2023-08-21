@@ -15,18 +15,19 @@ void	Server::initMap(){
 	
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	_commands["CAP"] = &Server::Cap; //adding Cap for the command map
-	_commands["NICK"] = &Server::Nick; // adding Nick for the command map
-	_commands["USER"] = &Server::User; //adding User for the command map
-	_commands["JOIN"] = &Server::Join; //adding Join for the command map
-	_commands["PART"] = &Server::Part; //adding Part for the command map
-	_commands["MODE"] = &Server::Mode; //adding Mode for the command map
-	_commands["PASS"] = &Server::Pass; //adding PAss for the command map
-	_commands["INVITE"] = &Server::Invite; //adding Invite for the command map
-	_commands["KICK"] = &Server::Kick; //adding Kick for the command map
-	_commands["PING"] = &Server::Ping; //adding Ping for the command map
-	_commands["TOPIC"] = &Server::Topic; //adding Topic for the command map
-	_commands["WHOIS"] = &Server::Whois; //adding Whois for the command map
-	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
+	_commands["OPER"] = &Server::Oper;
+	_commands["NICK"] = &Server::Nick;
+	_commands["USER"] = &Server::User;
+	_commands["JOIN"] = &Server::Join;
+	_commands["PART"] = &Server::Part;
+	_commands["MODE"] = &Server::Mode;
+	_commands["PASS"] = &Server::Pass;
+	_commands["INVITE"] = &Server::Invite; 
+	_commands["KICK"] = &Server::Kick;
+	_commands["PING"] = &Server::Ping;
+	_commands["TOPIC"] = &Server::Topic;
+	_commands["WHOIS"] = &Server::Whois; 
+	_commands["PRIVMSG"] = &Server::Privmsg; 
 }
 
 Server::Server(char *port, char *pass){
@@ -97,7 +98,7 @@ int Server::acceptClient(){
 
 	int client_socket = accept(_server_socket, (struct sockaddr *)&client_addr, &addr_len);
     if (client_socket < 0) {
-        throw runtime_error("Cannot accept client !");
+       cerr << "Can't accept client!" << endl;
     }
 	cout << "CLIENT SOCKET= " << client_socket << endl;
         FD_SET(client_socket, &_master_set);
@@ -126,32 +127,22 @@ void Server::handleClient(int socket){
 			if (!line.empty()) {
     			line.erase(line.length());
 			}
-		//get the command from the line and send it to handle command
 		vector<string> command = getCommand(line);
 		handleCommand(socket, command, *this, _clients[socket]);
 		}
-		//cout <<"client " << _clients[socket].getNickname() << " " <<  _clients[socket].getUser() << _clients[socket].getIsWelcomed() << '\n';
 		welcome(socket);
-		
-		//cout << "error\n";
-		//cout << message << endl;
 	}
 }
 
 void Server::runServ(){
 
-	// struct timeval timeout;
-	// timeout.tv_sec = 5;  // seconds
 	int maxFD = _server_socket;
 	while (running == false){
 		fd_set copy = _master_set;
-		//cout  << j++ << "run\n";
 		if(select(maxFD + 1, &copy, NULL, NULL, NULL) < 0){
-//			throw runtime_error("Select error.");
 			break ;
 		}
 		for (int i = 0; i <= maxFD; i++){
-			//cout  << j++ << "run\n";
 			if(FD_ISSET(i, &copy)){
 				if(i == _server_socket){
 					int newSocket = acceptClient();
@@ -161,14 +152,6 @@ void Server::runServ(){
 				}
 			}
 		}
-		//         // Print active file descriptors
-        // cout << "Active file descriptors: ";
-        // for(int i = 0; i < FD_SETSIZE; i++) {
-        //     if(FD_ISSET(i, &_master_set)) {
-        //         cout << i << " ";
-        //     }
-        // }
-        // cout << endl;
 	}
 }
 
@@ -198,9 +181,14 @@ vector<string> Server::getCommand(string input_client){
 	string tok;
 	vector<string> split;
 
+	if (input_client.empty())
+		return (split);
 	if (!input_client.empty() && input_client[input_client.size() - 1] == '\r') {
     	input_client.erase(input_client.size() - 1);
 	}
+	// if (!input_client.empty() && input_client[input_client.size() - 1] == '\n') {
+    // 	input_client.erase(input_client.size() - 1);
+	// }
 
 	stringstream ss(input_client);
 	while(getline(ss, tok, ' ')){ split.push_back(tok);	}
@@ -216,14 +204,17 @@ void	Server::handleCommand(int socket, vector<string> split, Server& server, Cli
 
 	//421	ERR_UNKNOWNCOMMAND	RFC1459	<command> :<reason>	Returned when the given command is unknown to the server (or hidden because of lack of access rights)
 	//421 + <command> <msg to explain the error \r\n
+	if (split.empty())
+		return ;
 	string command = split[0];
 	split.erase(split.begin()); // delete first index to keep the args
 	//string command = split[0]; //store first index which is the command
 	if (_commands.find(command) != _commands.end()){ // to check if the command exist in the map
 		 (server.*_commands[command])(socket, split, cl); //this killed me copy paste in chat gpt and learned it yourself
-	cout << "handle command" << endl;
+
 	} else {
 		errmsg = "421 " + command + " was not coded =)\r\n"; // /r/n = Carriage Return Line Feed
 		send(socket, errmsg.c_str(), errmsg.size(), 0); //c_str to convert to a const
 	}
+	//split.clear();
 }

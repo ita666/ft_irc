@@ -59,12 +59,10 @@ void Server::Nick(int socket, vector<string>& arg, Client cl) {
 			string msg = string(":") + _clients[socket].getNickname() + "!" + _clients[socket].getNickname() + "@localhost NICK :" + arg[0] + "\r\n";
 			send(socket, msg.c_str(), msg.length(), 0);
 		}
-		// remettre une condition pour la map (specifique)
 		_stringToClients.erase(_clients[socket].getNickname());
 		_clients[socket].setNickname(newNickname);
 		_stringToClients[newNickname] = _clients[socket];
 		cout << "NEW Nick = " << _stringToClients[newNickname].getNickname() << endl;
-			// NEED TO CODE OVERLOAD OPERATOR
 		string user = _clients[socket].getUser();
 		string host = _clients[socket].getHost();
 	}
