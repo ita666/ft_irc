@@ -5,6 +5,7 @@
 //#include	"command.hpp"
 #include	"channel.hpp"
 #include	"client.hpp"
+#include 	"define.hpp"
 
 extern bool running;
 
