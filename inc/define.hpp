@@ -75,7 +75,7 @@ typedef enum e_modes
 #define ERR_ERRONEUSNICKNAME(nickname) (std::string(":") + SERVER_NAME + " 432 *" + nickname + RED +" Erroneus nickname\r\n")
 #define ERR_NICKNAMEINUSE(nickname) ( std::string(":") + SERVER_NAME + " 433 * " + MAG + nickname + RESET + "\r\n")
 #define ERR_USERNOTINCHANNEL(nickname, channel, concerned_client_nickname) (std::string(":") + SERVER_NAME + " 441 " + nickname + " " + concerned_client_nickname + " " + channel + RED + " :They aren't on that channel" + "\r\n" + RESET)
-#define ERR_NOTONCHANNEL(nickname, channel) (std::string(":") + SERVER_NAME + " 442 " + nickname + " " + channel + RED + " :You're not on that chanel" + "\r\n")
+#define ERR_NOTONCHANNEL(nickname, channel) (std::string(":") + SERVER_NAME + " 442 " + nickname + " " + channel + RED + " :You're not on that channel" + "\r\n")
 #define ERR_USERONCHANNEL(nickname, channel, concerned_client_nickname) (std::string(":") + SERVER_NAME + " 443 " + nickname + " " + concerned_client_nickname + " #" + channel + RED + " :is already on channel" + "\r\n" + RESET)
 #define ERR_NOTREGISTERED(nickname, command) (std::string(":") + SERVER_NAME + " 451 " + nickname + " " + command + RED +" :You have not registered" + "\r\n" + RESET)
 #define ERR_INVITEONLYCHAN(nickname, channel) (std::string(":") + SERVER_NAME + " 473 " + nickname + " " + channel + RED +" :Cannot join channel (+i)" + "\r\n" + RESET)
