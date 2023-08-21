@@ -7,48 +7,42 @@
 
 class Channel {
 	public : 
-		
 		Channel();
 		Channel(string name);
 		~Channel();
-
-		vector<string> ban;
 		
-		string					getName();
+		// setters
 		void					setName(string&);
-
-		string					getTopic();
 		void					setTopic(string);
-
-		string&					getKey();
+		void					setLimit(string);
+		void					setTopicNickname(const string);
 		void					setKey(string&);
 		void					unsetKey();
-
-		size_t&					getLimit();
-		void					setLimit(string);
-
-		string& 				getTopicNickname();
-		void					setTopicNickname(string&);
-
-		map<string, int>&		getMap();
-		MODES					getCMode();
 		void					setCMode(char);
 		void					removeCMode(char);
 
-		void					addGuest(const string& nickname);
-		void					removeGuest(const string& nickname);
-
-		void					addUser(string&, int);
-		void					removeUser(string&, int);
-		string					findInvited(string& guest);
-		bool					isUserInChannel(const string& username);
-		bool					isInviteOnly(const string& nickname);
-		bool					isEmpty();
+		// getters
+		const string			getName() const;
+		const string			getKey() const;
+		const string			getTopic() const;
+		const string			getTopicNickname() const;
+		size_t					getLimit();
 		int						getSocket(string& );
 		vector<int>				getAllUsers();
 		vector<string>			getAllNickname();
 		string					getName(int);
+		map<string, int>		getMap();
+		MODES					getCMode();
 
+		// methods
+		void					addGuest(const string& nickname);
+		void					removeGuest(const string& nickname);
+		void					addUser(const string, int);
+		void					removeUser(const string, int);
+		string					findInvited(string& guest);
+		bool					isUserInChannel(const string& username);
+		bool					isInviteOnly(const string& nickname);
+		bool					isEmpty();
 		void					broadcast(string msg);
 
 	private :

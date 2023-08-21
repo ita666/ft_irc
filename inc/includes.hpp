@@ -22,7 +22,6 @@
 #include <csignal>
 #include "define.hpp"
 
-
 using namespace std;
 
 #endif

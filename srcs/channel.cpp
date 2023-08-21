@@ -13,32 +13,28 @@ Channel::Channel(string name) : _name(name){
 
 Channel::~Channel(){}
 
-string	Channel::getName() { return _name; }
-void	Channel::setName(string& name){ _name = name; }
+void			Channel::setName(string& name){ _name = name; }
+const string	Channel::getName() const { return _name; }
 
-string	Channel::getTopic() { return _topic; }
-void	Channel::setTopic(string topic){ _topic = topic; }
+void			Channel::setTopic(string topic){ _topic = topic; }
+const string	Channel::getTopic() const { return _topic; }
 
-size_t&	Channel::getLimit() { return _limit; }
-void	Channel::setLimit(string limit) {
-	
+void			Channel::setLimit(string limit) {
 	size_t limitInt;
 	istringstream iss(limit);
 	iss >> limitInt;
 	_limit = limitInt;
 }
+size_t			Channel::getLimit() { return _limit; }
+	
+void			Channel::setKey(string& key) { _key = key; }
+void			Channel::unsetKey() { _key = "" ; }
+const string	Channel::getKey() const { return (_key); }
 
+map<string, int>	Channel::getMap() { return _nameToSocket; }
 
-string& Channel::getKey(){ return (_key); }
-void	Channel::setKey(string& key){ _key = key; }
-void	Channel::unsetKey(){ _key = "" ;}
-
-map<string, int>&	Channel::getMap() { return _nameToSocket; }
-
-string&	Channel::getTopicNickname(){ return (_topicNickname); }
-void	Channel::setTopicNickname(string& topicNickname){ _topicNickname = topicNickname; }
-
-MODES Channel::getCMode(){ return (_chanMode); }
+void			Channel::setTopicNickname(const string topicNickname) { _topicNickname = topicNickname; }
+const string	Channel::getTopicNickname() const { return (_topicNickname); }
 
 void	Channel::setCMode(char c){
 	switch (c) {
@@ -52,6 +48,7 @@ void	Channel::setCMode(char c){
         default: throw runtime_error("setting wrong mode as input"); break;
     }
 }
+MODES	Channel::getCMode() { return (_chanMode); }
 
 void	Channel::removeCMode(char c){
 	switch (c) {
@@ -64,17 +61,17 @@ void	Channel::removeCMode(char c){
     }
 }
 
-void	Channel::addUser(string& userName, int socket){
+void	Channel::addUser(const string userName, int socket){
     _nameToSocket[userName] = socket;
     _socketToName[socket] = userName;
 }
 
-void	Channel::removeUser(string& userName, int socket){
+void	Channel::removeUser(const string userName, int socket){
     _nameToSocket.erase(userName);
     _socketToName.erase(socket);
 }
 
-int		Channel::getSocket(string& userName){
+int		Channel::getSocket (string& userName){
 		return (_nameToSocket[userName]);
 }
 
@@ -87,7 +84,6 @@ vector<int>	Channel::getAllUsers() {
 		users.push_back(it->second);
 		i++;
 	}
-
 	map<string, int>::iterator ot;
 	for (ot = _nameToSocket.begin(); ot != _nameToSocket.end(); ot++) {
 		cout << "NAME IN CHANNEL \n" << ot->first << " SOCKET IN CHANNEL " << ot->second << '\n';
@@ -131,11 +127,11 @@ string Channel::findInvited(string& guest) {
 	return "";
 }
 
-bool Channel::isEmpty(){
+bool	Channel::isEmpty(){
 	return (!_nameToSocket.size());
 }
 
-string	Channel::getName(int socket){
+string	Channel::getName(int socket) {
 		return (_socketToName[socket]);
 }
 
@@ -148,12 +144,11 @@ vector<string> Channel::getAllNickname() {
 	return users;
 }
 
-void Channel::broadcast(string msg) {
+void	Channel::broadcast(string msg) {
 	vector<int> usersInChannel = getAllUsers();
 	for (int i = 0; i < (int)_nameToSocket.size(); i++) {
 		send(usersInChannel[i], msg.c_str(), msg.length(), 0);
 	}
-	//delete usersInChannel;
 }
 
 void	Server::broadcastJoin(int socket, vector<string>& arg) {
