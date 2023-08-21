@@ -15,19 +15,19 @@ void	Server::initMap(){
 	
 	map<string, void (Server::*)(int, vector<string>&)>::iterator it;
 	_commands["CAP"] = &Server::Cap; //adding Cap for the command map
-	_commands["OPER"] = &Server::Oper; //adding Cap for the command map
-	_commands["NICK"] = &Server::Nick; // adding Nick for the command map
-	_commands["USER"] = &Server::User; //adding User for the command map
-	_commands["JOIN"] = &Server::Join; //adding Join for the command map
-	_commands["PART"] = &Server::Part; //adding Part for the command map
-	_commands["MODE"] = &Server::Mode; //adding Mode for the command map
-	_commands["PASS"] = &Server::Pass; //adding PAss for the command map
-	_commands["INVITE"] = &Server::Invite; //adding Invite for the command map
-	_commands["KICK"] = &Server::Kick; //adding Kick for the command map
-	_commands["PING"] = &Server::Ping; //adding Ping for the command map
-	_commands["TOPIC"] = &Server::Topic; //adding Topic for the command map
-	_commands["WHOIS"] = &Server::Whois; //adding Whois for the command map
-	_commands["PRIVMSG"] = &Server::Privmsg; //adding Privmsg for the command map
+	_commands["OPER"] = &Server::Oper;
+	_commands["NICK"] = &Server::Nick;
+	_commands["USER"] = &Server::User;
+	_commands["JOIN"] = &Server::Join;
+	_commands["PART"] = &Server::Part;
+	_commands["MODE"] = &Server::Mode;
+	_commands["PASS"] = &Server::Pass;
+	_commands["INVITE"] = &Server::Invite; 
+	_commands["KICK"] = &Server::Kick;
+	_commands["PING"] = &Server::Ping;
+	_commands["TOPIC"] = &Server::Topic;
+	_commands["WHOIS"] = &Server::Whois; 
+	_commands["PRIVMSG"] = &Server::Privmsg; 
 }
 
 Server::Server(char *port, char *pass){
@@ -127,32 +127,22 @@ void Server::handleClient(int socket){
 			if (!line.empty()) {
     			line.erase(line.length());
 			}
-		//get the command from the line and send it to handle command
 		vector<string> command = getCommand(line);
 		handleCommand(socket, command, *this, _clients[socket]);
 		}
-		//cout <<"client " << _clients[socket].getNickname() << " " <<  _clients[socket].getUser() << _clients[socket].getIsWelcomed() << '\n';
 		welcome(socket);
-		
-		//cout << "error\n";
-		//cout << message << endl;
 	}
 }
 
 void Server::runServ(){
 
-	// struct timeval timeout;
-	// timeout.tv_sec = 5;  // seconds
 	int maxFD = _server_socket;
 	while (running == false){
 		fd_set copy = _master_set;
-		//cout  << j++ << "run\n";
 		if(select(maxFD + 1, &copy, NULL, NULL, NULL) < 0){
-//			throw runtime_error("Select error.");
 			break ;
 		}
 		for (int i = 0; i <= maxFD; i++){
-			//cout  << j++ << "run\n";
 			if(FD_ISSET(i, &copy)){
 				if(i == _server_socket){
 					int newSocket = acceptClient();
@@ -162,14 +152,6 @@ void Server::runServ(){
 				}
 			}
 		}
-		//         // Print active file descriptors
-        // cout << "Active file descriptors: ";
-        // for(int i = 0; i < FD_SETSIZE; i++) {
-        //     if(FD_ISSET(i, &_master_set)) {
-        //         cout << i << " ";
-        //     }
-        // }
-        // cout << endl;
 	}
 }
 

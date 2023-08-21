@@ -10,13 +10,13 @@ void Server::Oper(int socket, vector<string>& arg, Client cl) {
 	string pass = arg[1];
 
 
-	if (arg.size() < 2) // check if there is enough arguments
+	if (arg.size() < 2)
 		return _clients[socket].sendMessage(ERR_NEEDMOREPARAMS(currentClientNickname, "OPER"));
-	if (_stringToClients.find(guest) == _stringToClients.end()) // check if the guest exists
+	if (_stringToClients.find(guest) == _stringToClients.end())
 		return _clients[socket].sendMessage(ERR_NOSUCHNICK(currentClientNickname, guest));
-	if (pass != OPERATOR_PASSWORD) // check if the channel exists
+	if (pass != OPERATOR_PASSWORD)
 		return _clients[socket].sendMessage(ERR_PASSWDMISMATCH(currentClientNickname));
-	if (pass == OPERATOR_PASSWORD) { // check if the guest is already invited, if not add him to the invited list
+	if (pass == OPERATOR_PASSWORD) {
 		_clients[socket].setUMode();
 		_clients[socket].sendMessage(RPL_YOUROPER(currentClientNickname));
 	}

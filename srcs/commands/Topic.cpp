@@ -31,7 +31,6 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 		} else if (_channels[channelName].isUserInChannel(currentClientNickname) == false) {
 			return currentClient.sendMessage(ERR_NOTONCHANNEL(currentClientNickname, channelName));
 		} else {
-			// _channels[channelName].setTopicNickname(currentClientNickname);
 			_channels[channelName].broadcast(RPL_TOPIC(currentClientNickname, channelName, _channels[channelName].getTopic()));
 		}
 	} else if (arg.size() >= 2) {

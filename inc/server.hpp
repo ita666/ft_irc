@@ -48,7 +48,7 @@ class Server{
 		void	Nick(int socket, vector<string>& arg, Client);
     	void	User(int socket, vector<string>& arg, Client);
 
-		void	checkFlag(int socket, vector<string>& arg, int i, Client);
+		int		checkFlag(int socket, vector<string>& arg, int i, Client);
 		void	invisibleMode(int socket, vector<string>& arg, Client);
 		bool	checkChannelName(string channelName);
 		void	broadcastJoin(int socket, vector<string>& arg);

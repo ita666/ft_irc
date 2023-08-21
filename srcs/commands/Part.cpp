@@ -22,11 +22,7 @@ void Server::Part(int socket, vector<string>& arg, Client client){
         _clients[socket].sendMessage(ERR_NOTONCHANNEL(_clients[socket].getNickname(), arg[0]));
         return;
     }
-   // string partingMessage =  arg[0] + _clients[socket].getNickname() + " has left the channel";
-    //cout << "parting message " << partingMessage << "\n";
-    //_channels[arg[0]].broadcast(partingMessage);
     _channels[arg[0]].removeUser(_clients[socket].getNickname(), _clients[socket].getSocket());
-   // _clients[socket].sendMessage(ERR_NOTONCHANNEL(_clients[socket].getNickname(), arg[0]));
     string msg = ":" + _clients[socket].getNickname() + "!" + _clients[socket].getUser() + "@" + _clients[socket].getRealhost() +" PART " + arg[0] + "\r\n";
     cout << msg << "\n";
     if (send(socket, msg.c_str(), msg.length(), 0)< 0)
