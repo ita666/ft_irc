@@ -98,7 +98,7 @@ int Server::acceptClient(){
 
 	int client_socket = accept(_server_socket, (struct sockaddr *)&client_addr, &addr_len);
     if (client_socket < 0) {
-        throw runtime_error("Cannot accept client !");
+       cerr << "Can't accept client!" << endl;
     }
 	cout << "CLIENT SOCKET= " << client_socket << endl;
         FD_SET(client_socket, &_master_set);
