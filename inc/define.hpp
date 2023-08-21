@@ -63,7 +63,7 @@ typedef enum e_modes
 							":" + SERVER_NAME + " 371 " + nickname + " :" + "written by zdevove, mcherel, lotmanza" + "\r\n" + \
 							":" + SERVER_NAME + " 371 " + nickname + " :" + "version 1.0" + "\r\n")
 #define RPL_ENDOFINFO(nickname) (std::string(":") + SERVER_NAME + " 374 " + nickname + " " + ":End of /INFO list. " + "\r\n")
-#define RPL_YOUROPER(nickname) (std::string(":") + SERVER_NAME + " 381 " + nickname + " :You are now an IRC operator" + "\r\n")
+#define RPL_YOUROPER(nickname) (std::string(":") + SERVER_NAME + " 381 * " + nickname + " :are now an IRC operator" + "\r\n")
 
 // 400
 #define ERR_NOSUCHNICK(nickname, other_nickname) (std::string(":") + SERVER_NAME + " 401 " + nickname + " " + other_nickname + " :No such nick\r\n")

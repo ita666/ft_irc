@@ -1,27 +1,23 @@
-PRIVMSG #AnimalFacts :Some cats are allergic to humans.
-PRIVMSG #AnimalFacts :Sea otters hold hands while sleeping to keep from drifting apart.
-PRIVMSG #AnimalFacts :The world's smallest mammal is the bumblebee bat.
-PRIVMSG #AnimalFacts :Reindeer eyes turn blue in the winter to help them see at lower light levels.
-PRIVMSG #AnimalFacts :The age of a tree can be determined by its rings.
-PRIVMSG #AnimalFacts :A crocodile can't stick its tongue out.
-PRIVMSG #AnimalFacts :Some cats are allergic to humans.
-PRIVMSG #AnimalFacts :Butterflies taste with their feet.
-PRIVMSG #AnimalFacts :Sea otters hold hands while sleeping to keep from drifting apart.
-PRIVMSG #AnimalFacts :The world's smallest mammal is the bumblebee bat.
-PRIVMSG #AnimalFacts :The age of a tree can be determined by its rings.
-PRIVMSG #AnimalFacts :Hummingbirds are the only birds that can fly backward.
-PRIVMSG #AnimalFacts :Ants never sleep.
-PRIVMSG #AnimalFacts :Bats are the only mammals that can fly.
-PRIVMSG #AnimalFacts :There are over 20,000 species of bees.
-PRIVMSG #AnimalFacts :Axolotls can regenerate their body parts.
+PASS 123
+NICK Oh_My_God_What_A_Shhh_Bot
+USER Oh_My_God_What_A_Shhh_Bot * * :Oh_My_God_What_A_Shhh_Bot
+JOIN #AnimalFacts
 PRIVMSG #AnimalFacts :A narwhal's tusk reveals its past living conditions.
-PRIVMSG #AnimalFacts :Ostriches can run faster than horses.
-PRIVMSG #AnimalFacts :Seahorses are monogamous life mates and travel holding each other's tails.
-PRIVMSG #AnimalFacts :Gorillas can catch human colds and other illnesses.
-PRIVMSG #AnimalFacts :Squirrels plant thousands of new trees each year by merely forgetting where they put their acorns.
+PRIVMSG #AnimalFacts :Owls turn their heads almost 360° but can't move their eyes.
+PRIVMSG #AnimalFacts :Elephants are the only animals that can't jump.
+PRIVMSG #AnimalFacts :Hummingbirds are the only birds that can fly backward.
+PRIVMSG #AnimalFacts :A rhinoceros's horn is made of hair.
+PRIVMSG #AnimalFacts :Ants never sleep.
+PRIVMSG #AnimalFacts :A narwhal's tusk reveals its past living conditions.
+PRIVMSG #AnimalFacts :A group of crows is called a murder.
+PRIVMSG #AnimalFacts :Seahorses have no stomach and must eat almost constantly to stay alive.
+PRIVMSG #AnimalFacts :Sea otters hold hands while sleeping to keep from drifting apart.
+PRIVMSG #AnimalFacts :A group of crows is called a murder.
+PRIVMSG #AnimalFacts :Baby elephants suck their trunks for comfort, similar to how human babies suck their thumbs.
+PRIVMSG #AnimalFacts :Jellyfish are 95PRIVMSG #AnimalFacts :A narwhal's tusk reveals its past living conditions.
+PRIVMSG #AnimalFacts :A rhinoceros's horn is made of hair.
 PRIVMSG #AnimalFacts :The fingerprints of a koala are so similar to humans that they can taint crime scenes.
-PRIVMSG #AnimalFacts :Axolotls can regenerate their body parts.
-PRIVMSG #AnimalFacts :Snails can sleep for up to three years.
-PRIVMSG #AnimalFacts :Cows have best friends.
-PRIVMSG #AnimalFacts :The male discus fish looks after its young by secreting a nutritious fluid from its skin.
-PRIVMSG #AnimalFacts :Cats have whiskers on the backs of their front legs.
+PRIVMSG #AnimalFacts :Sharks have been around for over 400 million years.
+PRIVMSG #AnimalFacts :Some cats are allergic to humans.
+PRIVMSG #AnimalFacts :Jellyfish are 95PRIVMSG #AnimalFacts :The mimic octopus can impersonate up to 15 marine species.
+PRIVMSG #AnimalFacts :Bats are the only mammals that can fly.

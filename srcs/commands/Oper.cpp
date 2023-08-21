@@ -18,6 +18,6 @@ void Server::Oper(int socket, vector<string>& arg, Client cl) {
 		return _clients[socket].sendMessage(ERR_PASSWDMISMATCH(currentClientNickname));
 	if (pass == OPERATOR_PASSWORD) {
 		_clients[socket].setUMode();
-		_clients[socket].sendMessage(RPL_YOUROPER(currentClientNickname));
+		_clients[socket].sendMessage(RPL_YOUROPER(arg[0]));
 	}
 }
