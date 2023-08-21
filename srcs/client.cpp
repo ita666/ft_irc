@@ -9,6 +9,16 @@ Client::Client(int socket) : _socket(socket) {
 	_userMode   = static_cast<MODES>(0);
 }
 
+
+Client::Client() : _socket(-1) {
+	_nickname = "";
+	_username = "";
+	_hostname = "IRC_HELL";
+	_realhost = "";
+	_iswelcomed = false;
+	_userMode   = static_cast<MODES>(0);
+}
+
 Client::~Client(){}
 
 
@@ -48,7 +58,7 @@ void	Client::setHost(string host) { _realhost = host; }
 void	Client::setPassword(string password) { _password = password ; }
 void	Client::setIsWelcomed(bool info) { _iswelcomed = info; }
 void	Client::setUMode() { _userMode = static_cast<e_modes>(_userMode | o); }
-void	Client::setIMode() { _userMode = static_cast<e_modes>(_userMode | o); }
+void	Client::setIMode() { _userMode = static_cast<e_modes>(_userMode | i); }
 
 void	Client::unsetUMode() { _userMode = static_cast<e_modes>(_userMode & ~o); }
 

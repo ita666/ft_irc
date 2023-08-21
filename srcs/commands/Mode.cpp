@@ -21,28 +21,43 @@ void	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 		switch (arg[1][j]){
 			case 'i' :
 			cout << "verif i" << endl;
-				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('i'); }
-				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('i'); }
+				if(arg[1][i] == '-'){
+					_channels[arg[0]].removeCMode('i');
+					client.sendMessage(MODE_CHANNEL(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], " -i"));
+					}
+				else if(arg[1][i] == '+') {
+					_channels[arg[0]].setCMode('i'); 
+					client.sendMessage(MODE_CHANNEL(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], " +i"));
+				}
 				break;
 			case 't' :
-				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('t'); }
-				else if(arg[1][i] == '+') { _channels[arg[0]].setCMode('t'); }
+				if(arg[1][i] == '-'){
+					_channels[arg[0]].removeCMode('t');
+					client.sendMessage(MODE_CHANNEL(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], " -t"));
+					}
+				else if(arg[1][i] == '+') {
+					_channels[arg[0]].setCMode('t');
+					client.sendMessage(MODE_CHANNEL(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], " +t"));
+					}
 				break;
 			case 'k' :
 				if(arg[1][i] == '-'){ 
 					_channels[arg[0]].removeCMode('k'); 
 					_channels[arg[0]].unsetKey();
+					client.sendMessage(MODE_CHANNEL(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], " -k"));
 				}
 				else if(arg[1][i] == '+') { 
 					_channels[arg[0]].setCMode('k');
 					_channels[arg[0]].setKey(arg[2]);
 					arg.erase(arg.begin() + 2);
+					client.sendMessage(MODE_CHANNEL(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], " +k"));
 				}
 				break;
 			case 'o' :
 				if(arg[1][i] == '-'){ 
 					if(_clients[socket].checkRight()){
 						_clients[map[arg[2]]].unsetUMode();
+						client.sendMessage(MODE_USER(_clients[socket].getNickname(), _clients[socket].getUser(), arg[2], " -o"));
 					} else {
 						cout << "MODE -O CALLED\n";
 						_clients[socket].sendMessage(ERR_NOPRIVILEGES(_clients[socket].getNickname())); }
@@ -50,6 +65,7 @@ void	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 				else if(arg[1][i] == '+') { 
 					if(_clients[socket].checkRight()){
 						_clients[map[arg[2]]].setUMode();
+						client.sendMessage(MODE_USER(_clients[socket].getNickname(), _clients[socket].getUser(), arg[2], " +o"));
 					} else {
 						cout << "MODE +O CALLED\n";
 						_clients[socket].sendMessage(ERR_NOPRIVILEGES(_clients[socket].getNickname())); }
@@ -57,11 +73,15 @@ void	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 				arg.erase(arg.begin() + 2);
 				break;
 			case 'l' :
-				if(arg[1][i] == '-'){ _channels[arg[0]].removeCMode('l');}
+				if(arg[1][i] == '-'){
+					_channels[arg[0]].removeCMode('l');
+					client.sendMessage(MODE_CHANNEL(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], " -l"));	
+				}
 				else if(arg[1][i] == '+') {
 					_channels[arg[0]].setCMode('l');
 					_channels[arg[0]].setLimit(arg[2]);
 					arg.erase(arg.begin() + 2);
+					client.sendMessage(MODE_CHANNEL(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], " +l"));
 				}
 				break;
 		}
