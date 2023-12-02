@@ -15,7 +15,7 @@ void	Server::welcome(int socket) {
 		string nickname = _clients[socket].getNickname();
 		string user = _clients[socket].getUser();
 		string host = _clients[socket].getHost();
-		string welcome_msg = (string)":" + SERVER_NAME " 001 " + nickname +" :Welcome to IRC " + GRN + nickname + RESET + "!" + user + "@" + host + "\r\n";
+		string welcome_msg = (string)":" + SERVER_NAME " 001 " + nickname +" :Welcome to IRC " + nickname + RESET + "!" + user + "@" + host + "\r\n";
 		send(socket, welcome_msg.c_str(), welcome_msg.size(), 0);
 		string msgBot = "AnimalFacts is the bot channel, join it to get some facts about animals!\r\n";
 		send(socket, msgBot.c_str(), msgBot.size(), 0);

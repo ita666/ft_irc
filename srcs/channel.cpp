@@ -44,7 +44,7 @@ void	Channel::setCMode(char c){
         case 'k': _chanMode = static_cast<e_modes>(_chanMode | k); break;
         case 'o': _chanMode = static_cast<e_modes>(_chanMode | o); break;
         case 'l': _chanMode = static_cast<e_modes>(_chanMode | l); break;
-        default: throw runtime_error("setting wrong mode as input"); break;
+        default: cerr << "setting wrong mode as input"; break;
     }
 }
 MODES	Channel::getCMode() { return (_chanMode); }
@@ -56,7 +56,7 @@ void	Channel::removeCMode(char c){
         case 'k': _chanMode = static_cast<e_modes>(_chanMode & ~k); break;
         case 'o': _chanMode = static_cast<e_modes>(_chanMode & ~o); break;
         case 'l': _chanMode = static_cast<e_modes>(_chanMode & ~l); break;
-        default: throw runtime_error("setting wrong mode as input"); break;
+        default: cerr << "setting wrong mode as input"; break;
     }
 }
 

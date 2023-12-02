@@ -23,7 +23,7 @@ void Server::Part(int socket, vector<string>& arg, Client client){
     _clients[socket].sendMessage(msg);
 
     // Broadcast parting message to all channel members
-    //channel[arg[1]].broadcastMessage(partingMessage);
+    _channels[arg[1]].broadcast(PART(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], "Left the channel"));
 
     // If the channel is empty, destroy it
     if (_channels[arg[0]].isEmpty()) {

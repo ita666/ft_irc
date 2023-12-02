@@ -29,6 +29,7 @@ Client& Client:: operator=(Client const &other) {
 	this->_hostname = other._hostname;
 	this->_realhost = other._realhost;
 	this->_iswelcomed = other._iswelcomed;
+	this->_password = other._password;
 	this->_userMode = other._userMode;
 	return (*this);
 }

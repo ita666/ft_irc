@@ -38,10 +38,10 @@ int	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 					_channels[arg[0]].unsetKey();
 					client.sendMessage(MODE_CHANNEL(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], " -k"));
 				}
-				else if(arg[1][i] == '+') { 
+				else if(arg[1][i] == '+' && arg[2].empty() == false) { 
 					_channels[arg[0]].setCMode('k');
 					_channels[arg[0]].setKey(arg[2]);
-					arg.erase(arg.begin() + 2);
+					if (arg.size() > 2) { arg.erase(arg.begin() + 2); }
 					client.sendMessage(MODE_CHANNEL(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], " +k"));
 				}
 				break;
@@ -54,7 +54,7 @@ int	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 						_clients[socket].sendMessage(ERR_NOPRIVILEGES(_clients[socket].getNickname())); }
 				}
 				else if(arg[1][i] == '+') { 
-					if(_clients[socket].checkRight()){
+					if(_clients[socket].checkRight() && arg[2].empty() == false){
 						_clients[map[arg[2]]].setUMode();
 						client.sendMessage(MODE_USER(_clients[socket].getNickname(), _clients[socket].getUser(), arg[2], " +o"));
 					} else {
@@ -63,24 +63,26 @@ int	Server::checkFlag(int socket, vector<string>& arg, int i, Client client){
 					if (_channels[arg[0]].isUserInChannel(arg[2]) == false)
 						client.sendMessage(ERR_USERNOTINCHANNEL(client.getNickname(), arg[0], arg[2]));
 				}
-				arg.erase(arg.begin() + 2);
+				if (arg.size() > 2) { arg.erase(arg.begin() + 2); }
 				break;
 			case 'l' :
 				if(arg[1][i] == '-'){
 					_channels[arg[0]].removeCMode('l');
 					client.sendMessage(MODE_CHANNEL(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], " -l"));	
 				}
-				else if(arg[1][i] == '+') {
+				else if(arg[1][i] == '+' && arg[2].empty() == false) {
+					
+					cout << "print l" << arg[2] << endl;
 					_channels[arg[0]].setCMode('l');
 					_channels[arg[0]].setLimit(arg[2]);
-					arg.erase(arg.begin() + 2);
+					if (arg.size() > 2) { arg.erase(arg.begin() + 2); }
 					client.sendMessage(MODE_CHANNEL(_clients[socket].getNickname(), _clients[socket].getUser(), arg[0], " +l"));
 				}
 				break;
 		}
 	}
 
-	return (j-1); //avoid invalid of size
+	return (j - 1); //avoid invalid of size
 }
 
 
@@ -99,7 +101,6 @@ void Server::invisibleMode(int socket, vector<string>& arg, Client client){
 		_stringToClients[targetNickname].setIMode();
 		return ;
 	}
-	
 }
 
 void Server::Mode(int socket, vector<string>& arg, Client client){
@@ -107,6 +108,12 @@ void Server::Mode(int socket, vector<string>& arg, Client client){
 	int i = 0;
 	if(arg.size() < 2){
 		client.sendMessage(ERR_NEEDMOREPARAMS(client.getNickname(), "MODE"));
+		return ;
+	}
+	if (arg[0][0] && (arg[0][0] != '#') )
+		return ;
+	if (_clients[socket].checkRight() == false){
+		client.sendMessage(ERR_NOPRIVILEGES(client.getNickname()));
 		return ;
 	}
 	for(; arg[1][i]; i++ ){//i is the index of the next sign + or -

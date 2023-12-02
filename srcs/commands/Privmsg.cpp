@@ -11,12 +11,14 @@ bool Server::isNicknamePresent(string nickName) {
 
 void Server::Privmsg(int socket, vector<string> &arg, Client cl) {
 
-	(void)socket;
 	string channelName = arg[0];
 	vector<int> users = _channels[channelName].getAllUsers();
 	string message = "";
 
 	//put to check if channel #
+	 for (size_t i = 1; i < arg.size(); i++) { 
+        message += " " + arg[i];
+	}
 	if (channelName[0] == '#') {
 		for (size_t i = 0; i < users.size(); i++) {
 			if (users[i] != socket) {

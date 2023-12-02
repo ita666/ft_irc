@@ -14,14 +14,11 @@ void Server::Topic(int socket, vector<string>& arg, Client cl) {
 		if (i != arg.size() - 1)
 			topic += " ";
 	}
-	if (arg.size() == 0){
-		return _channels[channelName].broadcast(TOPIC(currentClientNickname, currentClientUsername, channelName, topic));
-	}
 	if (currentClient.checkRight() == false) {
 		return currentClient.sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
 	}
 	if ((_channels[channelName].getCMode() & t) != t) {
-		return currentClient.sendMessage(ERR_NOPRIVILEGES(currentClientNickname));
+		return currentClient.sendMessage(ERR_CHANOPRIVSNEEDED(currentClientNickname, channelName));
 	}
 	else if (arg.size() == 1) {
 		if (checkChannelName(channelName) == false) {

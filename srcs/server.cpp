@@ -193,6 +193,9 @@ void	Server::handleCommand(int socket, vector<string> split, Server& server, Cli
 	//421 + <command> <msg to explain the error \r\n
 	if (split.empty())
 		return ;
+	// for(size_t i = 0; i < split.size(); i++){
+	// 	cout << "split[" << i << "] = " << split[i] << endl;
+	// }
 	string command = split[0]; // store first index which is the command
 	split.erase(split.begin()); // delete first index to keep the args
 	if (_commands.find(command) != _commands.end()) { // to check if the command exist in the map
